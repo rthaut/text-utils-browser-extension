@@ -21,6 +21,14 @@
     },
     "default_title": "__MSG_BrowserActionTitle__"
   },
+  "commands": {
+    "toggle-quick-actions-overlay": {
+      "suggested_key": {
+        "default": "Ctrl+Q"
+      },
+      "description": "__MSG_Command_ToggleQuickActionsOverlay__"
+    }
+  },
   "options_ui": {
     "__chrome__page": "pages/options.html?vendor=chrome",
     "__edge__page": "pages/options.html?vendor=edge",
@@ -43,9 +51,13 @@
   "permissions": [
     "activeTab",
     "clipboardWrite",
+    "commands",
     "contextMenus",
     "notifications",
     "storage"
+  ],
+  "web_accessible_resources": [
+    "pages/quick-actions-overlay.html"
   ],
   "__chrome__minimum_chrome_version": "51.0",
   "__firefox__applications": {

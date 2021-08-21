@@ -2,6 +2,7 @@ export const MSG_ACTION_CONVERT_EDITABLE = "ConvertEditableElementCase";
 export const MSG_ACTION_COPY_PLAINTEXT_TO_CLIPBOARD =
   "CopyPlainTextToClipboard";
 export const MSG_ACTION_COPY_HTML_TO_CLIPBOARD = "CopyHtmlToClipboard";
+export const MSG_ACTION_TOGGLE_OVERLAY_FRAME = "ToggleOverlayFrame";
 
 export const ConvertEditableText = (
   tabId,
@@ -40,4 +41,15 @@ export const CopyHtmlToClipboard = (tabId, html) => {
       html,
     },
   });
+};
+
+export const SendMessageToActiveTab = async (message) => {
+  const tabs = await browser.tabs.query({
+    active: true,
+    currentWindow: true,
+  });
+
+  return Promise.all(
+    tabs.map(({ id }) => browser.tabs.sendMessage(id, message))
+  );
 };

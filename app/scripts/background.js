@@ -6,6 +6,11 @@ import {
   RebuildMenus,
 } from "scripts/menus";
 
+import {
+  MSG_ACTION_TOGGLE_OVERLAY_FRAME,
+  SendMessageToActiveTab,
+} from "scripts/utils/messages";
+
 browser.runtime.onInstalled.addListener((details) => {
   console.log("Installation details", details);
 
@@ -30,6 +35,18 @@ browser.browserAction.onClicked.addListener(() =>
     .getSelf()
     .then(({ optionsUrl: url }) => browser.tabs.create({ url }))
 );
+
+browser.commands.onCommand.addListener((command) => {
+  switch (command) {
+    case "toggle-quick-actions-overlay":
+      return SendMessageToActiveTab({
+        action: MSG_ACTION_TOGGLE_OVERLAY_FRAME,
+      });
+
+    default:
+      break;
+  }
+});
 
 browser.storage.onChanged.addListener(
   debounce((changes, area) => {

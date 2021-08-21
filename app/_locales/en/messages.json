@@ -15,6 +15,9 @@
     "message": "Configure Text Utilities",
     "description": "The title of the browser action button"
   },
+  "Command_ToggleQuickActionsOverlay": {
+    "message": "Show or Hide the Quick Actions Overlay"
+  },
   "MenuGroup_Editable_Description": {
     "message": "Menu entries for converting text directly within editable fields"
   },
