@@ -1,0 +1,143 @@
+{
+  "AppDescription": {
+    "message": "Provides many utilities for quickly manipulating, transforming, and/or copying text",
+    "description": "The description of the application"
+  },
+  "AppName": {
+    "message": "Text Utilities",
+    "description": "The name of the application"
+  },
+  "AppShortName": {
+    "message": "text-utils",
+    "description": "The short_name (maximum of 12 characters recommended) is a short version of the app's name."
+  },
+  "BrowserActionTitle": {
+    "message": "Configure Text Utilities",
+    "description": "The title of the browser action button"
+  },
+  "MenuGroup_Editable_Description": {
+    "message": "Menu entries for converting text directly within editable fields"
+  },
+  "MenuGroup_Editable_Title": {
+    "message": "Convert Editable Text"
+  },
+  "MenuGroup_Selection_Description": {
+    "message": "Menu entries for converting selected text and copying result to clipboard"
+  },
+  "MenuGroup_Selection_Title": {
+    "message": "Convert and Copy Selected Text"
+  },
+  "Menu_Editable_ConvertToHyphenCase_Title": {
+    "message": "Convert Text to hyphen-case"
+  },
+  "Menu_Editable_ConvertToLowercase_Title": {
+    "message": "Convert Text to lowercase"
+  },
+  "Menu_Editable_ConvertToSarcasm_Title": {
+    "message": "Convert Text to sArCaSm"
+  },
+  "Menu_Editable_ConvertToSlug_Title": {
+    "message": "Convert Text to a Slug"
+  },
+  "Menu_Editable_ConvertToSlugPreserveCase_Title": {
+    "message": "Convert Text to a Slug (Preserve Case)"
+  },
+  "Menu_Editable_ConvertToTitleCase_Title": {
+    "message": "Convert Text to Title Case (Basic)"
+  },
+  "Menu_Editable_ConvertToTitleCaseAPStyle_Title": {
+    "message": "Convert Text to Title Case (AP Style)"
+  },
+  "Menu_Editable_ConvertToUppercase_Title": {
+    "message": "Convert Text to UPPERCASE"
+  },
+  "Menu_Editable_Reverse_Title": {
+    "message": "Reverse Text"
+  },
+  "Menu_Editable_ReverseKeepDirectionalCharacters_Title": {
+    "message": "Reverse Text (Keep Directional Characters)"
+  },
+  "Menu_Editable_SwapCase_Title": {
+    "message": "Swap Text Case"
+  },
+  "Menu_Editable_TrimLeadingWhitespace_Title": {
+    "message": "Remove the Leading Whitespace"
+  },
+  "Menu_Editable_TrimTrailingWhitespace_Title": {
+    "message": "Remove the Trailing Whitespace"
+  },
+  "Menu_Editable_TrimWhitespace_Title": {
+    "message": "Remove the Leading and Trailing Whitespace"
+  },
+  "Menu_Selection_ConvertToHyphenCase_Title": {
+    "message": "Copy Selected Text as hyphen-case"
+  },
+  "Menu_Selection_ConvertToLowercase_Title": {
+    "message": "Copy Selected Text as lowercase"
+  },
+  "Menu_Selection_ConvertToSarcasm_Title": {
+    "message": "Copy Selected Text as sArCaSm"
+  },
+  "Menu_Selection_ConvertToSlug_Title": {
+    "message": "Copy Selected Text as a Slug"
+  },
+  "Menu_Selection_ConvertToSlugPreserveCase_Title": {
+    "message": "Copy Selected Text as a Slug (Preserve Case)"
+  },
+  "Menu_Selection_ConvertToTitleCase_Title": {
+    "message": "Copy Selected Text as Title Case (Basic)"
+  },
+  "Menu_Selection_ConvertToTitleCaseAPStyle_Title": {
+    "message": "Copy Selected Text as Title Case (AP Style)"
+  },
+  "Menu_Selection_ConvertToUppercase_Title": {
+    "message": "Copy Selected Text as UPPERCASE"
+  },
+  "Menu_Selection_Reverse_Title": {
+    "message": "Copy Selected Text in Reverse"
+  },
+  "Menu_Selection_ReverseKeepDirectionalCharacters_Title": {
+    "message": "Copy Selected Text in Reverse (Keep Directional Characters)"
+  },
+  "Menu_Selection_SwapCase_Title": {
+    "message": "Copy Selected Text with Case Swapped"
+  },
+  "Menu_Selection_TrimLeadingWhitespace_Title": {
+    "message": "Copy Selected Text with the Leading Whitespace Removed"
+  },
+  "Menu_Selection_TrimTrailingWhitespace_Title": {
+    "message": "Copy Selected Text with the Trailing Whitespace Removed"
+  },
+  "Menu_Selection_TrimWhitespace_Title": {
+    "message": "Copy Selected Text with the Whitespace Removed"
+  },
+  "OptionsButtonResetMenusText": {
+    "message": "Reset Menus to Defaults"
+  },
+  "OptionsButtonResetMenusTextWithGroupNamePlaceholder": {
+    "message": "Reset \"$GROUP$\" Menus to Defaults",
+    "placeholders": {
+      "group": {
+        "content": "$1"
+      }
+    }
+  },
+  "OptionsButtonResetMenuTitleTooltip": {
+    "message": "Reset Menu Title to Default"
+  },
+  "OptionsHeadingAdvanced": {
+    "message": "Advanced Options"
+  },
+  "OptionsHeadingMenus": {
+    "message": "Configure Menus"
+  },
+  "OptionsPageTitle": {
+    "message": "Configure Text Utilities"
+  },
+  "OptionsTabNameAdvanced": {
+    "message": "Advanced Options"
+  },
+  "OptionsTabNameMenus": {
+    "message": "Configure Menus"
+  }
+}
