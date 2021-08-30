@@ -15,6 +15,22 @@
     "message": "Configure Text Utilities",
     "description": "The title of the browser action button"
   },
+  "ContextTitle_Editable_WithMenuTitlePlaceholder": {
+    "message": "$MENU$",
+    "placeholders": {
+      "menu": {
+        "content": "$1"
+      }
+    }
+  },
+  "ContextTitle_Selection_WithMenuTitlePlaceholder": {
+    "message": "$MENU$ Selected Text and Copy to Clipboard",
+    "placeholders": {
+      "menu": {
+        "content": "$1"
+      }
+    }
+  },
   "MenuGroup_Editable_Description": {
     "message": "Menu entries for converting text directly within editable fields"
   },
@@ -27,89 +43,47 @@
   "MenuGroup_Selection_Title": {
     "message": "Convert and Copy Selected Text"
   },
-  "Menu_Editable_ConvertToHyphenCase_Title": {
-    "message": "Convert Text to hyphen-case"
+  "Menu_ConvertToHyphenCase_Title": {
+    "message": "Convert to hyphen-case"
   },
-  "Menu_Editable_ConvertToLowercase_Title": {
-    "message": "Convert Text to lowercase"
+  "Menu_ConvertToLowercase_Title": {
+    "message": "Convert to lowercase"
   },
-  "Menu_Editable_ConvertToSarcasm_Title": {
-    "message": "Convert Text to sArCaSm"
+  "Menu_ConvertToSarcasm_Title": {
+    "message": "Convert to sArCaSm"
   },
-  "Menu_Editable_ConvertToSlug_Title": {
-    "message": "Convert Text to a Slug"
+  "Menu_ConvertToSlug_Title": {
+    "message": "Convert to Slug"
   },
-  "Menu_Editable_ConvertToSlugPreserveCase_Title": {
-    "message": "Convert Text to a Slug (Preserve Case)"
+  "Menu_ConvertToSlugPreserveCase_Title": {
+    "message": "Convert to Slug (Preserve Case)"
   },
-  "Menu_Editable_ConvertToTitleCase_Title": {
-    "message": "Convert Text to Title Case (Basic)"
+  "Menu_ConvertToTitleCase_Title": {
+    "message": "Convert to Title Case (Basic)"
   },
-  "Menu_Editable_ConvertToTitleCaseAPStyle_Title": {
-    "message": "Convert Text to Title Case (AP Style)"
+  "Menu_ConvertToTitleCaseAPStyle_Title": {
+    "message": "Convert to Title Case (AP Style)"
   },
-  "Menu_Editable_ConvertToUppercase_Title": {
-    "message": "Convert Text to UPPERCASE"
+  "Menu_ConvertToUppercase_Title": {
+    "message": "Convert to UPPERCASE"
   },
-  "Menu_Editable_Reverse_Title": {
+  "Menu_Reverse_Title": {
     "message": "Reverse Text"
   },
-  "Menu_Editable_ReverseKeepDirectionalCharacters_Title": {
+  "Menu_ReverseKeepDirectionalCharacters_Title": {
     "message": "Reverse Text (Keep Directional Characters)"
   },
-  "Menu_Editable_SwapCase_Title": {
+  "Menu_SwapCase_Title": {
     "message": "Swap Text Case"
   },
-  "Menu_Editable_TrimLeadingWhitespace_Title": {
-    "message": "Remove the Leading Whitespace"
+  "Menu_TrimLeadingWhitespace_Title": {
+    "message": "Remove Leading Whitespace"
   },
-  "Menu_Editable_TrimTrailingWhitespace_Title": {
-    "message": "Remove the Trailing Whitespace"
+  "Menu_TrimTrailingWhitespace_Title": {
+    "message": "Remove Trailing Whitespace"
   },
-  "Menu_Editable_TrimWhitespace_Title": {
-    "message": "Remove the Leading and Trailing Whitespace"
-  },
-  "Menu_Selection_ConvertToHyphenCase_Title": {
-    "message": "Copy Selected Text as hyphen-case"
-  },
-  "Menu_Selection_ConvertToLowercase_Title": {
-    "message": "Copy Selected Text as lowercase"
-  },
-  "Menu_Selection_ConvertToSarcasm_Title": {
-    "message": "Copy Selected Text as sArCaSm"
-  },
-  "Menu_Selection_ConvertToSlug_Title": {
-    "message": "Copy Selected Text as a Slug"
-  },
-  "Menu_Selection_ConvertToSlugPreserveCase_Title": {
-    "message": "Copy Selected Text as a Slug (Preserve Case)"
-  },
-  "Menu_Selection_ConvertToTitleCase_Title": {
-    "message": "Copy Selected Text as Title Case (Basic)"
-  },
-  "Menu_Selection_ConvertToTitleCaseAPStyle_Title": {
-    "message": "Copy Selected Text as Title Case (AP Style)"
-  },
-  "Menu_Selection_ConvertToUppercase_Title": {
-    "message": "Copy Selected Text as UPPERCASE"
-  },
-  "Menu_Selection_Reverse_Title": {
-    "message": "Copy Selected Text in Reverse"
-  },
-  "Menu_Selection_ReverseKeepDirectionalCharacters_Title": {
-    "message": "Copy Selected Text in Reverse (Keep Directional Characters)"
-  },
-  "Menu_Selection_SwapCase_Title": {
-    "message": "Copy Selected Text with Case Swapped"
-  },
-  "Menu_Selection_TrimLeadingWhitespace_Title": {
-    "message": "Copy Selected Text with the Leading Whitespace Removed"
-  },
-  "Menu_Selection_TrimTrailingWhitespace_Title": {
-    "message": "Copy Selected Text with the Trailing Whitespace Removed"
-  },
-  "Menu_Selection_TrimWhitespace_Title": {
-    "message": "Copy Selected Text with the Whitespace Removed"
+  "Menu_TrimWhitespace_Title": {
+    "message": "Remove Leading and Trailing Whitespace"
   },
   "OptionsButtonResetMenusText": {
     "message": "Reset Menus to Defaults"

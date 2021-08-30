@@ -5,6 +5,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControl from "@material-ui/core/FormControl";
+import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -12,8 +13,9 @@ import InputLabel from "@material-ui/core/InputLabel";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 import Tooltip from "@material-ui/core/Tooltip";
 
 import SettingsBackupRestoreIcon from "@material-ui/icons/SettingsBackupRestore";
@@ -65,35 +67,31 @@ export default function MenuList({ menus, updateMenus }) {
   };
 
   const updateMenuProp = (id, prop, value) => {
-    menus.forEach((menu) => {
-      if (menu.id === id) {
-        menu[prop] = value;
-      }
-    });
-
+    menus[id][prop] = value;
     updateMenus(menus);
   };
-
-  const toggleMenuEnabled = (id, isChecked) =>
-    updateMenuProp(id, "enabled", isChecked);
 
   const updateMenuTitle = (id, title) => updateMenuProp(id, "title", title);
 
   const resetMenuTitle = (id) => updateMenuTitle(id, GetDefaultMenuTitle(id));
 
+  const updateMenuContexts = (id, context) =>
+    updateMenuProp(id, "enabledContexts", context);
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="droppable">
-        {(droppableProvided, droppableSnapshot) => (
+        {(droppableProvided) => (
           <List className={classes.root} ref={droppableProvided.innerRef}>
             {Object.entries(menus).map(([id, menu], index) => (
               <Draggable key={id} draggableId={id} index={index}>
                 {(draggableProvided, draggableSnapshot) => (
                   <ListItem
-                    disabled={!menu.enabled}
+                    // disabled={!menu.enabled}
+                    disabled={!menu.enabledContexts.length}
                     divider
                     ContainerComponent="li"
-                    ContainerProps={{ ref: draggableProvided.innerRef }}
+                    ref={draggableProvided.innerRef}
                     {...draggableProvided.draggableProps}
                     style={getListItemStyle(
                       draggableSnapshot.isDragging,
@@ -103,49 +101,72 @@ export default function MenuList({ menus, updateMenus }) {
                     <ListItemIcon {...draggableProvided.dragHandleProps}>
                       <DragHandleIcon />
                     </ListItemIcon>
-                    {draggableSnapshot.isDragging ? (
-                      <ListItemText primary={menu.title} />
-                    ) : (
-                      <FormControl fullWidth>
-                        <InputLabel>{menu.id}</InputLabel>
-                        <Input
-                          fullWidth
-                          type="text"
-                          size="small"
-                          value={menu.title}
-                          onChange={(evt) =>
-                            updateMenuTitle(menu.id, evt.target.value)
-                          }
-                          endAdornment={
-                            <InputAdornment position="end">
-                              <Tooltip
-                                title={browser.i18n.getMessage(
-                                  "OptionsButtonResetMenuTitleTooltip"
-                                )}
-                                placement="top"
-                              >
-                                <IconButton
-                                  onClick={(_evt) => resetMenuTitle(menu.id)}
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} sm={8} md={9}>
+                        <FormControl fullWidth>
+                          <InputLabel>{menu.id}</InputLabel>
+                          <Input
+                            fullWidth
+                            type="text"
+                            size="small"
+                            value={menu.title}
+                            onChange={(evt) =>
+                              updateMenuTitle(menu.id, evt.target.value)
+                            }
+                            endAdornment={
+                              <InputAdornment position="end">
+                                <Tooltip
+                                  title={browser.i18n.getMessage(
+                                    "OptionsButtonResetMenuTitleTooltip"
+                                  )}
+                                  placement="top"
                                 >
-                                  <SettingsBackupRestoreIcon />
-                                </IconButton>
-                              </Tooltip>
-                            </InputAdornment>
-                          }
-                        />
-                      </FormControl>
-                    )}
-                    <ListItemSecondaryAction>
-                      {!droppableSnapshot.isDraggingOver && (
-                        <Checkbox
-                          edge="end"
-                          onChange={(evt) =>
-                            toggleMenuEnabled(menu.id, evt.target.checked)
-                          }
-                          checked={menu.enabled}
-                        />
-                      )}
-                    </ListItemSecondaryAction>
+                                  <IconButton
+                                    onClick={(_evt) => resetMenuTitle(menu.id)}
+                                  >
+                                    <SettingsBackupRestoreIcon />
+                                  </IconButton>
+                                </Tooltip>
+                              </InputAdornment>
+                            }
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12} sm={4} md={3}>
+                        <FormControl fullWidth variant="outlined" size="small">
+                          <InputLabel htmlFor={`select-${menu.id}`}>
+                            Enabled Contexts
+                          </InputLabel>
+                          <Select
+                            multiple
+                            label="Enabled Contexts"
+                            name={`select-${menu.id}`}
+                            value={menu.enabledContexts}
+                            onChange={(evt) =>
+                              updateMenuContexts(menu.id, evt.target.value)
+                            }
+                            renderValue={(selected) =>
+                              selected.sort().join(", ")
+                            }
+                          >
+                            {menu.possibleContexts.map((context) => (
+                              <MenuItem
+                                key={context}
+                                value={context}
+                                disableGutters
+                              >
+                                <Checkbox
+                                  checked={menu.enabledContexts.includes(
+                                    context
+                                  )}
+                                />
+                                <ListItemText primary={context} />
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                    </Grid>
                   </ListItem>
                 )}
               </Draggable>

@@ -1,112 +1,136 @@
 {
   "ConvertToHyphenCase": {
     "order": 3,
-    "enabled": false,
-    "contexts": [
+    "enabledContexts": [],
+    "possibleContexts": [
       "editable",
       "selection"
     ]
   },
   "ConvertToLowerCase": {
     "order": 1,
-    "enabled": true,
-    "contexts": [
+    "enabledContexts": [
+      "editable",
+      "selection"
+    ],
+    "possibleContexts": [
       "editable",
       "selection"
     ]
   },
   "ConvertToUpperCase": {
     "order": 2,
-    "enabled": true,
-    "contexts": [
+    "enabledContexts": [
+      "editable",
+      "selection"
+    ],
+    "possibleContexts": [
       "editable",
       "selection"
     ]
   },
   "ConvertToTitleCase": {
     "order": 5,
-    "enabled": false,
-    "contexts": [
+    "enabledContexts": [],
+    "possibleContexts": [
       "editable",
       "selection"
     ]
   },
   "ConvertToTitleCaseAPStyle": {
     "order": 4,
-    "enabled": true,
-    "contexts": [
+    "enabledContexts": [
+      "editable",
+      "selection"
+    ],
+    "possibleContexts": [
       "editable",
       "selection"
     ]
   },
   "ConvertToSlug": {
     "order": 6,
-    "enabled": true,
-    "contexts": [
+    "enabledContexts": [
+      "editable",
+      "selection"
+    ],
+    "possibleContexts": [
       "editable",
       "selection"
     ]
   },
   "ConvertToSlugPreserveCase": {
     "order": 7,
-    "enabled": false,
-    "contexts": [
+    "enabledContexts": [],
+    "possibleContexts": [
       "editable",
       "selection"
     ]
   },
   "ConvertToSarcasm": {
     "order": 10,
-    "enabled": true,
-    "contexts": [
+    "enabledContexts": [
+      "editable",
+      "selection"
+    ],
+    "possibleContexts": [
       "editable",
       "selection"
     ]
   },
   "Reverse": {
     "order": 8,
-    "enabled": true,
-    "contexts": [
+    "enabledContexts": [
+      "editable",
+      "selection"
+    ],
+    "possibleContexts": [
       "editable",
       "selection"
     ]
   },
   "ReverseKeepDirectionalCharacters": {
     "order": 9,
-    "enabled": false,
-    "contexts": [
+    "enabledContexts": [],
+    "possibleContexts": [
       "editable",
       "selection"
     ]
   },
   "SwapCase": {
     "order": 11,
-    "enabled": true,
-    "contexts": [
+    "enabledContexts": [
+      "editable",
+      "selection"
+    ],
+    "possibleContexts": [
       "editable",
       "selection"
     ]
   },
   "TrimLeadingWhitespace": {
     "order": 13,
-    "enabled": true,
-    "contexts": [
+    "enabledContexts": [
+      "editable",
+      "selection"
+    ],
+    "possibleContexts": [
       "editable",
       "selection"
     ]
   },
   "TrimTrailingWhitespace": {
     "order": 14,
-    "enabled": false,
-    "contexts": [
+    "enabledContexts": [],
+    "possibleContexts": [
       "editable",
       "selection"
     ]
   },
   "TrimWhitespace": {
     "order": 12,
-    "enabled": false,
-    "contexts": [
+    "enabledContexts": [],
+    "possibleContexts": [
       "editable",
       "selection"
     ]
