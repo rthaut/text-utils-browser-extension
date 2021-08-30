@@ -1,4 +1,4 @@
-require("scripts/polyfills/contextMenus.getTargetElement");
+require("scripts/polyfills/menus.getTargetElement");
 
 import {
   MSG_ACTION_CONVERT_EDITABLE,

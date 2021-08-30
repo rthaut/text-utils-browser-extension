@@ -1,5 +1,5 @@
-if (typeof browser.contextMenus?.getTargetElement !== "function") {
-  console.info("using contextMenus.getTargetElement() polyfill");
+if (typeof browser.menus?.getTargetElement !== "function") {
+  console.info("using menus.getTargetElement() polyfill");
   let menuTarget = null;
 
   const clearMenuTargetIfInvalid = () => {
@@ -18,11 +18,11 @@ if (typeof browser.contextMenus?.getTargetElement !== "function") {
 
   document.addEventListener("visibilitychange", clearMenuTargetIfInvalid, true);
 
-  browser.contextMenus = {
-    ...(browser.contextMenus ?? {}),
+  browser.menus = {
+    ...(browser.menus ?? {}),
     getTargetElement: function () {
       clearMenuTargetIfInvalid();
-      console.info("contextMenus.getTargetElement() menu target", menuTarget);
+      console.info("menus.getTargetElement() menu target", menuTarget);
       return menuTarget;
     },
   };

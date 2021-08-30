@@ -2,7 +2,7 @@ import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-import MenuAccordion from "../components/MenuAccordion";
+import MenusEditor from "../components/MenusEditor";
 
 const useStyles = makeStyles({
   root: {
@@ -15,7 +15,7 @@ export default function MenusTab() {
 
   return (
     <div className={classes.root}>
-      <MenuAccordion />
+      <MenusEditor />
     </div>
   );
 }

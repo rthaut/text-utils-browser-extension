@@ -15,7 +15,22 @@
     "message": "Configure Text Utilities",
     "description": "The title of the browser action button"
   },
-  "ContextTitle_Editable_WithMenuTitlePlaceholder": {
+  "MenuTitleLabel": {
+    "message": "Menu Title"
+  },
+  "EnabledContextsLabel": {
+    "message": "Enabled Contexts"
+  },
+  "SelectContextsToEnable": {
+    "message": "Select one or more contexts to enable"
+  },
+  "ContextTitle_Editable": {
+    "message": "Editable Content"
+  },
+  "ContextTitle_Selection": {
+    "message": "Selected Text"
+  },
+  "MenuTitleForContext_Editable": {
     "message": "$MENU$",
     "placeholders": {
       "menu": {
@@ -23,13 +38,19 @@
       }
     }
   },
-  "ContextTitle_Selection_WithMenuTitlePlaceholder": {
-    "message": "$MENU$ Selected Text and Copy to Clipboard",
+  "MenuTitleForContext_Selection": {
+    "message": "$MENU$ and Copy to Clipboard",
     "placeholders": {
       "menu": {
         "content": "$1"
       }
     }
+  },
+  "MenuGroupContextTitle_Editable": {
+    "message": "Text Utilities for Editable Content"
+  },
+  "MenuGroupContextTitle_Selection": {
+    "message": "Text Utilities for Selected Text"
   },
   "MenuGroup_Editable_Description": {
     "message": "Menu entries for converting text directly within editable fields"
@@ -43,48 +64,87 @@
   "MenuGroup_Selection_Title": {
     "message": "Convert and Copy Selected Text"
   },
-  "Menu_ConvertToHyphenCase_Title": {
-    "message": "Convert to hyphen-case"
-  },
-  "Menu_ConvertToLowercase_Title": {
-    "message": "Convert to lowercase"
-  },
-  "Menu_ConvertToSarcasm_Title": {
-    "message": "Convert to sArCaSm"
-  },
-  "Menu_ConvertToSlug_Title": {
-    "message": "Convert to Slug"
-  },
-  "Menu_ConvertToSlugPreserveCase_Title": {
-    "message": "Convert to Slug (Preserve Case)"
-  },
-  "Menu_ConvertToTitleCase_Title": {
-    "message": "Convert to Title Case (Basic)"
-  },
-  "Menu_ConvertToTitleCaseAPStyle_Title": {
-    "message": "Convert to Title Case (AP Style)"
-  },
-  "Menu_ConvertToUppercase_Title": {
-    "message": "Convert to UPPERCASE"
-  },
-  "Menu_Reverse_Title": {
-    "message": "Reverse Text"
-  },
-  "Menu_ReverseKeepDirectionalCharacters_Title": {
-    "message": "Reverse Text (Keep Directional Characters)"
-  },
-  "Menu_SwapCase_Title": {
-    "message": "Swap Text Case"
-  },
-  "Menu_TrimLeadingWhitespace_Title": {
-    "message": "Remove Leading Whitespace"
-  },
-  "Menu_TrimTrailingWhitespace_Title": {
-    "message": "Remove Trailing Whitespace"
-  },
-  "Menu_TrimWhitespace_Title": {
-    "message": "Remove Leading and Trailing Whitespace"
-  },
+  "Menu_ConvertToCamelCase_Title": {
+		"message": "Convert to camelCase"
+	},
+	"Menu_ConvertToCapitalCase_Title": {
+		"message": "Convert to Capital Case"
+	},
+	"Menu_ConvertToConstant_Title": {
+		"message": "Convert to CONSTANT_CASE"
+	},
+	"Menu_ConvertToDotCase_Title": {
+		"message": "Convert to dot.case"
+	},
+	"Menu_ConvertToHeaderCase_Title": {
+		"message": "Convert to Header-Case"
+	},
+	"Menu_ConvertToLowerCaseFirst_Title": {
+		"message": "Convert First Character to lowercase"
+	},
+	"Menu_ConvertToLowerCase_Title": {
+		"message": "Convert to lowercase"
+	},
+	"Menu_ConvertToNoCase_Title": {
+		"message": "Convert to no case"
+	},
+	"Menu_ConvertToParamCase_Title": {
+		"message": "Convert to param-case"
+	},
+	"Menu_ConvertToPascalCase_Title": {
+		"message": "Convert to PascalCase"
+	},
+	"Menu_ConvertToPathCase_Title": {
+		"message": "Convert to path/case"
+	},
+	"Menu_ConvertToSarcasm_Title": {
+		"message": "Convert to sArCaSm"
+	},
+	"Menu_ConvertToSlugPreserveCase_Title": {
+		"message": "Convert to Slug (Preserve Case)"
+	},
+	"Menu_ConvertToSlug_Title": {
+		"message": "Convert to Slug"
+	},
+	"Menu_ConvertToSnakeCase_Title": {
+		"message": "Convert to snake_case"
+	},
+	"Menu_ConvertToTitleCaseAPStyle_Title": {
+		"message": "Convert to Title Case (AP Style)"
+	},
+	"Menu_ConvertToTitleCase_Title": {
+		"message": "Convert to Title Case (Basic)"
+	},
+	"Menu_ConvertToUpperCaseFirst_Title": {
+		"message": "Convert First Character to UPPERCASE"
+	},
+	"Menu_ConvertToUpperCase_Title": {
+		"message": "Convert to UPPERCASE"
+	},
+	"Menu_DecodeURI_Title": {
+		"message": "Decode URI"
+	},
+	"Menu_EncodeURI_Title": {
+		"message": "Encode URI"
+	},
+	"Menu_ReverseKeepDirectionalCharacters_Title": {
+		"message": "Reverse Text (Keep Directional Characters)"
+	},
+	"Menu_Reverse_Title": {
+		"message": "Reverse Text"
+	},
+	"Menu_SwapCase_Title": {
+		"message": "Swap Text Case"
+	},
+	"Menu_TrimLeadingWhitespace_Title": {
+		"message": "Remove Leading Whitespace"
+	},
+	"Menu_TrimTrailingWhitespace_Title": {
+		"message": "Remove Trailing Whitespace"
+	},
+	"Menu_TrimWhitespace_Title": {
+		"message": "Remove Leading and Trailing Whitespace"
+	},
   "OptionsButtonResetMenusText": {
     "message": "Reset Menus to Defaults"
   },
@@ -113,5 +173,8 @@
   },
   "OptionsTabNameMenus": {
     "message": "Configure Menus"
+  },
+  "Error_MenuTitleRequired": {
+    "message": "This menu should have a title"
   }
 }
