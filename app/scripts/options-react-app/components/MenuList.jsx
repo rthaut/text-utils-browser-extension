@@ -1,27 +1,19 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControl from "@material-ui/core/FormControl";
-import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
-import Input from "@material-ui/core/Input";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import InputLabel from "@material-ui/core/InputLabel";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import Tooltip from "@material-ui/core/Tooltip";
 
-import SettingsBackupRestoreIcon from "@material-ui/icons/SettingsBackupRestore";
 import DragHandleIcon from "@material-ui/icons/DragHandle";
+import SwapVertIcon from "@material-ui/icons/SwapVert";
+import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 
-import { GetDefaultMenuTitle } from "scripts/menus";
+import MenuListControls from "./MenuListControls";
 
 const ReorderItemInList = (list, sourceIndex, targetIndex) => {
   const result = Array.from(list);
@@ -30,20 +22,28 @@ const ReorderItemInList = (list, sourceIndex, targetIndex) => {
   return result;
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
   },
-});
+  menuListItem: {
+    height: theme.spacing(8),
+  },
+}));
 
-export default function MenuList({ menus, updateMenus }) {
+const MenuList = ({ menus, updateMenus }) => {
   const classes = useStyles();
   const theme = useTheme();
 
-  const getListItemStyle = (isDragging, draggableStyle) => ({
+  const getListItemStyle = (draggableStyle, isDragging, isDisabled) => ({
     ...draggableStyle,
+    ...(isDisabled && {
+      background: theme.palette.grey[100],
+    }),
     ...(isDragging && {
-      background: theme.palette.action.selected,
+      background: theme.palette.grey[300],
+      border: "1px solid",
+      borderColor: theme.palette.grey[400],
     }),
   });
 
@@ -67,114 +67,88 @@ export default function MenuList({ menus, updateMenus }) {
   };
 
   const updateMenuProp = (id, prop, value) => {
-    menus[id][prop] = value;
+    menus.forEach((menu) => {
+      if (menu.id === id) {
+        menu[prop] = value;
+      }
+    });
+
     updateMenus(menus);
   };
-
-  const updateMenuTitle = (id, title) => updateMenuProp(id, "title", title);
-
-  const resetMenuTitle = (id) => updateMenuTitle(id, GetDefaultMenuTitle(id));
-
-  const updateMenuContexts = (id, context) =>
-    updateMenuProp(id, "enabledContexts", context);
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="droppable">
-        {(droppableProvided) => (
-          <List className={classes.root} ref={droppableProvided.innerRef}>
-            {Object.entries(menus).map(([id, menu], index) => (
-              <Draggable key={id} draggableId={id} index={index}>
-                {(draggableProvided, draggableSnapshot) => (
-                  <ListItem
-                    // disabled={!menu.enabled}
-                    disabled={!menu.enabledContexts.length}
-                    divider
-                    ContainerComponent="li"
-                    ref={draggableProvided.innerRef}
-                    {...draggableProvided.draggableProps}
-                    style={getListItemStyle(
-                      draggableSnapshot.isDragging,
-                      draggableProvided.draggableProps.style
-                    )}
-                  >
-                    <ListItemIcon {...draggableProvided.dragHandleProps}>
-                      <DragHandleIcon />
-                    </ListItemIcon>
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} sm={8} md={9}>
-                        <FormControl fullWidth>
-                          <InputLabel>{menu.id}</InputLabel>
-                          <Input
-                            fullWidth
-                            type="text"
-                            size="small"
-                            value={menu.title}
-                            onChange={(evt) =>
-                              updateMenuTitle(menu.id, evt.target.value)
-                            }
-                            endAdornment={
-                              <InputAdornment position="end">
-                                <Tooltip
-                                  title={browser.i18n.getMessage(
-                                    "OptionsButtonResetMenuTitleTooltip"
-                                  )}
-                                  placement="top"
-                                >
-                                  <IconButton
-                                    onClick={(_evt) => resetMenuTitle(menu.id)}
-                                  >
-                                    <SettingsBackupRestoreIcon />
-                                  </IconButton>
-                                </Tooltip>
-                              </InputAdornment>
-                            }
+        {(droppableProvided, droppableSnapshot) => (
+          <List
+            disablePadding
+            className={classes.root}
+            ref={droppableProvided.innerRef}
+          >
+            {menus
+              .sort((a, b) => a.order - b.order)
+              .map(({ id, ...menu }, index) => {
+                const [isHovered, setIsHovered] = React.useState();
+                return (
+                  <Draggable key={id} draggableId={id} index={index}>
+                    {(draggableProvided, draggableSnapshot) => (
+                      <ListItem
+                        divider
+                        ContainerComponent="li"
+                        ref={draggableProvided.innerRef}
+                        {...draggableProvided.draggableProps}
+                        style={getListItemStyle(
+                          draggableProvided.draggableProps.style,
+                          draggableSnapshot.isDragging,
+                          !menu.enabledContexts.length
+                        )}
+                        className={classes.menuListItem}
+                      >
+                        <ListItemIcon
+                          {...draggableProvided.dragHandleProps}
+                          onMouseEnter={() => setIsHovered(true)}
+                          onMouseLeave={() => setIsHovered(false)}
+                        >
+                          {/* <DragHandleIcon fontSize="large" color={(isHovered || draggableSnapshot.isDragging) ? "inherit" : "disabled"} /> */}
+                          {isHovered || draggableSnapshot.isDragging ? (
+                            <DragHandleIcon fontSize="large" color="secondary" />
+                          ) : (
+                            <UnfoldMoreIcon fontSize="large" color="disabled" />
+                          )}
+                        </ListItemIcon>
+                        {droppableSnapshot.isDraggingOver ? (
+                          <ListItemText primary={menu.title} />
+                        ) : (
+                          <MenuListControls
+                            id={id}
+                            menu={menu}
+                            updateMenuProp={updateMenuProp}
+                            disabled={!menu.enabledContexts.length}
                           />
-                        </FormControl>
-                      </Grid>
-                      <Grid item xs={12} sm={4} md={3}>
-                        <FormControl fullWidth variant="outlined" size="small">
-                          <InputLabel htmlFor={`select-${menu.id}`}>
-                            Enabled Contexts
-                          </InputLabel>
-                          <Select
-                            multiple
-                            label="Enabled Contexts"
-                            name={`select-${menu.id}`}
-                            value={menu.enabledContexts}
-                            onChange={(evt) =>
-                              updateMenuContexts(menu.id, evt.target.value)
-                            }
-                            renderValue={(selected) =>
-                              selected.sort().join(", ")
-                            }
-                          >
-                            {menu.possibleContexts.map((context) => (
-                              <MenuItem
-                                key={context}
-                                value={context}
-                                disableGutters
-                              >
-                                <Checkbox
-                                  checked={menu.enabledContexts.includes(
-                                    context
-                                  )}
-                                />
-                                <ListItemText primary={context} />
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                    </Grid>
-                  </ListItem>
-                )}
-              </Draggable>
-            ))}
+                        )}
+                      </ListItem>
+                    )}
+                  </Draggable>
+                );
+              })}
             {droppableProvided.placeholder}
           </List>
         )}
       </Droppable>
     </DragDropContext>
   );
-}
+};
+
+MenuList.propTypes = {
+  menus: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      enabledContexts: PropTypes.arrayOf(PropTypes.string).isRequired,
+      possibleContexts: PropTypes.arrayOf(PropTypes.string).isRequired,
+    })
+  ),
+  updateMenus: PropTypes.func.isRequired,
+};
+
+export default MenuList;

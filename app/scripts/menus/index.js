@@ -8,7 +8,8 @@ import {
 export const CONFIG_STORAGE_KEY = "menu-configs";
 
 export const GetMenuOnClickHandler = (context, action) => {
-  if (typeof ACTIONS[action] !== "function") {
+  if (typeof ACTIONS[action]?.["func"] !== "function") {
+    console.error(`Action "${action}" is invalid`);
     return;
   }
 
@@ -17,7 +18,7 @@ export const GetMenuOnClickHandler = (context, action) => {
       return (info, tab) =>
         CopyPlainTextToClipboard(
           tab.id,
-          ACTIONS[action].call(null, info.selectionText)
+          ACTIONS[action]["func"].call(null, info.selectionText)
         );
 
     case "editable":
@@ -30,15 +31,14 @@ export const GetMenus = () => {
   const menus = {};
 
   Object.entries(CONFIGS).forEach(([action, menu]) => {
-    const id = action;
-
-    menus[id] = {
-      id,
+    menus[action] = {
+      action,
       ...menu,
-      title: GetDefaultMenuTitle(id),
+      title: GetDefaultMenuTitle(action),
     };
   });
 
+  console.log("GetMenus()", menus);
   return menus;
 };
 
@@ -52,12 +52,14 @@ export const GetMenusWithConfigs = async () => {
     }
 
     menus[id] = {
+      group: ACTIONS[id]?.["group"],
       ...menus[id],
       ...(configs[id] ?? {}),
       title: configs[id]?.["title"] ?? menus[id]["title"],
     };
   });
 
+  console.log("GetMenusWithConfigs()", menus);
   return menus;
 };
 
@@ -68,7 +70,7 @@ export const GetDefaultMenuConfigs = () => {
     const { enabledContexts, order } = menu;
     configs[id] = {
       enabledContexts,
-      order,
+      order: order > 0 ? order : null,
     };
   });
 
@@ -85,6 +87,7 @@ export const GetDefaultMenuConfigs = () => {
     }
   });
 
+  console.log("GetDefaultMenuConfigs()", configs);
   return configs;
 };
 
@@ -100,13 +103,10 @@ export const GetDefaultMenuTitle = (id) =>
   browser.i18n.getMessage(`Menu_${id}_Title`);
 
 export const GetMenuTitleForContext = (context, title) =>
-  browser.i18n.getMessage(
-    `ContextTitle_${context}_WithMenuTitlePlaceholder`,
-    title
-  );
+  browser.i18n.getMessage(`MenuTitleForContext_${context}`, title);
 
 export const RebuildMenus = async () => {
-  await browser.contextMenus.removeAll();
+  await browser.menus.removeAll();
 
   let menus = Object.values(await GetMenusWithConfigs());
   menus = menus.filter((menu) => menu.enabledContexts.length);
@@ -124,28 +124,42 @@ export const RebuildMenus = async () => {
 
         menusByContext[context].push({
           ...menu,
-          contexts: [context],
           title: GetMenuTitleForContext(context, menu.title),
         });
       });
     }
   );
 
-  Object.entries(menusByContext).forEach(([context, menus], groupIndex) => {
-    if (groupIndex > 0) {
-      browser.contextMenus.create({
-        id: context + "-separator-",
-        type: "separator",
-        contexts: ["all"],
-      });
-    }
+  console.log("RebuildMenus() :: Menus By Context", menusByContext);
 
-    menus.forEach(({ id: action, ...menu }) =>
-      browser.contextMenus.create({
-        id: `${action}-${context}`.toLowerCase(),
-        ...menu,
-        onclick: GetMenuOnClickHandler(context, action),
-      })
-    );
+  Object.keys(menusByContext).forEach((context) => {
+    const group = {
+      id: context + "-group",
+      title: browser.i18n.getMessage(`MenuGroupContextTitle_${context}`),
+      contexts: [context],
+    };
+    console.log("RebuildMenus() :: Creating Group", group);
+    browser.menus.create(group);
+  });
+
+  Object.entries(menusByContext).forEach(([context, menus]) => {
+    menus.forEach(({ action, title }) => {
+      const onclick = GetMenuOnClickHandler(context, action);
+
+      if (typeof onclick === "function") {
+        const menu = {
+          parentId: context + "-group",
+          id: `${action}-${context}`.toLowerCase(),
+          title,
+          contexts: [context],
+          onclick,
+        };
+
+        console.log("RebuildMenus() :: Creating Menu", menu);
+        browser.menus.create(menu);
+      } else {
+        console.warn(`Menu ${title} does not have a valid onclick handler`);
+      }
+    });
   });
 };

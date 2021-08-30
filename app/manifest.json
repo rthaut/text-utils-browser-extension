@@ -43,7 +43,7 @@
   "permissions": [
     "activeTab",
     "clipboardWrite",
-    "contextMenus",
+    "menus",
     "notifications",
     "storage"
   ],
