@@ -13,23 +13,17 @@ browser.runtime.onInstalled.addListener((details) => {
   browser.storage.sync.set({ [CONFIG_STORAGE_KEY]: GetDefaultMenuConfigs() });
 });
 
-// browser.browserAction.onClicked.addListener(() => {
-//   if (browser.runtime.openOptionsPage) {
-//     browser.runtime.openOptionsPage();
-//   } else {
-//     browser.management
-//       .getSelf()
-//       .then(({ optionsUrl: url }) =>
-//         browser.windows.create({ url, type: "popup" })
-//       );
-//   }
-// });
-
-browser.browserAction.onClicked.addListener(() =>
-  browser.management
-    .getSelf()
-    .then(({ optionsUrl: url }) => browser.tabs.create({ url }))
-);
+browser.browserAction.onClicked.addListener(() => {
+  if (browser.runtime.openOptionsPage) {
+    browser.runtime.openOptionsPage();
+  } else {
+    browser.management
+      .getSelf()
+      .then(({ optionsUrl: url }) =>
+        browser.windows.create({ url, type: "popup" })
+      );
+  }
+});
 
 browser.storage.onChanged.addListener(
   debounce((changes, area) => {
