@@ -77,8 +77,8 @@ export const GetDefaultMenuConfigs = () => {
   // fill in the order for menus without a default order (placing them at the end)
   let order = Array.from(Object.values(configs))
     .map((menu) => menu["order"])
-    .filter(Boolean)
-    .sort()
+    .filter((order) => order > 0)
+    .sort((a, b) => a - b)
     .pop();
 
   Object.entries(configs).forEach(([id, menu]) => {
