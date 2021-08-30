@@ -19,7 +19,7 @@
     "message": "Menu Title"
   },
   "EnabledContextsLabel": {
-    "message": "Enabled Contexts"
+    "message": "Enabled Context(s)"
   },
   "SelectContextsToEnable": {
     "message": "Select one or more contexts to enable"
