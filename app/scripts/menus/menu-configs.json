@@ -58,14 +58,6 @@
       "selection"
     ]
   },
-  "ConvertToNoCase": {
-    "order": -1,
-    "enabledContexts": [],
-    "possibleContexts": [
-      "editable",
-      "selection"
-    ]
-  },
   "ConvertToParamCase": {
     "order": -1,
     "enabledContexts": [],
@@ -96,6 +88,14 @@
       "editable",
       "selection"
     ],
+    "possibleContexts": [
+      "editable",
+      "selection"
+    ]
+  },
+  "ConvertToSentenceCase": {
+    "order": -1,
+    "enabledContexts": [],
     "possibleContexts": [
       "editable",
       "selection"

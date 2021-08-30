@@ -11,7 +11,6 @@ export { dotCase as ConvertToDotCase } from "text-case";
 export { headerCase as ConvertToHeaderCase } from "text-case";
 export { lowerCase as ConvertToLowerCase } from "text-case";
 export { lowerCaseFirst as ConvertToLowerCaseFirst } from "text-case";
-export { noCase as ConvertToNoCase } from "text-case";
 export { paramCase as ConvertToParamCase } from "text-case";
 export { pascalCase as ConvertToPascalCase } from "text-case";
 export { pathCase as ConvertToPathCase } from "text-case";
