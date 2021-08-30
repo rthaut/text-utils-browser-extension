@@ -20,6 +20,9 @@ import AppBar from "@material-ui/core/AppBar";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
 import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -35,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const resetButtonTheme = createTheme({
+const redButtonTheme = createTheme({
   palette: {
     primary: red,
   },
@@ -44,6 +47,8 @@ const resetButtonTheme = createTheme({
 const MenusEditor = () => {
   const classes = useStyles();
 
+  const [showResetConfirmationDialog, setShowResetConfirmationDialog] =
+    React.useState(false);
   const [menus, setMenus] = React.useState({});
   const [_, setConfigs] = useBrowserStorageSync(
     CONFIG_STORAGE_KEY,
@@ -84,73 +89,115 @@ const MenusEditor = () => {
     });
 
     setMenus(await GetMenusWithConfigs());
+    setShowResetConfirmationDialog(false);
   };
 
   return (
-    <Box border={1} borderColor="grey.400" width="auto">
-      {Object.keys(menus).length ? (
-        <>
-          <AppBar
-            className={classes.appBar}
-            color="default"
-            position="sticky"
-            elevation={0}
-            variant="elevation"
-            square
+    <>
+      <Box border={1} borderColor="grey.400" width="auto">
+        {Object.keys(menus).length ? (
+          <>
+            <AppBar
+              className={classes.appBar}
+              color="default"
+              position="sticky"
+              elevation={0}
+              variant="elevation"
+              square
+            >
+              <Toolbar disableGutters>
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  spacing={2}
+                >
+                  <Grid item xs={12} sm={8} md={9}>
+                    <Typography color="textPrimary" variant="subtitle1" noWrap>
+                      <b>{browser.i18n.getMessage("MenuTitleLabel")}</b>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={4} md={3}>
+                    <Typography color="textPrimary" variant="subtitle1" noWrap>
+                      <b>{browser.i18n.getMessage("EnabledContextsLabel")}</b>
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Toolbar>
+            </AppBar>
+            <MenuList
+              menus={Object.entries(menus).map(([id, menu]) => ({
+                id,
+                ...menu,
+              }))}
+              updateMenus={updateMenus}
+            />
+          </>
+        ) : (
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            m={1}
+            p={1}
+            width="auto"
           >
-            <Toolbar disableGutters>
-              <Grid
-                container
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-                spacing={2}
-              >
-                <Grid item xs={12} sm={8} md={9}>
-                  <Typography color="textPrimary" variant="subtitle1" noWrap>
-                    <b>{browser.i18n.getMessage("MenuTitleLabel")}</b>
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={4} md={3}>
-                  <Typography color="textPrimary" variant="subtitle1" noWrap>
-                    <b>{browser.i18n.getMessage("EnabledContextsLabel")}</b>
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Toolbar>
-          </AppBar>
-          <MenuList
-            menus={Object.entries(menus).map(([id, menu]) => ({ id, ...menu }))}
-            updateMenus={updateMenus}
-          />
-        </>
-      ) : (
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          m={1}
-          p={1}
-          width="auto"
-        >
-          <CircularProgress size={120} color="secondary" />
+            <CircularProgress size={120} color="secondary" />
+          </Box>
+        )}
+        <Box display="flex" justifyContent="center" mb={2} p={1}>
+          <ThemeProvider theme={redButtonTheme}>
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth={false}
+              size="large"
+              startIcon={<SettingsBackupRestoreIcon />}
+              onClick={(_evt) => setShowResetConfirmationDialog(true)}
+            >
+              {browser.i18n.getMessage("OptionsButtonResetMenusText")}
+            </Button>
+          </ThemeProvider>
         </Box>
-      )}
-      <Box display="flex" justifyContent="center" mb={2} p={1}>
-        <ThemeProvider theme={resetButtonTheme}>
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth={false}
-            size="large"
-            startIcon={<SettingsBackupRestoreIcon />}
-            onClick={(_evt) => resetMenus()}
-          >
-            {browser.i18n.getMessage("OptionsButtonResetMenusText")}
-          </Button>
-        </ThemeProvider>
       </Box>
-    </Box>
+      <Dialog
+        fullWidth
+        open={showResetConfirmationDialog}
+        onClose={(_evt) => setShowResetConfirmationDialog(false)}
+      >
+        <DialogContent>
+          <Typography gutterBottom>
+            {browser.i18n.getMessage("OptionsResetConfirmationText")}
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            variant="text"
+            color="inherit"
+            fullWidth={false}
+            onClick={(_evt) => setShowResetConfirmationDialog(false)}
+            autoFocus
+          >
+            {browser.i18n.getMessage(
+              "OptionsResetConfirmationButtonDeclineText"
+            )}
+          </Button>
+          <ThemeProvider theme={redButtonTheme}>
+            <Button
+              variant="text"
+              color="primary"
+              fullWidth={false}
+              onClick={(_evt) => resetMenus()}
+            >
+              {browser.i18n.getMessage(
+                "OptionsResetConfirmationButtonAcceptText"
+              )}
+            </Button>
+          </ThemeProvider>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 

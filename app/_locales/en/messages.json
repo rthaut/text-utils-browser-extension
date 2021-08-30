@@ -156,6 +156,15 @@
       }
     }
   },
+  "OptionsResetConfirmationText": {
+    "message": "Are you sure you wish to reset ALL menus to their default configurations?"
+  },
+  "OptionsResetConfirmationButtonAcceptText": {
+    "message": "Yes"
+  },
+  "OptionsResetConfirmationButtonDeclineText": {
+    "message": "No"
+  },
   "OptionsButtonResetMenuTitleTooltip": {
     "message": "Reset Menu Title to Default"
   },
