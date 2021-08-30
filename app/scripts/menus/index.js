@@ -1,4 +1,3 @@
-import apStyleTitleCase from "ap-style-title-case";
 import ACTIONS from "scripts/actions";
 import CONFIGS from "./menu-configs.json";
 import {
@@ -30,23 +29,14 @@ export const GetMenuOnClickHandler = (context, action) => {
 export const GetMenus = () => {
   const menus = {};
 
-  Object.entries(CONFIGS).forEach(([action, { contexts, ...menuConfig }]) => {
-    contexts.forEach((context) => {
-      const group = apStyleTitleCase(context);
-      const id = `${group}_${action}`;
+  Object.entries(CONFIGS).forEach(([action, menu]) => {
+    const id = action;
 
-      if (menus[group] === undefined) {
-        menus[group] = {};
-      }
-
-      menus[group][id] = {
-        id,
-        ...menuConfig,
-        contexts: [context],
-        title: GetDefaultMenuTitle(id),
-        onclick: GetMenuOnClickHandler(context, action),
-      };
-    });
+    menus[id] = {
+      id,
+      ...menu,
+      title: GetDefaultMenuTitle(id),
+    };
   });
 
   return menus;
@@ -56,18 +46,16 @@ export const GetMenusWithConfigs = async () => {
   const menus = GetMenus();
   const configs = await GetMenuConfigsFromStorage();
 
-  Object.keys(menus).forEach((group) => {
-    Object.keys(menus[group]).forEach((id) => {
-      if (!configs[group]?.[id]) {
-        console.error(`Missing Menu Config (group: ${group}, ID: ${id}`);
-      }
+  Object.keys(menus).forEach((id) => {
+    if (!configs[id]) {
+      console.error("Missing Config for Menu", id);
+    }
 
-      menus[group][id] = {
-        ...menus[group][id],
-        ...(configs[group]?.[id] ?? {}),
-        title: configs[group]?.[id]?.["title"] ?? menus[group][id]["title"],
-      };
-    });
+    menus[id] = {
+      ...menus[id],
+      ...(configs[id] ?? {}),
+      title: configs[id]?.["title"] ?? menus[id]["title"],
+    };
   });
 
   return menus;
@@ -76,31 +64,25 @@ export const GetMenusWithConfigs = async () => {
 export const GetDefaultMenuConfigs = () => {
   const configs = {};
 
-  Object.entries(GetMenus()).forEach(([group, menus]) => {
-    if (configs[group] === undefined) {
-      configs[group] = {};
+  Object.entries(GetMenus()).forEach(([id, menu]) => {
+    const { enabledContexts, order } = menu;
+    configs[id] = {
+      enabledContexts,
+      order,
+    };
+  });
+
+  // fill in the order for menus without a default order (placing them at the end)
+  let order = Array.from(Object.values(configs))
+    .map((menu) => menu["order"])
+    .filter(Boolean)
+    .sort()
+    .pop();
+
+  Object.entries(configs).forEach(([id, menu]) => {
+    if (menu["order"] === null) {
+      configs[id]["order"] = ++order;
     }
-
-    Object.entries(menus).forEach(([id, menu]) => {
-      const { enabled = true, order = null } = menu;
-      configs[group][id] = {
-        enabled,
-        order,
-      };
-    });
-
-    // fill in the order for menus without a default order (placing them at the end)
-    let order = Array.from(Object.values(configs[group]))
-      .map((menu) => menu["order"])
-      .filter(Boolean)
-      .sort()
-      .pop();
-
-    Object.entries(configs[group]).forEach(([id, menu]) => {
-      if (menu["order"] === null) {
-        configs[group][id]["order"] = ++order;
-      }
-    });
   });
 
   return configs;
@@ -114,40 +96,56 @@ export const GetMenuConfigsFromStorage = async () => {
   )[CONFIG_STORAGE_KEY];
 };
 
-export const GetMenusAsConfigured = async () =>
-  Object.fromEntries(
-    Object.entries(await GetMenusWithConfigs()).map(([group, menus]) => [
-      group,
-      Array.from(Object.values(menus)).sort((a, b) =>
-        a["order"] > b["order"] ? 1 : a["order"] < b["order"] ? -1 : 0
-      ),
-    ])
-  );
-
 export const GetDefaultMenuTitle = (id) =>
   browser.i18n.getMessage(`Menu_${id}_Title`);
+
+export const GetMenuTitleForContext = (context, title) =>
+  browser.i18n.getMessage(
+    `ContextTitle_${context}_WithMenuTitlePlaceholder`,
+    title
+  );
 
 export const RebuildMenus = async () => {
   await browser.contextMenus.removeAll();
 
-  Object.entries(await GetMenusAsConfigured()).forEach(
-    ([group, menus], groupIndex) => {
-      if (groupIndex > 0) {
-        browser.contextMenus.create({
-          id: group + "-separator",
-          type: "separator",
-          contexts: ["all"],
-        });
-      }
+  let menus = Object.values(await GetMenusWithConfigs());
+  menus = menus.filter((menu) => menu.enabledContexts.length);
+  menus.sort((a, b) => a["order"] - b["order"]);
 
-      // eslint-disable-next-line no-unused-vars
-      menus.forEach(({ enabled, order, ...menu }) => {
-        if (enabled) {
-          browser.contextMenus.create(menu);
+  const menusByContext = {};
+
+  Object.values(menus).forEach(
+    // eslint-disable-next-line no-unused-vars
+    ({ enabledContexts: contexts, order, possibleContexts, ...menu }) => {
+      contexts.forEach((context) => {
+        if (!menusByContext[context]) {
+          menusByContext[context] = [];
         }
-      });
 
-      groupIndex++;
+        menusByContext[context].push({
+          ...menu,
+          contexts: [context],
+          title: GetMenuTitleForContext(context, menu.title),
+        });
+      });
     }
   );
+
+  Object.entries(menusByContext).forEach(([context, menus], groupIndex) => {
+    if (groupIndex > 0) {
+      browser.contextMenus.create({
+        id: context + "-separator-",
+        type: "separator",
+        contexts: ["all"],
+      });
+    }
+
+    menus.forEach(({ id: action, ...menu }) =>
+      browser.contextMenus.create({
+        id: `${action}-${context}`.toLowerCase(),
+        ...menu,
+        onclick: GetMenuOnClickHandler(context, action),
+      })
+    );
+  });
 };
