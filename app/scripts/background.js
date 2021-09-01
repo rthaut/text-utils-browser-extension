@@ -2,15 +2,14 @@ import { debounce } from "debounce";
 
 import {
   CONFIG_STORAGE_KEY,
-  GetDefaultMenuConfigs,
   RebuildMenus,
+  SoftResetStoredMenuConfigs,
 } from "scripts/menus";
 
-browser.runtime.onInstalled.addListener((details) => {
-  console.log("Installation details", details);
+browser.runtime.onInstalled.addListener(async (details) => {
+  console.log("Installation Details", details);
 
-  // TODO: this needs to be smarter: it should remove invalid items, and add missing items, but not change any valid items
-  browser.storage.sync.set({ [CONFIG_STORAGE_KEY]: GetDefaultMenuConfigs() });
+  await SoftResetStoredMenuConfigs();
 });
 
 browser.browserAction.onClicked.addListener(() => {

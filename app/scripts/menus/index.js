@@ -163,3 +163,39 @@ export const RebuildMenus = async () => {
     });
   });
 };
+
+export const SoftResetStoredMenuConfigs = async () => {
+  const { [CONFIG_STORAGE_KEY]: storedMenuConfigs } =
+    await browser.storage.sync.get(CONFIG_STORAGE_KEY);
+
+  const defaultMenuConfigs = GetDefaultMenuConfigs();
+
+  Object.keys(defaultMenuConfigs).forEach((config) => {
+    if (
+      storedMenuConfigs[config] === undefined ||
+      storedMenuConfigs[config] === null
+    ) {
+      console.info(
+        `Setting menu config "${config}" to default configuration`,
+        defaultMenuConfigs[config]
+      );
+
+      storedMenuConfigs[config] = defaultMenuConfigs[config];
+    }
+  });
+
+  Object.keys(storedMenuConfigs).forEach((config) => {
+    if (
+      defaultMenuConfigs[config] === undefined ||
+      defaultMenuConfigs[config] === null
+    ) {
+      console.info(`Removing unknown/invalid menu config "${config}"`);
+
+      delete storedMenuConfigs[config];
+    }
+  });
+
+  await browser.storage.sync.set({
+    [CONFIG_STORAGE_KEY]: storedMenuConfigs,
+  });
+};
