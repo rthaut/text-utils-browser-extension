@@ -38,7 +38,7 @@ export const GetMenus = () => {
     };
   });
 
-  console.log("GetMenus()", menus);
+  // console.log("GetMenus()", menus);
   return menus;
 };
 
@@ -59,7 +59,7 @@ export const GetMenusWithConfigs = async () => {
     };
   });
 
-  console.log("GetMenusWithConfigs()", menus);
+  // console.log("GetMenusWithConfigs()", menus);
   return menus;
 };
 
@@ -87,7 +87,7 @@ export const GetDefaultMenuConfigs = () => {
     }
   });
 
-  console.log("GetDefaultMenuConfigs()", configs);
+  // console.log("GetDefaultMenuConfigs()", configs);
   return configs;
 };
 
@@ -130,7 +130,7 @@ export const RebuildMenus = async () => {
     }
   );
 
-  console.log("RebuildMenus() :: Menus By Context", menusByContext);
+  // console.log("RebuildMenus() :: Menus By Context", menusByContext);
 
   Object.keys(menusByContext).forEach((context) => {
     const group = {
@@ -138,7 +138,7 @@ export const RebuildMenus = async () => {
       title: browser.i18n.getMessage(`MenuGroupContextTitle_${context}`),
       contexts: [context],
     };
-    console.log("RebuildMenus() :: Creating Group", group);
+    // console.log("RebuildMenus() :: Creating Group", group);
     browser.menus.create(group);
   });
 
@@ -155,7 +155,7 @@ export const RebuildMenus = async () => {
           onclick,
         };
 
-        console.log("RebuildMenus() :: Creating Menu", menu);
+        // console.log("RebuildMenus() :: Creating Menu", menu);
         browser.menus.create(menu);
       } else {
         console.warn(`Menu ${title} does not have a valid onclick handler`);
