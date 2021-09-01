@@ -7,8 +7,6 @@ export function ConvertEditableElementCase(targetElementId, action) {
     return;
   }
 
-  console.log(action);
-
   const element = browser.menus.getTargetElement(targetElementId);
 
   if (element.isContentEditable) {
