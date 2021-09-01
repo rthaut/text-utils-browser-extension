@@ -11,7 +11,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 
 import DragHandleIcon from "@material-ui/icons/DragHandle";
 import SwapVertIcon from "@material-ui/icons/SwapVert";
-import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
+import UnfoldMoreIcon from "@material-ui/icons/UnfoldMore";
 
 import MenuListControls from "./MenuListControls";
 
@@ -38,12 +38,12 @@ const MenuList = ({ menus, updateMenus }) => {
   const getListItemStyle = (draggableStyle, isDragging, isDisabled) => ({
     ...draggableStyle,
     ...(isDisabled && {
-      background: theme.palette.grey[100],
+      background: theme.palette.background.default,
     }),
     ...(isDragging && {
-      background: theme.palette.grey[300],
+      background: theme.palette.background.default,
       border: "1px solid",
-      borderColor: theme.palette.grey[400],
+      borderColor: theme.palette.divider,
     }),
   });
 
@@ -110,7 +110,10 @@ const MenuList = ({ menus, updateMenus }) => {
                         >
                           {/* <DragHandleIcon fontSize="large" color={(isHovered || draggableSnapshot.isDragging) ? "inherit" : "disabled"} /> */}
                           {isHovered || draggableSnapshot.isDragging ? (
-                            <DragHandleIcon fontSize="large" color="secondary" />
+                            <DragHandleIcon
+                              fontSize="large"
+                              color="secondary"
+                            />
                           ) : (
                             <UnfoldMoreIcon fontSize="large" color="disabled" />
                           )}

@@ -33,7 +33,7 @@ import MenuList from "./MenuList";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    borderBottom: "1px solid " + theme.palette.grey[400],
+    borderBottom: "1px solid " + theme.palette.divider,
     paddingLeft: theme.spacing(9),
   },
 }));
@@ -94,7 +94,7 @@ const MenusEditor = () => {
 
   return (
     <>
-      <Box border={1} borderColor="grey.400" width="auto">
+      <Box border={1} borderColor="divider" width="auto">
         {Object.keys(menus).length ? (
           <>
             <AppBar

@@ -3,6 +3,8 @@ import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import amber from "@material-ui/core/colors/amber";
+import indigo from "@material-ui/core/colors/indigo";
 
 import AppBar from "@material-ui/core/AppBar";
 import Paper from "@material-ui/core/Paper";
@@ -20,9 +22,17 @@ export default function OptionsApp() {
   const theme = React.useMemo(
     () =>
       createTheme({
-        palette: {
-          type: prefersDarkMode ? "dark" : "light",
-        },
+        palette: prefersDarkMode
+          ? {
+              type: "dark",
+              primary: amber,
+              secondary: amber,
+            }
+          : {
+              type: "light",
+              primary: indigo,
+              secondary: indigo,
+            },
       }),
     [prefersDarkMode]
   );
