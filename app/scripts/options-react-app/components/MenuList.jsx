@@ -66,8 +66,12 @@ const MenuList = ({ menus, updateMenus }) => {
     updateMenus(reorderedMenus);
   };
 
-  const updateMenuProp = (id, prop, value) => {
-    menus[id][prop] = value;
+  const updateMenuProp = (id) => (prop, value) => {
+    menus.forEach((menu) => {
+      if (menu.id === id) {
+        menu[prop] = value;
+      }
+    });
     updateMenus(menus);
   };
 
@@ -117,7 +121,7 @@ const MenuList = ({ menus, updateMenus }) => {
                           <MenuListControls
                             id={id}
                             menu={menu}
-                            updateMenuProp={updateMenuProp}
+                            updateMenuProp={updateMenuProp(id)}
                             disabled={!menu.enabledContexts.length}
                           />
                         )}

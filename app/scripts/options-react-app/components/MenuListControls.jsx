@@ -21,12 +21,12 @@ import Tooltip from "@material-ui/core/Tooltip";
 import SettingsBackupRestoreIcon from "@material-ui/icons/SettingsBackupRestore";
 
 const MenuListControls = ({ id, menu, updateMenuProp, disabled = false }) => {
-  const updateMenuTitle = (id, title) => updateMenuProp(id, "title", title);
+  const updateMenuTitle = (title) => updateMenuProp("title", title);
 
-  const resetMenuTitle = (id) => updateMenuTitle(id, GetDefaultMenuTitle(id));
+  const resetMenuTitle = () => updateMenuTitle(GetDefaultMenuTitle(id));
 
-  const updateMenuContexts = (id, contexts) =>
-    updateMenuProp(id, "enabledContexts", contexts);
+  const updateMenuContexts = (contexts) =>
+    updateMenuProp("enabledContexts", contexts);
 
   const MenuContextsSwitches = () => {
     const handleChange = (evt) => {
@@ -36,7 +36,7 @@ const MenuListControls = ({ id, menu, updateMenuProp, disabled = false }) => {
       if (evt.target.checked) {
         contexts.push(evt.target.name);
       }
-      updateMenuContexts(id, contexts.sort());
+      updateMenuContexts(contexts.sort());
     };
 
     return (
@@ -83,7 +83,7 @@ const MenuListControls = ({ id, menu, updateMenuProp, disabled = false }) => {
           label={browser.i18n.getMessage("EnabledContextsLabel")}
           name={`select-${id}`}
           value={menu.enabledContexts}
-          onChange={(evt) => updateMenuContexts(id, evt.target.value)}
+          onChange={(evt) => updateMenuContexts(evt.target.value)}
           renderValue={renderEnabledContexts}
         >
           {menu.possibleContexts.sort().map((context) => (
@@ -121,7 +121,7 @@ const MenuListControls = ({ id, menu, updateMenuProp, disabled = false }) => {
               ? browser.i18n.getMessage("Error_MenuTitleRequired")
               : null
           }
-          onChange={(evt) => updateMenuTitle(id, evt.target.value)}
+          onChange={(evt) => updateMenuTitle(evt.target.value)}
           InputProps={{
             endAdornment: !disabled && (
               <InputAdornment position="end">
@@ -131,7 +131,7 @@ const MenuListControls = ({ id, menu, updateMenuProp, disabled = false }) => {
                   )}
                   placement="top"
                 >
-                  <IconButton onClick={(_evt) => resetMenuTitle(id)}>
+                  <IconButton onClick={(_evt) => resetMenuTitle()}>
                     <SettingsBackupRestoreIcon />
                   </IconButton>
                 </Tooltip>
