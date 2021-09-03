@@ -168,8 +168,8 @@
   "OptionsButtonResetMenuTitleTooltip": {
     "message": "Reset Menu Title to Default"
   },
-  "OptionsHeadingAdvanced": {
-    "message": "Advanced Options"
+  "OptionsHeadingSettings": {
+    "message": "Settings"
   },
   "OptionsHeadingMenus": {
     "message": "Configure Menus"
@@ -177,13 +177,19 @@
   "OptionsPageTitle": {
     "message": "Configure Text Utilities"
   },
-  "OptionsTabNameAdvanced": {
-    "message": "Advanced Options"
+  "OptionsTabNameSettings": {
+    "message": "Settings"
   },
   "OptionsTabNameMenus": {
     "message": "Configure Menus"
   },
   "Error_MenuTitleRequired": {
     "message": "This menu should have a title"
+  },
+  "Setting_EditableApplyToSelectedTextOnly_Name": {
+    "message": "Within Editable Contexts Apply Only to Selected Text"
+  },
+  "Setting_EditableApplyToSelectedTextOnly_Description": {
+    "message": "When enabled, if an editable element has some text selected, utilities will only be applied to the selected text. Does not impact editable elements when no text is selected."
   }
 }

@@ -14,7 +14,7 @@ import TabList from "@material-ui/lab/TabList";
 import TabPanel from "@material-ui/lab/TabPanel";
 
 import MenusTab from "./tabs/MenusTab";
-import AdvancedTab from "./tabs/AdvancedTab";
+import SettingsTab from "./tabs/SettingsTab";
 
 export default function OptionsApp() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -43,7 +43,7 @@ export default function OptionsApp() {
 
   const tabs = {
     menus: <MenusTab />,
-    advanced: <AdvancedTab />,
+    settings: <SettingsTab />,
   };
 
   const [tabValue, setTabValue] = React.useState(Object.keys(tabs)[0]);

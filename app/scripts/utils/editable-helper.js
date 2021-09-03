@@ -1,11 +1,16 @@
 import ACTIONS from "scripts/actions";
+import { GetSetting } from "./settings";
 
-export function ConvertEditableElementCase(targetElementId, action) {
+export async function ConvertEditableElementCase(targetElementId, action) {
   action = ACTIONS[action]?.["func"];
   if (typeof action !== "function") {
     console.error(`Action "${action}" is invalid`);
     return;
   }
+
+  const EditableApplyToSelectedTextOnly = await GetSetting(
+    "EditableApplyToSelectedTextOnly"
+  );
 
   const element = browser.menus.getTargetElement(targetElementId);
 
@@ -20,13 +25,18 @@ export function ConvertEditableElementCase(targetElementId, action) {
       // no selection; convert the entire value as requested
       element.value = action.call(null, value);
     } else {
-      // convert only the selected text as requested
-      element.value =
-        value.substring(0, selectionStart) +
-        action.call(null, value.substring(selectionStart, selectionEnd)) +
-        value.substring(selectionEnd);
+      if (!EditableApplyToSelectedTextOnly) {
+        // convert the entire value
+        element.value = action.call(null, value);
+      } else {
+        // convert only the selected text as requested
+        element.value =
+          value.substring(0, selectionStart) +
+          action.call(null, value.substring(selectionStart, selectionEnd)) +
+          value.substring(selectionEnd);
+      }
 
-      // re-select the originally selected text
+      // re-select the originally selected text (even if we converted the entire value)
       element.setSelectionRange(selectionStart, selectionEnd);
       element.focus();
     }
