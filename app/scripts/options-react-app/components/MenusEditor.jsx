@@ -146,7 +146,7 @@ const MenusEditor = () => {
             <CircularProgress size={120} color="secondary" />
           </Box>
         )}
-        <Box display="flex" justifyContent="center" mb={2} p={1}>
+        <Box display="flex" justifyContent="center" my={2} p={1}>
           <ThemeProvider theme={redButtonTheme}>
             <Button
               variant="contained"
