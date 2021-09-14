@@ -2,7 +2,7 @@
 
 [![Chrome Web Store][chrome-image-version]][chrome-url] [![Microsoft Edge Add-on][edge-image-version]][edge-url] [![Mozilla Add-on][firefox-image-version]][firefox-url]
 
-> This browser extension provides many utilities for quickly manipulating, transforming, and/or copying text.
+> This browser extension provides many utilities for quickly manipulating, transforming, and/or copying selected and/or editable text.
 
 * * *
 
@@ -12,9 +12,9 @@
 
 ### Features
 
-* **Over 25 Utilities!**
-* All utilities can easily be renamed, enabled/disabled, and reordered.
-* Utilities are automatically for selected text vs. editable text when the actions be performed on either/both.
+* [**Over 25 text utilities included!**](#included-utilities)
+* All utilities can easily be renamed, enabled/disabled, and reordered through a built-in drag-and-drop editor.
+* Utilities are automatically grouped for selected text vs. editable text when working with selected text in editable fields.
 
 * * *
 
@@ -25,6 +25,42 @@
 | Google Chrome | [![Chrome Web Store][chrome-image-version]][chrome-url] [![Chrome Web Store][chrome-image-users]][chrome-url] |
 | Microsoft Edge | [![Microsoft Edge Add-on][edge-image-version]][edge-url] |
 | Mozilla Firefox | [![Mozilla Add-on][firefox-image-version]][firefox-url] [![Mozilla Add-on][firefox-image-users]][firefox-url] |
+
+* * *
+
+## Included Utilities
+
+* Case Conversion
+  * Swap Case
+  * Convert to Camel Case
+  * Convert to Capital Case
+  * Convert to Constant
+  * Convert to Dot Case
+  * Convert to Header Case
+  * Convert to Lower Case
+  * Convert to Param Case
+  * Convert to Pascal Case
+  * Convert to Path Case
+  * Convert to Sarcasm
+  * Convert to Sentence Case
+  * Convert to Snake Case
+  * Convert to Title Case (AP Style)
+  * Convert to Title Case
+  * Convert to Upper Case
+  * Convert First Character to Lower Case
+  * Convert First Character to Upper Case
+* URL
+  * Encode URI
+  * Decode URI
+  * Convert to Slug
+  * Convert to Slug (Preserve Case)
+* Whitespace
+  * Trim Whitespace
+  * Trim Leading Whitespace
+  * Trim Trailing Whitespace
+* Miscellaneous
+  * Reverse Text
+  * Reverse Text (Keep Directional Characters)
 
 * * *
 
