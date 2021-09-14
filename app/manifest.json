@@ -5,6 +5,8 @@
   "version": "1.0.0",
   "manifest_version": 2,
   "default_locale": "en",
+  "author": "Ryan Thaut",
+  "homepage_url": "https://github.com/rthaut/text-utils-browser-extension/",
   "icons": {
     "16": "images/icon-16.png",
     "19": "images/icon-19.png",
@@ -43,14 +45,14 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "<all_urls>"
-      ],
+      "all_frames": true,
       "js": [
         "scripts/content-script.js"
       ],
-      "run_at": "document_end",
-      "all_frames": false
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end"
     }
   ],
   "permissions": [
