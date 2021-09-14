@@ -1,15 +1,15 @@
 {
-  "AppDescription": {
-    "message": "Provides many utilities for quickly manipulating, transforming, and/or copying text",
-    "description": "The description of the application"
-  },
   "AppName": {
     "message": "Text Utilities",
     "description": "The name of the application"
   },
   "AppShortName": {
     "message": "text-utils",
-    "description": "The short_name (maximum of 12 characters recommended) is a short version of the app's name."
+    "description": "The short_name (maximum of 12 characters) is a short version of the application's name"
+  },
+  "AppDescription": {
+    "message": "Provides many utilities for quickly manipulating, transforming, and/or copying text",
+    "description": "The description (maximum of 132 characters) of the application"
   },
   "BrowserActionTitle": {
     "message": "Configure Text Utilities",
