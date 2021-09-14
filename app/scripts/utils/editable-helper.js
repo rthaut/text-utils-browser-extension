@@ -12,7 +12,7 @@ export async function ConvertEditableElementCase(targetElementId, action) {
     "EditableApplyToSelectedTextOnly"
   );
 
-  const element = browser.menus.getTargetElement(targetElementId);
+  const element = browser.contextMenus.getTargetElement(targetElementId);
 
   if (element.isContentEditable) {
     element.textContent = action.call(null, element.textContent);

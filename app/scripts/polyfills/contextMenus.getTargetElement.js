@@ -1,5 +1,5 @@
 if (typeof browser.menus?.getTargetElement !== "function") {
-  console.info("using menus.getTargetElement() polyfill");
+  console.info("using contextMenus.getTargetElement() polyfill");
   let menuTarget = null;
 
   const clearMenuTargetIfInvalid = () => {
@@ -22,7 +22,7 @@ if (typeof browser.menus?.getTargetElement !== "function") {
     ...(browser.menus ?? {}),
     getTargetElement: function () {
       clearMenuTargetIfInvalid();
-      console.info("menus.getTargetElement() menu target", menuTarget);
+      console.info("contextMenus.getTargetElement() menu target", menuTarget);
       return menuTarget;
     },
   };

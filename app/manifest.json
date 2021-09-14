@@ -58,8 +58,7 @@
   "permissions": [
     "activeTab",
     "clipboardWrite",
-    "menus",
-    "notifications",
+    "contextMenus",
     "storage"
   ],
   "__chrome__minimum_chrome_version": "51.0",

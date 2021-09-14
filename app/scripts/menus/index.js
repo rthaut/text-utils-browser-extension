@@ -106,7 +106,7 @@ export const GetMenuTitleForContext = (context, title) =>
   browser.i18n.getMessage(`MenuTitleForContext_${context}`, title);
 
 export const RebuildMenus = async () => {
-  await browser.menus.removeAll();
+  await browser.contextMenus.removeAll();
 
   let menus = Object.values(await GetMenusWithConfigs());
   menus = menus.filter((menu) => menu.enabledContexts.length);
@@ -139,7 +139,7 @@ export const RebuildMenus = async () => {
       contexts: [context],
     };
     // console.log("RebuildMenus() :: Creating Group", group);
-    browser.menus.create(group);
+    browser.contextMenus.create(group);
   });
 
   Object.entries(menusByContext).forEach(([context, menus]) => {
@@ -156,7 +156,7 @@ export const RebuildMenus = async () => {
         };
 
         // console.log("RebuildMenus() :: Creating Menu", menu);
-        browser.menus.create(menu);
+        browser.contextMenus.create(menu);
       } else {
         console.warn(`Menu ${title} does not have a valid onclick handler`);
       }
