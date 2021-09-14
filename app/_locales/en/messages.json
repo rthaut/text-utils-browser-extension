@@ -191,5 +191,11 @@
   },
   "Setting_EditableApplyToSelectedTextOnly_Description": {
     "message": "When enabled, if an editable element has some text selected, utilities will only be applied to the selected text. Does not impact editable elements when no text is selected."
+  },
+  "Setting_ForceDarkMode_Name": {
+    "message": "Force Dark Mode"
+  },
+  "Setting_ForceDarkMode_Description": {
+    "message": "When enabled, this extension will use dark mode (regardless of your system preferences)."
   }
 }

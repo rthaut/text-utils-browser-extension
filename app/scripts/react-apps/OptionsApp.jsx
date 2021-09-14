@@ -1,41 +1,22 @@
 import React from "react";
 
-import CssBaseline from "@material-ui/core/CssBaseline";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { createTheme, ThemeProvider } from "@material-ui/core/styles";
-import amber from "@material-ui/core/colors/amber";
-import indigo from "@material-ui/core/colors/indigo";
+import useTheme from "./hooks/useTheme";
 
-import AppBar from "@material-ui/core/AppBar";
-import Paper from "@material-ui/core/Paper";
-import Tab from "@material-ui/core/Tab";
-import TabContext from "@material-ui/lab/TabContext";
-import TabList from "@material-ui/lab/TabList";
-import TabPanel from "@material-ui/lab/TabPanel";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+
+import AppBar from "@mui/material/AppBar";
+import Paper from "@mui/material/Paper";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
 
 import MenusTab from "./tabs/MenusTab";
 import SettingsTab from "./tabs/SettingsTab";
 
 export default function OptionsApp() {
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: prefersDarkMode
-          ? {
-              type: "dark",
-              primary: amber,
-              secondary: amber,
-            }
-          : {
-              type: "light",
-              primary: indigo,
-              secondary: indigo,
-            },
-      }),
-    [prefersDarkMode]
-  );
+  const theme = useTheme();
 
   React.useEffect(() => {
     document.title = browser.i18n.getMessage("OptionsPageTitle");

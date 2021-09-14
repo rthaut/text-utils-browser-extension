@@ -12,31 +12,24 @@ import {
 
 import {
   createTheme,
-  makeStyles,
   ThemeProvider,
-} from "@material-ui/core/styles";
-import { red } from "@material-ui/core/colors";
-import AppBar from "@material-ui/core/AppBar";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import Grid from "@material-ui/core/Grid";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+  StyledEngineProvider,
+} from "@mui/material/styles";
+import { red } from "@mui/material/colors";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import Grid from "@mui/material/Grid";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 
-import SettingsBackupRestoreIcon from "@material-ui/icons/SettingsBackupRestore";
+import SettingsBackupRestoreIcon from "@mui/icons-material/SettingsBackupRestore";
 
 import MenuList from "./MenuList";
-
-const useStyles = makeStyles((theme) => ({
-  appBar: {
-    borderBottom: "1px solid " + theme.palette.divider,
-    paddingLeft: theme.spacing(9),
-  },
-}));
 
 const redButtonTheme = createTheme({
   palette: {
@@ -45,8 +38,6 @@ const redButtonTheme = createTheme({
 });
 
 const MenusEditor = () => {
-  const classes = useStyles();
-
   const [showResetConfirmationDialog, setShowResetConfirmationDialog] =
     React.useState(false);
   const [menus, setMenus] = React.useState({});
@@ -98,14 +89,16 @@ const MenusEditor = () => {
         {Object.keys(menus).length ? (
           <>
             <AppBar
-              className={classes.appBar}
               color="default"
               position="sticky"
               elevation={0}
               variant="elevation"
               square
             >
-              <Toolbar disableGutters>
+              <Toolbar
+                disableGutters
+                sx={{ marginLeft: (theme) => theme.spacing(10) }}
+              >
                 <Grid
                   container
                   direction="row"
@@ -183,18 +176,20 @@ const MenusEditor = () => {
               "OptionsResetConfirmationButtonDeclineText"
             )}
           </Button>
-          <ThemeProvider theme={redButtonTheme}>
-            <Button
-              variant="text"
-              color="primary"
-              fullWidth={false}
-              onClick={(_evt) => resetMenus()}
-            >
-              {browser.i18n.getMessage(
-                "OptionsResetConfirmationButtonAcceptText"
-              )}
-            </Button>
-          </ThemeProvider>
+          <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={redButtonTheme}>
+              <Button
+                variant="text"
+                color="primary"
+                fullWidth={false}
+                onClick={(_evt) => resetMenus()}
+              >
+                {browser.i18n.getMessage(
+                  "OptionsResetConfirmationButtonAcceptText"
+                )}
+              </Button>
+            </ThemeProvider>
+          </StyledEngineProvider>
         </DialogActions>
       </Dialog>
     </>

@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "description": "Provides many utilities for quickly manipulating, transforming, and/or copying text",
   "author": "Ryan Thaut <rthaut@gmail.com> (https://ryan.thaut.me)",
-  "homepage": "https://rthaut.github.io/text-utils-browser-extension/",
+  "homepage": "https://github.com/rthaut/text-utils-browser-extension/",
   "license": "GPL-3.0",
   "private": true,
   "scripts": {
     "lint": "eslint ./app/",
     "dev": "webextension-toolbox dev",
-    "dev:firefox": "npm-run-all --parallel \"dev firefox\" start:firefox",
     "build": "webextension-toolbox build",
+    "build:icons": "node scripts/generate-icons",
     "start:chrome": "web-ext run --source-dir=./dist/chrome/ --target chromium",
     "start:firefox": "web-ext run --source-dir=./dist/firefox/ --target firefox-desktop",
     "start:firefox:nr": "npm run start:firefox -- --no-reload",
@@ -30,11 +30,13 @@
     "firefox >= 62.0"
   ],
   "dependencies": {
-    "@material-ui/core": "^4.12.3",
-    "@material-ui/icons": "^4.11.2",
-    "@material-ui/lab": "^4.0.0-alpha.60",
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
+    "@mui/icons-material": "^5.0.0-rc.1",
+    "@mui/lab": "^5.0.0-alpha.46",
+    "@mui/material": "^5.0.0-rc.1",
     "ap-style-title-case": "^1.1.2",
-    "debounce": "^1.2.0",
+    "debounce": "^1.2.1",
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",
@@ -47,10 +49,10 @@
   "devDependencies": {
     "eslint": "latest",
     "eslint-import-resolver-webpack": "^0.13.1",
-    "eslint-plugin-import": "^2.24.0",
-    "eslint-plugin-react": "^7.24.0",
-    "npm-run-all": "^4.1.5",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-react": "^7.25.1",
     "prettier": "latest",
+    "svg2png": "^4.1.1",
     "web-ext": "latest",
     "webextension-toolbox": "github:rthaut/webextension-toolbox#browserslist-string-vendor-version"
   }

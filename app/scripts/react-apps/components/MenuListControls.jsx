@@ -3,22 +3,20 @@ import PropTypes from "prop-types";
 
 import { GetDefaultMenuTitle } from "scripts/menus";
 
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormGroup from "@material-ui/core/FormGroup";
-import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import InputLabel from "@material-ui/core/InputLabel";
-import ListItemText from "@material-ui/core/ListItemText";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import Switch from "@material-ui/core/Switch";
-import TextField from "@material-ui/core/TextField";
-import Tooltip from "@material-ui/core/Tooltip";
+import Checkbox from "@mui/material/Checkbox";
+import FormControl from "@mui/material/FormControl";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import InputLabel from "@mui/material/InputLabel";
+import ListItemText from "@mui/material/ListItemText";
+import MenuItem from "@mui/material/MenuItem";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import Select from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
+import Tooltip from "@mui/material/Tooltip";
 
-import SettingsBackupRestoreIcon from "@material-ui/icons/SettingsBackupRestore";
+import SettingsBackupRestoreIcon from "@mui/icons-material/SettingsBackupRestore";
 
 const MenuListControls = ({ id, menu, updateMenuProp, disabled = false }) => {
   const updateMenuTitle = (title) => updateMenuProp("title", title);
@@ -28,40 +26,13 @@ const MenuListControls = ({ id, menu, updateMenuProp, disabled = false }) => {
   const updateMenuContexts = (contexts) =>
     updateMenuProp("enabledContexts", contexts);
 
-  const MenuContextsSwitches = () => {
-    const handleChange = (evt) => {
-      const contexts = Array.from(menu.enabledContexts).filter(
-        (context) => context !== evt.target.name
-      );
-      if (evt.target.checked) {
-        contexts.push(evt.target.name);
-      }
-      updateMenuContexts(contexts.sort());
-    };
-
-    return (
-      <FormControl component="fieldset" fullWidth>
-        <FormGroup row>
-          {menu.possibleContexts.sort().map((context) => (
-            <FormControlLabel
-              key={context}
-              control={
-                <Switch
-                  checked={menu.enabledContexts.includes(context)}
-                  onChange={handleChange}
-                  name={context}
-                  size="small"
-                />
-              }
-              label={browser.i18n.getMessage(`ContextTitle_${context}`)}
-            />
-          ))}
-        </FormGroup>
-      </FormControl>
-    );
-  };
-
   const MenuContextsSelect = () => {
+    const label = browser.i18n.getMessage(
+      menu.enabledContexts.length < 1
+        ? "SelectContextsToEnable"
+        : "EnabledContextsLabel"
+    );
+
     const renderEnabledContexts = (contexts) =>
       contexts
         .sort()
@@ -70,20 +41,14 @@ const MenuListControls = ({ id, menu, updateMenuProp, disabled = false }) => {
 
     return (
       <FormControl fullWidth variant="outlined" size="small">
-        <InputLabel htmlFor={`select-${id}`}>
-          {browser.i18n.getMessage(
-            menu.enabledContexts.length < 1
-              ? "SelectContextsToEnable"
-              : "EnabledContextsLabel"
-          )}
-        </InputLabel>
-        {/* TODO: prevent the select menu from closing when checking/un-checking an option */}
+        <InputLabel id={`select-${id}-label`}>{label}</InputLabel>
         <Select
+          labelId={`select-${id}-label`}
+          id={`select-${id}`}
           multiple
-          label={browser.i18n.getMessage("EnabledContextsLabel")}
-          name={`select-${id}`}
           value={menu.enabledContexts}
           onChange={(evt) => updateMenuContexts(evt.target.value)}
+          input={<OutlinedInput label={label} />}
           renderValue={renderEnabledContexts}
         >
           {menu.possibleContexts.sort().map((context) => (
@@ -131,7 +96,7 @@ const MenuListControls = ({ id, menu, updateMenuProp, disabled = false }) => {
                   )}
                   placement="top"
                 >
-                  <IconButton onClick={(_evt) => resetMenuTitle()}>
+                  <IconButton onClick={(_evt) => resetMenuTitle()} size="large">
                     <SettingsBackupRestoreIcon />
                   </IconButton>
                 </Tooltip>

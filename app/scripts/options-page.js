@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import OptionsReactApp from "./options-react-app/index.jsx";
+import OptionsReactApp from "./react-apps/OptionsApp.jsx";
 
 ReactDOM.render(<OptionsReactApp />, document.querySelector("#root"));
 

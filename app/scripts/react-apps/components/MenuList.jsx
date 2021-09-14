@@ -3,15 +3,15 @@ import PropTypes from "prop-types";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+import { useTheme } from "@mui/material/styles";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 
-import DragHandleIcon from "@material-ui/icons/DragHandle";
-import SwapVertIcon from "@material-ui/icons/SwapVert";
-import UnfoldMoreIcon from "@material-ui/icons/UnfoldMore";
+import DragHandleIcon from "@mui/icons-material/DragHandle";
+import SwapVertIcon from "@mui/icons-material/SwapVert";
+import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
 
 import MenuListControls from "./MenuListControls";
 
@@ -22,17 +22,7 @@ const ReorderItemInList = (list, sourceIndex, targetIndex) => {
   return result;
 };
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-  },
-  menuListItem: {
-    height: theme.spacing(8),
-  },
-}));
-
 const MenuList = ({ menus, updateMenus }) => {
-  const classes = useStyles();
   const theme = useTheme();
 
   const getListItemStyle = (draggableStyle, isDragging, isDisabled) => ({
@@ -79,11 +69,7 @@ const MenuList = ({ menus, updateMenus }) => {
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="droppable">
         {(droppableProvided, droppableSnapshot) => (
-          <List
-            disablePadding
-            className={classes.root}
-            ref={droppableProvided.innerRef}
-          >
+          <List disablePadding ref={droppableProvided.innerRef}>
             {menus
               .sort((a, b) => a.order - b.order)
               .map(({ id, ...menu }, index) => {
@@ -101,7 +87,7 @@ const MenuList = ({ menus, updateMenus }) => {
                           draggableSnapshot.isDragging,
                           !menu.enabledContexts.length
                         )}
-                        className={classes.menuListItem}
+                        sx={{ height: (theme) => theme.spacing(8) }}
                       >
                         <ListItemIcon
                           {...draggableProvided.dragHandleProps}
