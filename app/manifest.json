@@ -38,9 +38,7 @@
     "default_title": "__MSG_BrowserActionTitle__"
   },
   "options_ui": {
-    "__chrome__page": "pages/options.html?vendor=chrome",
-    "__edge__page": "pages/options.html?vendor=edge",
-    "__firefox__page": "pages/options.html?vendor=firefox",
+    "page": "pages/options.html",
     "open_in_tab": true
   },
   "content_scripts": [
