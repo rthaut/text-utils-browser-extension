@@ -28,7 +28,7 @@
     "message": "Enabled Context(s)"
   },
   "SelectContextsToEnable": {
-    "message": "Select one or more contexts to enable"
+    "message": "Select a context to enable"
   },
   "ContextTitle_Editable": {
     "message": "Editable Content"
