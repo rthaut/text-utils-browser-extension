@@ -1,5 +1,3 @@
-require("./polyfills/contextMenus.getTargetElement");
-
 import {
   MSG_ACTION_CONVERT_EDITABLE,
   MSG_ACTION_COPY_PLAINTEXT_TO_CLIPBOARD,
