@@ -85,7 +85,7 @@ const MenusEditor = () => {
 
   return (
     <>
-      <Box border={1} borderColor="divider" width="auto">
+      <Box border={1} borderColor="grey.500" width="auto">
         {Object.keys(menus).length ? (
           <>
             <AppBar
@@ -94,6 +94,11 @@ const MenusEditor = () => {
               elevation={0}
               variant="elevation"
               square
+              sx={{
+                borderBottom: 1,
+                borderColor: "primary.main",
+                marginBottom: (theme) => theme.spacing(1),
+              }}
             >
               <Toolbar
                 disableGutters

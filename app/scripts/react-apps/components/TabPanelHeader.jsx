@@ -13,6 +13,7 @@ export default function TabPanelHeader({ title, icon = null }) {
       direction="row"
       justifyContent="flex-start"
       alignItems="center"
+      sx={{ borderBottom: 1, borderColor: "primary.main" }}
     >
       {icon && <Grid item>{icon}</Grid>}
       <Grid item xs zeroMinWidth>

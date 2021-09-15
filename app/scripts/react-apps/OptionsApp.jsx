@@ -36,7 +36,7 @@ export default function OptionsApp() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Paper elevation={0} square variant="outlined">
+      <Paper elevation={0} square variant="elevation">
         <TabContext value={tabValue}>
           <AppBar position="static" color="default">
             <TabList onChange={handleTabChange} variant="fullWidth">
