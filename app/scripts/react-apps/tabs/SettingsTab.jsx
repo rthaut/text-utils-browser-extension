@@ -69,7 +69,7 @@ export default function SettingsTab() {
               </ListItem>
             )
           )}
-          <ListItem>
+          <ListItem disableGutters>
             <ListItemIcon>
               <HelpIcon sx={{ color: "primary.main", fontSize: 48 }} />
             </ListItemIcon>
