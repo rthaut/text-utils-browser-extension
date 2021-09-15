@@ -1,8 +1,8 @@
-# Text Utilities v1.0.0
+# Configurable Text Utilities v1.0.0
 
 [![Chrome Web Store][chrome-image-version]][chrome-url] [![Microsoft Edge Add-on][edge-image-version]][edge-url] [![Mozilla Add-on][firefox-image-version]][firefox-url]
 
-> This browser extension provides many utilities for quickly manipulating, transforming, and/or copying selected and/or editable text.
+> This browser extension provides many fully-configurable utilities for quickly manipulating, transforming, and/or copying selected and/or editable text.
 
 * * *
 

@@ -1,6 +1,6 @@
 {
   "AppName": {
-    "message": "Text Utilities",
+    "message": "Configurable Text Utilities",
     "description": "The name of the application"
   },
   "AppShortName": {
@@ -8,7 +8,7 @@
     "description": "The short_name (maximum of 12 characters) is a short version of the application's name"
   },
   "AppDescription": {
-    "message": "Provides many utilities for quickly manipulating, transforming, and/or copying selected and/or editable text",
+    "message": "Provides many fully-configurable utilities for quickly manipulating, transforming, and/or copying selected and/or editable text",
     "description": "The description (maximum of 132 characters) of the application"
   },
   "BrowserActionTitle": {
