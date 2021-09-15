@@ -15,6 +15,12 @@
     "message": "Configure Text Utilities",
     "description": "The title of the browser action button"
   },
+  "BugEnhancementTitle": {
+    "message": "Found a bug? Have an idea for an enhancement?"
+  },
+  "BugEnhancementLinkText": {
+    "message": "Please submit an issue on the GitHub repository"
+  },
   "MenuTitleLabel": {
     "message": "Menu Title"
   },
