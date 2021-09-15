@@ -10,7 +10,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
 import DragHandleIcon from "@mui/icons-material/DragHandle";
-import SwapVertIcon from "@mui/icons-material/SwapVert";
 import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
 
 import MenuListControls from "./MenuListControls";
@@ -94,7 +93,6 @@ const MenuList = ({ menus, updateMenus }) => {
                           onMouseEnter={() => setIsHovered(true)}
                           onMouseLeave={() => setIsHovered(false)}
                         >
-                          {/* <DragHandleIcon fontSize="large" color={(isHovered || draggableSnapshot.isDragging) ? "inherit" : "disabled"} /> */}
                           {isHovered || draggableSnapshot.isDragging ? (
                             <DragHandleIcon
                               fontSize="large"
