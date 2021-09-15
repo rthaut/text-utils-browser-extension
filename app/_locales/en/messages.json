@@ -193,10 +193,10 @@
     "message": "This menu should have a title"
   },
   "Setting_EditableApplyToSelectedTextOnly_Name": {
-    "message": "Within Editable Contexts Apply Only to Selected Text"
+    "message": "Only Apply to Selected Text in Editable Content"
   },
   "Setting_EditableApplyToSelectedTextOnly_Description": {
-    "message": "When enabled, if an editable element has some text selected, utilities will only be applied to the selected text. Does not impact editable elements when no text is selected."
+    "message": "When enabled, if an editable element has only some of the text selected, the utilities will only be applied to the selected text. Regardless of this setting, if not text is selected in an editable element, the utilities will be applied to the full content."
   },
   "Setting_ForceDarkMode_Name": {
     "message": "Force Dark Mode"

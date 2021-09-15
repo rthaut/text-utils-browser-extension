@@ -8,9 +8,7 @@ export async function ConvertEditableElementCase(targetElementId, action) {
     return;
   }
 
-  const EditableApplyToSelectedTextOnly = await GetSetting(
-    "EditableApplyToSelectedTextOnly"
-  );
+  const selectionOnly = await GetSetting("EditableApplyToSelectedTextOnly");
 
   const element = browser.contextMenus.getTargetElement(targetElementId);
 
@@ -25,7 +23,7 @@ export async function ConvertEditableElementCase(targetElementId, action) {
       // no selection; convert the entire value as requested
       element.value = action.call(null, value);
     } else {
-      if (!EditableApplyToSelectedTextOnly) {
+      if (!selectionOnly) {
         // convert the entire value
         element.value = action.call(null, value);
       } else {
