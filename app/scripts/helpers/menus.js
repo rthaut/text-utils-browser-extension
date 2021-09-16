@@ -1,15 +1,16 @@
-import ACTIONS from "scripts/actions";
-import CONFIGS from "./menu-configs.json";
+import DEFAULT_MENU_CONFIGS from "../../../utilities/default-menu-configs.json";
+
+import utilities from "scripts/helpers/utilities";
 import {
   ConvertEditableText,
   CopyPlainTextToClipboard,
-} from "scripts/utils/messages";
+} from "scripts/helpers/messages";
 
 export const CONFIG_STORAGE_KEY = "menu-configs";
 
-export const GetMenuOnClickHandler = (context, action) => {
-  if (typeof ACTIONS[action]?.["func"] !== "function") {
-    console.error(`Action "${action}" is invalid`);
+export const GetMenuOnClickHandler = (context, utility) => {
+  if (typeof utilities[utility]?.["fn"] !== "function") {
+    console.error(`Utility "${utility}" is invalid`);
     return;
   }
 
@@ -18,43 +19,51 @@ export const GetMenuOnClickHandler = (context, action) => {
       return (info, tab) =>
         CopyPlainTextToClipboard(
           tab.id,
-          ACTIONS[action]["func"].call(null, info.selectionText)
+          utilities[utility]["fn"].call(null, info.selectionText)
         );
 
     case "editable":
       return (info, tab) =>
-        ConvertEditableText(tab.id, info.frameId, info.targetElementId, action);
+        ConvertEditableText(
+          tab.id,
+          info.frameId,
+          info.targetElementId,
+          utility
+        );
   }
 };
 
-export const GetMenus = () => {
+export const GetMenusForUtilities = () => {
   const menus = {};
 
-  Object.entries(CONFIGS).forEach(([action, menu]) => {
-    menus[action] = {
-      action,
-      ...menu,
-      title: GetDefaultMenuTitle(action),
+  Object.entries(utilities).forEach(([id, { contexts }]) => {
+    menus[id] = {
+      id,
+      possibleContexts: contexts,
+      title: GetDefaultMenuTitle(id),
     };
   });
 
-  // console.log("GetMenus()", menus);
+  // console.log("GetMenusForUtilities()", menus);
   return menus;
 };
 
 export const GetMenusWithConfigs = async () => {
-  const menus = GetMenus();
+  const menus = GetMenusForUtilities();
   const configs = await GetMenuConfigsFromStorage();
+  const defaults = GetDefaultMenuConfigs();
 
   Object.keys(menus).forEach((id) => {
     if (!configs[id]) {
-      console.error("Missing Config for Menu", id);
+      console.warn("Missing Config for Menu", id);
     }
 
     menus[id] = {
-      group: ACTIONS[id]?.["group"],
-      ...menus[id],
-      ...(configs[id] ?? {}),
+      id,
+      order: configs[id]?.["order"] ?? defaults[id]["order"],
+      enabledContexts:
+        configs[id]?.["enabledContexts"] ?? defaults[id]["enabledContexts"],
+      possibleContexts: menus[id]["possibleContexts"],
       title: configs[id]?.["title"] ?? menus[id]["title"],
     };
   });
@@ -66,11 +75,10 @@ export const GetMenusWithConfigs = async () => {
 export const GetDefaultMenuConfigs = () => {
   const configs = {};
 
-  Object.entries(GetMenus()).forEach(([id, menu]) => {
-    const { enabledContexts, order } = menu;
-    configs[id] = {
-      enabledContexts,
-      order: order > 0 ? order : null,
+  Object.keys(GetMenusForUtilities()).forEach((id) => {
+    configs[id] = DEFAULT_MENU_CONFIGS[id] ?? {
+      order: null,
+      enabledContexts: [],
     };
   });
 
@@ -143,13 +151,13 @@ export const RebuildMenus = async () => {
   });
 
   Object.entries(menusByContext).forEach(([context, menus]) => {
-    menus.forEach(({ action, title }) => {
-      const onclick = GetMenuOnClickHandler(context, action);
+    menus.forEach(({ id, title }) => {
+      const onclick = GetMenuOnClickHandler(context, id);
 
       if (typeof onclick === "function") {
         const menu = {
           parentId: context + "-group",
-          id: `${action}-${context}`.toLowerCase(),
+          id: `${id}-${context}`.toLowerCase(),
           title,
           contexts: [context],
           onclick,

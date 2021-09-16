@@ -1,32 +1,28 @@
+require("scripts/polyfills/menus.getTargetElement.js");
+
 import {
   MSG_ACTION_CONVERT_EDITABLE,
   MSG_ACTION_COPY_PLAINTEXT_TO_CLIPBOARD,
   MSG_ACTION_COPY_HTML_TO_CLIPBOARD,
-} from "scripts/utils/messages";
+} from "scripts/helpers/messages";
 
-import {
-  CopyPlainTextToClipboard,
-  CopyHtmlToClipboard,
-} from "scripts/utils/clipboard-helper";
+import { ApplyUtilityToEditableElement } from "scripts/helpers/editable-helper";
 
-import { ConvertEditableElementCase } from "scripts/utils/editable-helper";
-
-// eslint-disable-next-line no-unused-vars
-browser.runtime.onMessage.addListener((message, _sender) => {
+browser.runtime.onMessage.addListener((message) => {
   switch (message.action) {
     case MSG_ACTION_CONVERT_EDITABLE:
-      ConvertEditableElementCase(
-        message.data.targetElementId,
-        message.data.action
+      ApplyUtilityToEditableElement(
+        message.data.elementId,
+        message.data.utilityId
       );
       break;
 
     case MSG_ACTION_COPY_PLAINTEXT_TO_CLIPBOARD:
-      CopyPlainTextToClipboard(message.data.text);
+      navigator.clipboard.writeText(message.data.text);
       break;
 
     case MSG_ACTION_COPY_HTML_TO_CLIPBOARD:
-      CopyHtmlToClipboard(message.data.html);
+      navigator.clipboard.writeText(message.data.html);
       break;
 
     default:

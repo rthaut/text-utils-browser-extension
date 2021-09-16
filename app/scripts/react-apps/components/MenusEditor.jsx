@@ -8,7 +8,7 @@ import {
   GetDefaultMenuTitle,
   GetMenuConfigsFromStorage,
   GetMenusWithConfigs,
-} from "scripts/menus";
+} from "scripts/helpers/menus";
 
 import {
   createTheme,

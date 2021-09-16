@@ -25,8 +25,8 @@
     "url": "https://github.com/rthaut/text-utils-browser-extension/issues"
   },
   "browserslist": [
-    "chrome >= 51.0",
-    "edge >= 79.0.309",
+    "chrome >= 66.0",
+    "edge >= 79.0",
     "firefox >= 63.0"
   ],
   "dependencies": {

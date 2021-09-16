@@ -4,7 +4,7 @@ import {
   CONFIG_STORAGE_KEY,
   RebuildMenus,
   SoftResetStoredMenuConfigs,
-} from "scripts/menus";
+} from "scripts/helpers/menus";
 
 browser.runtime.onInstalled.addListener(async (details) => {
   console.log("Installation Details", details);

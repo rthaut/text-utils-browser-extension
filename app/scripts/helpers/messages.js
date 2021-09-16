@@ -3,14 +3,14 @@ export const MSG_ACTION_COPY_PLAINTEXT_TO_CLIPBOARD =
   "CopyPlainTextToClipboard";
 export const MSG_ACTION_COPY_HTML_TO_CLIPBOARD = "CopyHtmlToClipboard";
 
-export const ConvertEditableText = (tabId, frameId, targetElementId, action) =>
+export const ConvertEditableText = (tabId, frameId, elementId, utilityId) =>
   browser.tabs.sendMessage(
     tabId,
     {
       action: MSG_ACTION_CONVERT_EDITABLE,
       data: {
-        targetElementId,
-        action,
+        elementId,
+        utilityId,
       },
     },
     {

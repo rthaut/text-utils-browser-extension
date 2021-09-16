@@ -76,7 +76,7 @@
   "Menu_ConvertToCapitalCase_Title": {
     "message": "Convert to Capital Case"
   },
-  "Menu_ConvertToConstant_Title": {
+  "Menu_ConvertToConstantCase_Title": {
     "message": "Convert to CONSTANT_CASE"
   },
   "Menu_ConvertToDotCase_Title": {

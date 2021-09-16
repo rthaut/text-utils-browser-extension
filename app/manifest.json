@@ -44,11 +44,7 @@
   "content_scripts": [
     {
       "all_frames": true,
-      "__chrome|edge__js": [
-        "scripts/getTargetElement.polyfill.js",
-        "scripts/content-script.js"
-      ],
-      "__firefox__js": [
+      "js": [
         "scripts/content-script.js"
       ],
       "match_about_blank": true,
@@ -60,10 +56,12 @@
   ],
   "permissions": [
     "activeTab",
+    "clipboardWrite",
     "contextMenus",
     "storage"
   ],
-  "__chrome__minimum_chrome_version": "51.0",
+  "__chrome__minimum_chrome_version": "66.0",
+  "__edge__minimum_chrome_version": "79.0",
   "__firefox__applications": {
     "gecko": {
       "id": "text-utils-browser-extension@ryan.thaut.me",

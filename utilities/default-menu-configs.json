@@ -1,0 +1,72 @@
+{
+  "TrimWhitespace": {
+    "order": 1,
+    "enabledContexts": [
+      "editable",
+      "selection"
+    ]
+  },
+  "ConvertToLowerCase": {
+    "order": 2,
+    "enabledContexts": [
+      "editable",
+      "selection"
+    ]
+  },
+  "ConvertToUpperCase": {
+    "order": 3,
+    "enabledContexts": [
+      "editable",
+      "selection"
+    ]
+  },
+  "ConvertToTitleCaseAPStyle": {
+    "order": 4,
+    "enabledContexts": [
+      "editable",
+      "selection"
+    ]
+  },
+  "ConvertToSlug": {
+    "order": 5,
+    "enabledContexts": [
+      "editable",
+      "selection"
+    ]
+  },
+  "ConvertToSarcasm": {
+    "order": 6,
+    "enabledContexts": [
+      "editable",
+      "selection"
+    ]
+  },
+  "Reverse": {
+    "order": 7,
+    "enabledContexts": [
+      "editable",
+      "selection"
+    ]
+  },
+  "SwapCase": {
+    "order": 8,
+    "enabledContexts": [
+      "editable",
+      "selection"
+    ]
+  },
+  "DecodeURI": {
+    "order": 9,
+    "enabledContexts": [
+      "editable",
+      "selection"
+    ]
+  },
+  "EncodeURI": {
+    "order": 10,
+    "enabledContexts": [
+      "editable",
+      "selection"
+    ]
+  }
+}

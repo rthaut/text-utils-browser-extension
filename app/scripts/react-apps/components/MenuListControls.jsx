@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { GetDefaultMenuTitle } from "scripts/menus";
+import { GetDefaultMenuTitle } from "scripts/helpers/menus";
 
 import Checkbox from "@mui/material/Checkbox";
 import FormControl from "@mui/material/FormControl";
