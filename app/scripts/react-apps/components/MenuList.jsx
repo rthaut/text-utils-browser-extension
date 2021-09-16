@@ -24,17 +24,20 @@ const ReorderItemInList = (list, sourceIndex, targetIndex) => {
 const MenuList = ({ menus, updateMenus }) => {
   const theme = useTheme();
 
-  const getListItemStyle = (draggableStyle, isDragging, isDisabled) => ({
-    ...draggableStyle,
-    ...(isDisabled && {
-      background: theme.palette.background.default,
+  const getListItemStyle = React.useCallback(
+    (draggableStyle, isDragging, isDisabled) => ({
+      ...draggableStyle,
+      ...(isDisabled && {
+        background: theme.palette.primary.default,
+      }),
+      ...(isDragging && {
+        background: theme.palette.action.hover,
+        border: "1px solid",
+        borderColor: theme.palette.primary.main,
+      }),
     }),
-    ...(isDragging && {
-      background: theme.palette.background.default,
-      border: "1px solid",
-      borderColor: theme.palette.divider,
-    }),
-  });
+    [theme]
+  );
 
   const onDragEnd = (result) => {
     // dropped outside the list
@@ -103,7 +106,15 @@ const MenuList = ({ menus, updateMenus }) => {
                           )}
                         </ListItemIcon>
                         {droppableSnapshot.isDraggingOver ? (
-                          <ListItemText primary={menu.title} />
+                          <ListItemText
+                            primary={menu.title}
+                            sx={{
+                              color:
+                                menu.enabledContexts.length > 0
+                                  ? "text.primary"
+                                  : "text.disabled",
+                            }}
+                          />
                         ) : (
                           <MenuListControls
                             id={id}
