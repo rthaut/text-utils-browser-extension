@@ -60,12 +60,12 @@
     "contextMenus",
     "storage"
   ],
-  "__chrome__minimum_chrome_version": "66.0",
-  "__edge__minimum_chrome_version": "79.0",
+  "__chrome__minimum_chrome_version": "90",
+  "__edge__minimum_chrome_version": "91",
   "__firefox__applications": {
     "gecko": {
       "id": "text-utils-browser-extension@ryan.thaut.me",
-      "strict_min_version": "63.0"
+      "strict_min_version": "78"
     }
   }
 }
