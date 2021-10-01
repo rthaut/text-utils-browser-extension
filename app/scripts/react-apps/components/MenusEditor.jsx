@@ -1,9 +1,8 @@
 import React from "react";
 
-import { useChromeStorageSync as useBrowserStorageSync } from "use-chrome-storage";
+import useConfigsStore from "../hooks/useConfigsStore";
 
 import {
-  CONFIG_STORAGE_KEY,
   GetDefaultMenuConfigs,
   GetDefaultMenuTitle,
   GetMenuConfigsFromStorage,
@@ -41,10 +40,7 @@ const MenusEditor = () => {
   const [showResetConfirmationDialog, setShowResetConfirmationDialog] =
     React.useState(false);
   const [menus, setMenus] = React.useState({});
-  const [_, setConfigs] = useBrowserStorageSync(
-    CONFIG_STORAGE_KEY,
-    GetDefaultMenuConfigs()
-  );
+  const [_configs, setConfigs] = useConfigsStore();
 
   React.useEffect(() => {
     (async () => {
