@@ -28,7 +28,7 @@ const MenuList = ({ menus, updateMenus }) => {
     (draggableStyle, isDragging, isDisabled) => ({
       ...draggableStyle,
       ...(isDisabled && {
-        background: theme.palette.primary.default,
+        background: theme.palette.action.disabledBackground,
       }),
       ...(isDragging && {
         background: theme.palette.action.hover,
