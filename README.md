@@ -12,7 +12,7 @@
 
 ### Features
 
-* [**Over 25 text utilities included!**](#included-utilities)
+* [**Over 30 text utilities included!**](#included-utilities)
 * All utilities can easily be renamed, enabled/disabled, and reordered through a built-in drag-and-drop editor.
 * Utilities are automatically grouped for selected text vs. editable text when working with selected text in editable fields.
 
@@ -61,6 +61,13 @@
 * Miscellaneous
   * Reverse Text
   * Reverse Text (Keep Directional Characters)
+  * Sort Lines (Ascending)
+  * Sort Lines (Descending)
+* Base64
+  * Base64 Decode
+  * Base64 Decode (URL Safe)
+  * Base64 Encode
+  * Base64 Encode (URL Safe)
 
 * * *
 
