@@ -70,6 +70,18 @@
   "MenuGroup_Selection_Title": {
     "message": "Convert and Copy Selected Text"
   },
+  "Menu_Base64Decode_Title": {
+    "message": "Base64 Decode"
+  },
+  "Menu_Base64DecodeURLSafe_Title": {
+    "message": "Base64 Decode (URL Safe)"
+  },
+  "Menu_Base64Encode_Title": {
+    "message": "Base64 Encode"
+  },
+  "Menu_Base64EncodeURLSafe_Title": {
+    "message": "Base64 Encode (URL Safe)"
+  },
   "Menu_ConvertToCamelCase_Title": {
     "message": "Convert to camelCase"
   },
