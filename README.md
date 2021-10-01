@@ -1,4 +1,4 @@
-# Configurable Text Utilities v1.0.0
+# Configurable Text Utilities v0.0.0
 
 [![Chrome Web Store][chrome-image-version]][chrome-url] [![Microsoft Edge Add-on][edge-image-version]][edge-url] [![Mozilla Add-on][firefox-image-version]][firefox-url]
 
@@ -119,7 +119,7 @@ npm run start:chrome
 [chrome-image-users]: https://img.shields.io/chrome-web-store/d/{{TODO:CHROME_ID}}?logo=googlechrome&style=for-the-badge
 
 [edge-url]: https://microsoftedge.microsoft.com/addons/detail/text-utils/{{TODO:EDGE_ID}}
-[edge-image-version]: https://img.shields.io/badge/microsoft%20edge%20add--on-v1.0.0-blue?logo=microsoftedge&style=for-the-badge
+[edge-image-version]: https://img.shields.io/badge/microsoft%20edge%20add--on-v0.0.0-blue?logo=microsoftedge&style=for-the-badge
 
 [firefox-url]: https://addons.mozilla.org/en-US/firefox/addon/text-utils/
 [firefox-image-version]: https://img.shields.io/amo/v/text-utils?color=blue&logo=firefox&style=for-the-badge
