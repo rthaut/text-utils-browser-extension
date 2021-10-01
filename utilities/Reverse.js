@@ -1,4 +1,4 @@
-export default (text) => text.split("").reverse().join("");
+export { reverse as default } from "esrever";
 
 export const contexts = ["editable", "selection"];
 export const group = "reverse";
