@@ -139,6 +139,12 @@
   "Menu_Reverse_Title": {
     "message": "Reverse Text"
   },
+  "Menu_SortLinesAscending_Title": {
+    "message": "Sort Lines (Ascending)"
+  },
+  "Menu_SortLinesDescending_Title": {
+    "message": "Sort Lines (Descending)"
+  },
   "Menu_SwapCase_Title": {
     "message": "Swap Text Case"
   },
