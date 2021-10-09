@@ -12,3 +12,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Initial Release
 
 [unreleased]: https://github.com/rthaut/challenge-grid-autofill-extension/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/rthaut/text-utils-browser-extension/commits/v1.0.0
