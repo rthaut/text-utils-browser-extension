@@ -128,6 +128,6 @@ npm run start:chrome
 [edge-url]: https://microsoftedge.microsoft.com/addons/detail/text-utils/{{TODO:EDGE_ID}}
 [edge-image-version]: https://img.shields.io/badge/microsoft%20edge%20add--on-v1.0.0-blue?logo=microsoftedge&style=for-the-badge
 
-[firefox-url]: https://addons.mozilla.org/en-US/firefox/addon/text-utils/
-[firefox-image-version]: https://img.shields.io/amo/v/text-utils?color=blue&logo=firefox&style=for-the-badge
-[firefox-image-users]: https://img.shields.io/amo/users/text-utils?color=blue&logo=firefox&style=for-the-badge
+[firefox-url]: https://addons.mozilla.org/en-US/firefox/addon/configurable-text-utilities/
+[firefox-image-version]: https://img.shields.io/amo/v/configurable-text-utilities?color=blue&logo=firefox&style=for-the-badge
+[firefox-image-users]: https://img.shields.io/amo/users/configurable-text-utilities?color=blue&logo=firefox&style=for-the-badge
