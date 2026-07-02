@@ -1,4 +1,4 @@
-import apStyleTitleCase from "ap-style-title-case";
+import { apStyleTitleCase } from "ap-style-title-case";
 
 export default (text) => apStyleTitleCase(text, { keepSpaces: true });
 
