@@ -30,7 +30,7 @@
     "firefox >= 78"
   ],
   "dependencies": {
-    "@emotion/react": "^11.4.1",
+    "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.3.0",
     "@mui/icons-material": "^5.0.0",
     "@mui/lab": "^5.0.0-alpha.47",
@@ -43,7 +43,7 @@
     "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",
     "sarcastify": "^1.0.5",
-    "slugify": "^1.6.0",
+    "slugify": "^1.6.9",
     "text-case": "^1.0.9",
     "use-chrome-storage": "^1.0.4",
     "webextension-polyfill": "latest"
@@ -51,7 +51,7 @@
   "devDependencies": {
     "eslint": "latest",
     "eslint-import-resolver-webpack": "^0.13.1",
-    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.25.2",
     "prettier": "latest",
     "svg2png": "^4.1.1",
