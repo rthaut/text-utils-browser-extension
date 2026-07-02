@@ -1,3 +1,5 @@
+import { browser } from "wxt/browser";
+
 if (typeof browser.menus?.getTargetElement !== "function") {
   let menuTarget = null;
 

@@ -1,3 +1,5 @@
+import { browser } from "wxt/browser";
+
 import utilities from "scripts/helpers/utilities";
 import { GetSetting } from "scripts/helpers/settings";
 

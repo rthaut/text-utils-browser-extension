@@ -1,3 +1,5 @@
+import { browser } from "wxt/browser";
+
 export const MSG_ACTION_CONVERT_EDITABLE = "ConvertEditableElementCase";
 export const MSG_ACTION_COPY_PLAINTEXT_TO_CLIPBOARD =
   "CopyPlainTextToClipboard";

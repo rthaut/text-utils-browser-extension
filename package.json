@@ -8,14 +8,20 @@
   "private": true,
   "scripts": {
     "lint": "eslint ./app/",
-    "dev": "webextension-toolbox dev",
-    "build": "webextension-toolbox build",
+    "dev": "wxt --mv2",
+    "build": "wxt build --mv2",
+    "build:chrome": "wxt build -b chrome --mv2",
+    "build:edge": "wxt build -b edge --mv2",
+    "build:firefox": "wxt build -b firefox --mv2",
     "build:icons": "node scripts/generate-icons",
-    "start:chrome": "web-ext run --source-dir=./dist/chrome/ --target chromium",
-    "start:firefox": "web-ext run --source-dir=./dist/firefox/ --target firefox-desktop",
+    "zip:chrome": "wxt zip -b chrome --mv2",
+    "zip:edge": "wxt zip -b edge --mv2",
+    "zip:firefox": "wxt zip -b firefox --mv2",
+    "start:chrome": "wxt -b chrome --mv2",
+    "start:firefox": "wxt -b firefox --mv2",
     "start:firefox:nr": "npm run start:firefox -- --no-reload",
     "test": "npm run lint && npm run test:firefox",
-    "test:firefox": "npm run build firefox && web-ext lint --source-dir=./dist/firefox/"
+    "test:firefox": "npm run build:firefox && web-ext lint --source-dir=./.output/firefox-mv2/"
   },
   "repository": {
     "type": "git",
@@ -49,13 +55,14 @@
     "webextension-polyfill": "latest"
   },
   "devDependencies": {
-    "eslint": "latest",
-    "eslint-import-resolver-webpack": "^0.13.1",
+    "@wxt-dev/module-react": "^1.2.2",
+    "@wxt-dev/webextension-polyfill": "^1.0.0",
+    "eslint": "7.32.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.25.2",
-    "prettier": "latest",
+    "prettier": "2.4.0",
     "svg2png": "^4.1.1",
-    "web-ext": "latest",
-    "webextension-toolbox": "github:rthaut/webextension-toolbox#browserslist-string-vendor-version"
+    "web-ext": "10.4.0",
+    "wxt": "^0.20.27"
   }
 }
