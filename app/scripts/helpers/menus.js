@@ -1,3 +1,5 @@
+import { browser } from "wxt/browser";
+
 import DEFAULT_MENU_CONFIGS from "../../../utilities/default-menu-configs.json";
 
 import utilities from "scripts/helpers/utilities";

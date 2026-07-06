@@ -1,11 +1,13 @@
-const context = require.context("../../../utilities/", true, /\.js$/);
+const utilityModules = import.meta.glob("../../../utilities/*.js", {
+  eager: true,
+});
 
 export const GetUtilities = () => {
   const utilities = {};
 
-  context.keys().forEach((path, ...args) => {
-    const name = path.replace(/(?:^[.\/]*\/|\.[^.]+$)/g, "");
-    const { default: fn, ...utility } = context(path, ...args);
+  Object.entries(utilityModules).forEach(([path, module]) => {
+    const name = path.split("/").pop().replace(/\.[^.]+$/, "");
+    const { default: fn, ...utility } = module;
     utilities[name] = { fn, ...utility };
   });
 

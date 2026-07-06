@@ -1,3 +1,5 @@
+import { browser } from "wxt/browser";
+
 export const SETTINGS_STORAGE_KEY = "settings";
 
 export const DEFAULT_SETTINGS = {

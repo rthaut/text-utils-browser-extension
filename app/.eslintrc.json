@@ -28,11 +28,6 @@
     "no-useless-escape": "off"
   },
   "settings": {
-    "import/resolver": {
-      "webpack": {
-        "config": "../webextension-toolbox.config.js"
-      }
-    },
     "react": {
       "version": "detect"
     }
