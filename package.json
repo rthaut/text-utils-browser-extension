@@ -39,7 +39,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.3.0",
     "@mui/icons-material": "^5.0.0",
-    "@mui/lab": "^5.0.0-alpha.47",
+    "@mui/lab": "^6.0.0-dev.20240529-082515-213b5e33ab",
     "@mui/material": "^5.0.0",
     "ap-style-title-case": "^2.0.0",
     "base64util": "^2.1.0",
