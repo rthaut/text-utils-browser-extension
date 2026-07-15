@@ -108,13 +108,13 @@ const MenusEditor = () => {
                   alignItems="center"
                   spacing={2}
                 >
-                  <Grid item xs={12} sm={8} md={9}>
-                    <Typography color="textPrimary" variant="subtitle1" noWrap>
+                  <Grid size={{ xs: 12, sm: 8, md: 9 }}>
+                    <Typography color="text.primary" variant="subtitle1" noWrap>
                       <b>{browser.i18n.getMessage("MenuTitleLabel")}</b>
                     </Typography>
                   </Grid>
-                  <Grid item xs={12} sm={4} md={3}>
-                    <Typography color="textPrimary" variant="subtitle1" noWrap>
+                  <Grid size={{ xs: 12, sm: 4, md: 3 }}>
+                    <Typography color="text.primary" variant="subtitle1" noWrap>
                       <b>{browser.i18n.getMessage("EnabledContextsLabel")}</b>
                     </Typography>
                   </Grid>
