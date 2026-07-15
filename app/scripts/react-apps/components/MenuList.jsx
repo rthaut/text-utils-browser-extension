@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 import { useTheme } from "@mui/material/styles";
 import List from "@mui/material/List";
@@ -21,8 +21,10 @@ const ReorderItemInList = (list, sourceIndex, targetIndex) => {
   return result;
 };
 
-const MenuList = ({ menus, updateMenus }) => {
+const MenuListItem = ({ id, menu, index, isDraggingOver, updateMenuProp }) => {
   const theme = useTheme();
+
+  const [isHovered, setIsHovered] = React.useState(false);
 
   const getListItemStyle = React.useCallback(
     (draggableStyle, isDragging, isDisabled) => ({
@@ -39,6 +41,68 @@ const MenuList = ({ menus, updateMenus }) => {
     [theme]
   );
 
+  return (
+    <Draggable draggableId={id} index={index}>
+      {(draggableProvided, draggableSnapshot) => (
+        <ListItem
+          divider
+          ref={draggableProvided.innerRef}
+          {...draggableProvided.draggableProps}
+          style={getListItemStyle(
+            draggableProvided.draggableProps.style,
+            draggableSnapshot.isDragging,
+            !menu.enabledContexts.length
+          )}
+          sx={{ height: (theme) => theme.spacing(8) }}
+        >
+          <ListItemIcon
+            {...draggableProvided.dragHandleProps}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            {isHovered || draggableSnapshot.isDragging ? (
+              <DragHandleIcon fontSize="large" color="secondary" />
+            ) : (
+              <UnfoldMoreIcon fontSize="large" color="disabled" />
+            )}
+          </ListItemIcon>
+          {isDraggingOver ? (
+            <ListItemText
+              primary={menu.title}
+              sx={{
+                color:
+                  menu.enabledContexts.length > 0
+                    ? "text.primary"
+                    : "text.disabled",
+              }}
+            />
+          ) : (
+            <MenuListControls
+              id={id}
+              menu={menu}
+              updateMenuProp={updateMenuProp}
+              disabled={!menu.enabledContexts.length}
+            />
+          )}
+        </ListItem>
+      )}
+    </Draggable>
+  );
+};
+
+MenuListItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  menu: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    enabledContexts: PropTypes.arrayOf(PropTypes.string).isRequired,
+    possibleContexts: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }),
+  index: PropTypes.number.isRequired,
+  isDraggingOver: PropTypes.bool,
+  updateMenuProp: PropTypes.func.isRequired,
+};
+
+const MenuList = ({ menus, updateMenus }) => {
   const onDragEnd = (result) => {
     // dropped outside the list
     if (!result.destination) {
@@ -74,60 +138,16 @@ const MenuList = ({ menus, updateMenus }) => {
           <List disablePadding ref={droppableProvided.innerRef}>
             {menus
               .sort((a, b) => a.order - b.order)
-              .map(({ id, ...menu }, index) => {
-                const [isHovered, setIsHovered] = React.useState();
-                return (
-                  <Draggable key={id} draggableId={id} index={index}>
-                    {(draggableProvided, draggableSnapshot) => (
-                      <ListItem
-                        divider
-                        ContainerComponent="li"
-                        ref={draggableProvided.innerRef}
-                        {...draggableProvided.draggableProps}
-                        style={getListItemStyle(
-                          draggableProvided.draggableProps.style,
-                          draggableSnapshot.isDragging,
-                          !menu.enabledContexts.length
-                        )}
-                        sx={{ height: (theme) => theme.spacing(8) }}
-                      >
-                        <ListItemIcon
-                          {...draggableProvided.dragHandleProps}
-                          onMouseEnter={() => setIsHovered(true)}
-                          onMouseLeave={() => setIsHovered(false)}
-                        >
-                          {isHovered || draggableSnapshot.isDragging ? (
-                            <DragHandleIcon
-                              fontSize="large"
-                              color="secondary"
-                            />
-                          ) : (
-                            <UnfoldMoreIcon fontSize="large" color="disabled" />
-                          )}
-                        </ListItemIcon>
-                        {droppableSnapshot.isDraggingOver ? (
-                          <ListItemText
-                            primary={menu.title}
-                            sx={{
-                              color:
-                                menu.enabledContexts.length > 0
-                                  ? "text.primary"
-                                  : "text.disabled",
-                            }}
-                          />
-                        ) : (
-                          <MenuListControls
-                            id={id}
-                            menu={menu}
-                            updateMenuProp={updateMenuProp(id)}
-                            disabled={!menu.enabledContexts.length}
-                          />
-                        )}
-                      </ListItem>
-                    )}
-                  </Draggable>
-                );
-              })}
+              .map(({ id, ...menu }, index) => (
+                <MenuListItem
+                  key={id}
+                  id={id}
+                  menu={menu}
+                  index={index}
+                  isDraggingOver={droppableSnapshot.isDraggingOver}
+                  updateMenuProp={updateMenuProp(id)}
+                />
+              ))}
             {droppableProvided.placeholder}
           </List>
         )}

@@ -73,7 +73,7 @@ const MenuListControls = ({ id, menu, updateMenuProp, disabled = false }) => {
       alignItems="center"
       spacing={2}
     >
-      <Grid item xs={12} sm={8} md={9}>
+      <Grid size={{ xs: 12, sm: 8, md: 9 }}>
         <TextField
           disabled={disabled}
           fullWidth
@@ -88,25 +88,30 @@ const MenuListControls = ({ id, menu, updateMenuProp, disabled = false }) => {
               : null
           }
           onChange={(evt) => updateMenuTitle(evt.target.value)}
-          InputProps={{
-            endAdornment: !disabled && (
-              <InputAdornment position="end">
-                <Tooltip
-                  title={browser.i18n.getMessage(
-                    "OptionsButtonResetMenuTitleTooltip"
-                  )}
-                  placement="top"
-                >
-                  <IconButton onClick={(_evt) => resetMenuTitle()} size="large">
-                    <SettingsBackupRestoreIcon />
-                  </IconButton>
-                </Tooltip>
-              </InputAdornment>
-            ),
+          slotProps={{
+            input: {
+              endAdornment: !disabled && (
+                <InputAdornment position="end">
+                  <Tooltip
+                    title={browser.i18n.getMessage(
+                      "OptionsButtonResetMenuTitleTooltip"
+                    )}
+                    placement="top"
+                  >
+                    <IconButton
+                      onClick={(_evt) => resetMenuTitle()}
+                      size="large"
+                    >
+                      <SettingsBackupRestoreIcon />
+                    </IconButton>
+                  </Tooltip>
+                </InputAdornment>
+              ),
+            },
           }}
         />
       </Grid>
-      <Grid item xs={12} sm={4} md={3}>
+      <Grid size={{ xs: 12, sm: 4, md: 3 }}>
         <MenuContextsSelect />
       </Grid>
     </Grid>

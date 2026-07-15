@@ -15,8 +15,8 @@ export default function TabPanelHeader({ title, icon = null }) {
       alignItems="center"
       sx={{ borderBottom: 1, borderColor: "primary.main" }}
     >
-      {icon && <Grid item>{icon}</Grid>}
-      <Grid item xs zeroMinWidth>
+      {icon && <Grid>{icon}</Grid>}
+      <Grid size="grow">
         <Typography variant="h5" component="h2" gutterBottom>
           {title}
         </Typography>

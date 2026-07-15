@@ -1,6 +1,6 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 
 import OptionsReactApp from "./react-apps/OptionsApp.jsx";
 
-ReactDOM.render(<OptionsReactApp />, document.querySelector("#root"));
+createRoot(document.querySelector("#root")).render(<OptionsReactApp />);
