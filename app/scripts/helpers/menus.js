@@ -125,7 +125,6 @@ export const RebuildMenus = async () => {
   const menusByContext = {};
 
   Object.values(menus).forEach(
-    // eslint-disable-next-line no-unused-vars
     ({ enabledContexts: contexts, order, possibleContexts, ...menu }) => {
       contexts.forEach((context) => {
         if (!menusByContext[context]) {
