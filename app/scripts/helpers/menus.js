@@ -91,7 +91,19 @@ export const OnMenuClicked = async (info, tab) => {
   }
 
   const frameId = info.frameId ?? 0;
-  await EnsureContentScript(tab.id, frameId);
+  try {
+    await EnsureContentScript(tab.id, frameId);
+  } catch (error) {
+    // Chrome/Edge's activeTab grant covers the top-level origin, but not a
+    // cross-origin child frame. Firefox's manifest-registered content script
+    // does not have that limitation. Keep the failure contained to this click
+    // instead of leaving a rejected MV3 event-listener promise.
+    console.warn(
+      `Unable to run utility "${utility}" in frame ${frameId}`,
+      error
+    );
+    return;
+  }
 
   switch (context) {
     case "selection":
@@ -102,12 +114,7 @@ export const OnMenuClicked = async (info, tab) => {
       break;
 
     case "editable":
-      await ConvertEditableText(
-        tab.id,
-        frameId,
-        info.targetElementId,
-        utility
-      );
+      await ConvertEditableText(tab.id, frameId, info.targetElementId, utility);
       break;
   }
 };

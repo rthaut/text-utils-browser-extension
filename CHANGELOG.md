@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Automated permission verification harness (`npm run test:permissions`) that proves each requested permission is required by exercising the real context-menu message pipeline against builds with individual permissions removed
+- Automated permission-path harness (`npm run test:permissions`) that exercises content-script injection, clipboard access, editable-field updates, and the no-host-grant failure case against builds with individual permissions removed
 
 ### Removed
 

@@ -120,6 +120,23 @@ Chrome:
 npm run start:chrome
 ```
 
+### Browser Manifest Compatibility
+
+Chrome and Edge use Manifest V3 and inject the shared content script only after
+a context-menu click. This avoids requesting permanent access to every site.
+Firefox remains on Manifest V2 so the extension continues to support Firefox
+78 and later; it declares the same content script in the manifest instead.
+
+The utilities, settings, context-menu definitions, and message handlers are
+shared across all three browsers. One permission-related difference remains:
+Firefox can operate inside cross-origin iframes because its content script is
+declared for all frames, while Chrome and Edge cannot inject into a
+cross-origin iframe using only the top-level page's `activeTab` grant. Restoring
+that Chrome/Edge behavior would require broad or user-approved host access.
+
+Before publishing a browser build, run the automated checks and the
+[manual browser checks](e2e/manual-browser-checks.md).
+
 [chrome-url]: https://chrome.google.com/webstore/detail/text-utils/{{TODO:CHROME_ID}}
 [chrome-image-version]: https://img.shields.io/chrome-web-store/v/{{TODO:CHROME_ID}}?logo=googlechrome&style=for-the-badge
 [chrome-image-users]: https://img.shields.io/chrome-web-store/d/{{TODO:CHROME_ID}}?logo=googlechrome&style=for-the-badge

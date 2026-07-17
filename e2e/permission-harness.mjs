@@ -1,7 +1,7 @@
 /**
  * Permission verification harness.
  *
- * Empirically proves which manifest permissions are load-bearing by driving
+ * Exercises the permission-sensitive execution paths by driving
  * the real context-menu message pipeline (background service worker ->
  * content script -> clipboard / editable element) against the built
  * `chrome-mv3` output, using build variants with individual permissions
@@ -10,12 +10,14 @@
  * Native context menus cannot be automated, so each test dispatches the same
  * `contextMenus.onClicked` event a real menu click produces by evaluating in
  * the extension's service worker (`chrome.contextMenus.onClicked.dispatch`).
- * A synthetic dispatch cannot produce the `activeTab` grant a real menu
+ * A synthetic dispatch cannot verify the `contextMenus` user gesture or
+ * produce the `activeTab` grant a real menu
  * click grants, so variants marked `testGrant: true` add a host permission
  * for the local test server as a stand-in for that grant; the
  * `expect-failure-without-any-grant` variant runs the production manifest
- * as-is to prove that page access fails without a grant (in production,
- * `activeTab` is the only grant source).
+ * as-is to prove that page access fails without a grant. Native activeTab and
+ * context-menu behavior is covered by the manual release checks documented in
+ * `e2e/manual-browser-checks.md`.
  *
  * Run via `npm run test:permissions` (builds `chrome-mv3` first).
  */
@@ -27,6 +29,13 @@ import { chromium } from "playwright";
 
 const EXTENSION_DIR = resolve(import.meta.dirname, "../.output/chrome-mv3");
 const HEADLESS = process.env.HARNESS_HEADED !== "1";
+const EXPECTED_PRODUCTION_PERMISSIONS = [
+  "activeTab",
+  "clipboardWrite",
+  "contextMenus",
+  "scripting",
+  "storage",
+];
 
 const TEST_PAGE = `<!DOCTYPE html>
 <html>
@@ -69,12 +78,12 @@ const VARIANTS = [
       "scripting is load-bearing: without it, the content script cannot be injected at all",
   },
   {
-    name: "without-activeTab-but-with-host-grant",
+    name: "host-grant-substitutes-for-activeTab",
     remove: ["activeTab"],
     testGrant: true,
     expect: { inject: true, clipboard: true, editable: true },
     proves:
-      "activeTab is purely an access grant: with an equivalent host grant the pipeline works, so activeTab's role is exactly to grant page access on menu click",
+      "an explicit host grant can supply the page access normally expected from activeTab; native activeTab activation still requires the manual browser check",
   },
   {
     name: "expect-failure-without-any-grant",
@@ -82,16 +91,17 @@ const VARIANTS = [
     testGrant: false,
     expect: { inject: false, clipboard: false, editable: false },
     proves:
-      "page access requires a grant: the production manifest has no host permissions, so scripting.executeScript fails unless the user gesture (context menu click) grants activeTab",
+      "page access requires a grant: the production manifest cannot inject after a synthetic event that supplies neither host access nor a native activeTab grant",
   },
 ];
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const sleep = (ms) =>
+  new Promise((resolvePromise) => setTimeout(resolvePromise, ms));
 
-async function pollFor(fn, timeoutMs = 5000, intervalMs = 200) {
+async function pollFor(predicate, timeoutMs = 5000, intervalMs = 200) {
   const deadline = Date.now() + timeoutMs;
   for (;;) {
-    if (await fn()) return true;
+    if (await predicate()) return true;
     if (Date.now() > deadline) return false;
     await sleep(intervalMs);
   }
@@ -115,19 +125,43 @@ async function makeVariant(variant, origin) {
   return dir;
 }
 
+async function assertProductionManifest() {
+  const manifest = JSON.parse(
+    await readFile(join(EXTENSION_DIR, "manifest.json"), "utf8")
+  );
+  const actualPermissions = [...(manifest.permissions ?? [])].sort();
+  const expectedPermissions = [...EXPECTED_PRODUCTION_PERMISSIONS].sort();
+
+  if (
+    JSON.stringify(actualPermissions) !== JSON.stringify(expectedPermissions)
+  ) {
+    throw new Error(
+      `Unexpected production permissions: ${actualPermissions.join(", ")}`
+    );
+  }
+  if (manifest.host_permissions?.length) {
+    throw new Error("Production manifest must not request host permissions");
+  }
+  if (manifest.content_scripts?.length) {
+    throw new Error("Production manifest must not declare content scripts");
+  }
+}
+
 async function startServer() {
   const server = createServer((req, res) => {
     res.writeHead(200, { "Content-Type": "text/html" });
     res.end(TEST_PAGE);
   });
-  await new Promise((r) => server.listen(0, "127.0.0.1", r));
+  await new Promise((resolvePromise) =>
+    server.listen(0, "127.0.0.1", resolvePromise)
+  );
   const origin = `http://127.0.0.1:${server.address().port}`;
   return { server, origin };
 }
 
 /** Dispatch the exact event payload a real context menu click produces. */
-async function dispatchMenuClick(sw, tabId, info) {
-  await sw.evaluate(
+async function dispatchMenuClick(serviceWorker, tabId, info) {
+  await serviceWorker.evaluate(
     ([tabId, info]) =>
       new Promise((resolve, reject) => {
         if (typeof chrome.contextMenus.onClicked.dispatch !== "function") {
@@ -165,7 +199,7 @@ async function runVariant(variant, origin) {
     // own clipboardWrite permission
     await context.grantPermissions(["clipboard-read"], { origin });
 
-    const sw =
+    const serviceWorker =
       context.serviceWorkers()[0] ??
       (await context.waitForEvent("serviceworker", { timeout: 15000 }));
 
@@ -173,7 +207,7 @@ async function runVariant(variant, origin) {
     await page.goto(`${origin}/`);
     await page.bringToFront();
 
-    const tabId = await sw.evaluate(
+    const tabId = await serviceWorker.evaluate(
       () =>
         new Promise((resolve) =>
           chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) =>
@@ -188,7 +222,7 @@ async function runVariant(variant, origin) {
     const uniqueText = `permission harness ${variant.name} ${Date.now()}`;
     const expectedClipboard = uniqueText.toUpperCase();
 
-    await dispatchMenuClick(sw, tabId, {
+    await dispatchMenuClick(serviceWorker, tabId, {
       menuItemId: "converttouppercase-selection",
       selectionText: uniqueText,
       editable: false,
@@ -205,7 +239,7 @@ async function runVariant(variant, origin) {
 
     // injection probe: distinguishes "content script missing" from
     // "content script present but clipboard write blocked"
-    results.inject = await sw.evaluate(
+    results.inject = await serviceWorker.evaluate(
       (tabId) =>
         chrome.tabs
           .sendMessage(tabId, { action: "Ping" }, { frameId: 0 })
@@ -218,12 +252,12 @@ async function runVariant(variant, origin) {
     // programmatic focus only (no user activation); the polyfill falls back
     // to document.activeElement when no contextmenu event was captured
     await page.evaluate(() => {
-      const ta = document.getElementById("ta");
-      ta.value = "make me shout";
-      ta.focus();
+      const textarea = document.getElementById("ta");
+      textarea.value = "make me shout";
+      textarea.focus();
     });
 
-    await dispatchMenuClick(sw, tabId, {
+    await dispatchMenuClick(serviceWorker, tabId, {
       menuItemId: "converttouppercase-editable",
       editable: true,
       frameId: 0,
@@ -242,12 +276,14 @@ async function runVariant(variant, origin) {
     let editableCaptured = false;
     if (results.inject) {
       await page.evaluate(() => {
-        const ce = document.getElementById("ce");
-        ce.textContent = "quiet words";
-        ce.dispatchEvent(new MouseEvent("contextmenu", { bubbles: true }));
+        const contentEditable = document.getElementById("ce");
+        contentEditable.textContent = "quiet words";
+        contentEditable.dispatchEvent(
+          new MouseEvent("contextmenu", { bubbles: true })
+        );
       });
 
-      await dispatchMenuClick(sw, tabId, {
+      await dispatchMenuClick(serviceWorker, tabId, {
         menuItemId: "converttouppercase-editable",
         editable: true,
         frameId: 0,
@@ -262,7 +298,8 @@ async function runVariant(variant, origin) {
       });
     }
 
-    results.editable = editableFallback && (results.inject ? editableCaptured : false);
+    results.editable =
+      editableFallback && (results.inject ? editableCaptured : false);
     results.editableFallback = editableFallback;
     results.editableCaptured = editableCaptured;
   } finally {
@@ -275,6 +312,7 @@ async function runVariant(variant, origin) {
 }
 
 async function main() {
+  await assertProductionManifest();
   const { server, origin } = await startServer();
   const rows = [];
   let failed = false;
@@ -308,8 +346,8 @@ async function main() {
   process.stdout.write(JSON.stringify(rows, null, 2) + "\n");
   process.stdout.write(
     failed
-      ? "\nPERMISSION HARNESS FAILED: observed behavior does not match the documented permission model\n"
-      : "\nPERMISSION HARNESS PASSED: every permission in the manifest is empirically load-bearing\n"
+      ? "\nPERMISSION HARNESS FAILED: observed behavior does not match the documented permission paths\n"
+      : "\nPERMISSION HARNESS PASSED: automated permission-path checks matched expectations\n"
   );
   process.exit(failed ? 1 : 0);
 }
