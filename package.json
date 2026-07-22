@@ -47,7 +47,7 @@
     "debounce": "^1.2.1",
     "esrever": "^0.2.0",
     "prop-types": "^15.8.1",
-    "react": "^19.2.7",
+    "react": "^19.2.8",
     "react-dom": "^19.2.7",
     "sarcastify": "^1.0.5",
     "slugify": "^1.6.9",
