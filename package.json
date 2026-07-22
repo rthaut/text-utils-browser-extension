@@ -44,7 +44,7 @@
     "@mui/material": "^9.2.0",
     "ap-style-title-case": "^2.0.0",
     "base64util": "^2.1.0",
-    "debounce": "^1.2.1",
+    "debounce": "^3.0.0",
     "esrever": "^0.2.0",
     "prop-types": "^15.8.1",
     "react": "^19.2.7",
