@@ -47,7 +47,7 @@ export const ParseMenuItemId = (menuItemId) => {
 /**
  * Ensures the content script is loaded in the given tab/frame,
  * injecting it via the `scripting` API when it is not already present
- * (Chrome/Edge register the content script at runtime; page access is
+ * (all browsers register the content script at runtime; page access is
  * granted via `activeTab` when the user clicks a context menu item)
  * @param {number} tabId the ID of the tab
  * @param {number} frameId the ID of the frame within the tab
@@ -57,7 +57,7 @@ export const EnsureContentScript = async (tabId, frameId = 0) => {
     await PingContentScript(tabId, frameId);
   } catch {
     // no message listener in the target frame, so the content script
-    // is not loaded (it is registered at runtime for Chrome/Edge)
+    // is not loaded
     if (typeof browser.scripting?.executeScript !== "function") {
       throw new Error("Unable to load content script (scripting API missing)");
     }
@@ -94,10 +94,9 @@ export const OnMenuClicked = async (info, tab) => {
   try {
     await EnsureContentScript(tab.id, frameId);
   } catch (error) {
-    // Chrome/Edge's activeTab grant covers the top-level origin, but not a
-    // cross-origin child frame. Firefox's manifest-registered content script
-    // does not have that limitation. Keep the failure contained to this click
-    // instead of leaving a rejected MV3 event-listener promise.
+    // activeTab does not guarantee access to cross-origin child frames.
+    // Keep injection failures contained to this click instead of leaving a
+    // rejected background event-listener promise.
     console.warn(
       `Unable to run utility "${utility}" in frame ${frameId}`,
       error

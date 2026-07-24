@@ -22,7 +22,7 @@
     "start:firefox:nr": "npm run start:firefox -- --no-reload",
     "test": "npm run lint && npm run test:firefox && npm run test:permissions",
     "test:firefox": "npm run build:firefox && web-ext lint --source-dir=./.output/firefox-mv2/",
-    "test:permissions": "npm run build:chrome && node e2e/permission-harness.mjs"
+    "test:permissions": "npm run build:chrome && npm run build:firefox && node e2e/permission-harness.mjs"
   },
   "repository": {
     "type": "git",
@@ -34,7 +34,7 @@
   "browserslist": [
     "chrome >= 90",
     "edge >= 91",
-    "firefox >= 78"
+    "firefox >= 117"
   ],
   "dependencies": {
     "@emotion/react": "^11.14.0",

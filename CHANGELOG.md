@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Chrome and Edge builds now use Manifest V3 (Firefox remains Manifest V2)
-- Chrome/Edge: the content script is now injected on demand (`activeTab` + `scripting`) when a context menu item is clicked, instead of being loaded on every page; this removes the "read and change all your data on all websites" install warning
+- Chrome, Edge, and Firefox: the content script is now injected on demand (`activeTab` + `scripting`) when a context menu item is clicked, instead of being loaded on every page; this removes the "read and change all your data on all websites" install warning
 - Context menu clicks are now handled by a single `contextMenus.onClicked` listener (required for Manifest V3 service workers)
 
 ### Added

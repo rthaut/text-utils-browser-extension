@@ -1,10 +1,12 @@
 # Manual Browser Checks
 
 Run these checks before publishing a browser build. The automated permission
-harness cannot open a native browser context menu, so it cannot create or
-directly verify Chrome's `activeTab` grant.
+harness verifies the Chrome and Firefox manifest shapes, then exercises the
+permission-sensitive pipeline in Chromium with synthetic context-menu events.
+It cannot open a native browser context menu, create a real `activeTab` grant,
+or exercise the pipeline in Firefox.
 
-## Chrome and Edge (Manifest V3)
+## Chrome, Edge, and Firefox
 
 1. Load the unpacked production build with no host permissions granted.
 2. On a normal web page, use a Text Utilities context-menu action on selected
@@ -15,18 +17,13 @@ directly verify Chrome's `activeTab` grant.
    path.
 5. Confirm the generated manifest has no `host_permissions` or static
    `content_scripts` entry.
-6. Confirm an action inside a cross-origin iframe fails without changing the
-   frame. This is the expected cost of avoiding permanent all-sites access.
-
-## Firefox (Manifest V2)
-
-Repeat the selection and editable-field checks above. Also confirm an action
-inside a cross-origin iframe succeeds; Firefox's manifest-declared, all-frame
-content script intentionally retains this capability.
+6. Confirm actions in same-origin nested frames work.
+7. Confirm an action inside a cross-origin iframe does not change the frame.
+   Cross-origin child-frame access is not supported without a host grant.
 
 ## Expected Compatibility Boundary
 
 All browsers share utility execution, menu configuration, storage, messaging,
-and editable-element logic. Their only intended functional difference is
-cross-origin iframe access. Chrome and Edge favor minimal permissions; Firefox
-retains the broader access supplied by its Manifest V2 content-script model.
+editable-element logic, and frame-targeted dynamic injection. Firefox remains
+on Manifest V2 with a minimum version of 117 because that release fixed a known
+`activeTab` issue in same-origin nested frames.

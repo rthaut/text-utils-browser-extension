@@ -15,11 +15,10 @@ export default defineContentScript({
   allFrames: true,
   matchAboutBlank: true,
   runAt: "document_end",
-  // Firefox (MV2) declares the content script in the manifest;
-  // Chrome/Edge (MV3) inject it on demand via `scripting.executeScript()`
+  // Every browser injects this on demand via `scripting.executeScript()`
   // using the `activeTab` grant from the context menu click, which avoids
-  // requesting persistent access to all sites
-  registration: import.meta.env.FIREFOX ? "manifest" : "runtime",
+  // requesting persistent access to all sites.
+  registration: "runtime",
   main() {
     const polyfillReady = import(
       "scripts/polyfills/menus.getTargetElement.js"

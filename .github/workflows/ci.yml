@@ -39,6 +39,7 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run build:chrome
+      - run: npm run build:firefox
       # xvfb-run keeps the harness working even if it has to fall back to
       # headed mode (extensions require the new headless mode otherwise)
       - run: xvfb-run --auto-servernum -- node e2e/permission-harness.mjs

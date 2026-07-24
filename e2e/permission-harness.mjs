@@ -3,9 +3,10 @@
  *
  * Exercises the permission-sensitive execution paths by driving
  * the real context-menu message pipeline (background service worker ->
- * content script -> clipboard / editable element) against the built
- * `chrome-mv3` output, using build variants with individual permissions
- * removed, and asserting the observable behavior of each variant.
+ * content script -> clipboard / editable element) against build variants of
+ * the `chrome-mv3` output with individual permissions removed. Before running
+ * the behavioral matrix, it verifies the production Chrome and Firefox
+ * manifests use the same minimal permission shape.
  *
  * Native context menus cannot be automated, so each test dispatches the same
  * `contextMenus.onClicked` event a real menu click produces by evaluating in
@@ -19,7 +20,7 @@
  * context-menu behavior is covered by the manual release checks documented in
  * `e2e/manual-browser-checks.md`.
  *
- * Run via `npm run test:permissions` (builds `chrome-mv3` first).
+ * Run via `npm run test:permissions` (builds Chrome and Firefox first).
  */
 import { createServer } from "node:http";
 import { cp, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
@@ -27,7 +28,10 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { chromium } from "playwright";
 
-const EXTENSION_DIR = resolve(import.meta.dirname, "../.output/chrome-mv3");
+const EXTENSION_DIRS = {
+  chrome: resolve(import.meta.dirname, "../.output/chrome-mv3"),
+  firefox: resolve(import.meta.dirname, "../.output/firefox-mv2"),
+};
 const HEADLESS = process.env.HARNESS_HEADED !== "1";
 const EXPECTED_PRODUCTION_PERMISSIONS = [
   "activeTab",
@@ -109,7 +113,7 @@ async function pollFor(predicate, timeoutMs = 5000, intervalMs = 200) {
 
 async function makeVariant(variant, origin) {
   const dir = await mkdtemp(join(tmpdir(), `text-utils-${variant.name}-`));
-  await cp(EXTENSION_DIR, dir, { recursive: true });
+  await cp(EXTENSION_DIRS.chrome, dir, { recursive: true });
 
   const manifestPath = join(dir, "manifest.json");
   const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
@@ -125,9 +129,9 @@ async function makeVariant(variant, origin) {
   return dir;
 }
 
-async function assertProductionManifest() {
+async function assertProductionManifest(browserName) {
   const manifest = JSON.parse(
-    await readFile(join(EXTENSION_DIR, "manifest.json"), "utf8")
+    await readFile(join(EXTENSION_DIRS[browserName], "manifest.json"), "utf8")
   );
   const actualPermissions = [...(manifest.permissions ?? [])].sort();
   const expectedPermissions = [...EXPECTED_PRODUCTION_PERMISSIONS].sort();
@@ -136,15 +140,34 @@ async function assertProductionManifest() {
     JSON.stringify(actualPermissions) !== JSON.stringify(expectedPermissions)
   ) {
     throw new Error(
-      `Unexpected production permissions: ${actualPermissions.join(", ")}`
+      `Unexpected ${browserName} production permissions: ${actualPermissions.join(
+        ", "
+      )}`
     );
   }
-  if (manifest.host_permissions?.length) {
-    throw new Error("Production manifest must not request host permissions");
+  if ("host_permissions" in manifest) {
+    throw new Error(
+      `${browserName} production manifest must not contain host_permissions`
+    );
   }
-  if (manifest.content_scripts?.length) {
-    throw new Error("Production manifest must not declare content scripts");
+  if ("content_scripts" in manifest) {
+    throw new Error(
+      `${browserName} production manifest must not contain content_scripts`
+    );
   }
+
+  if (
+    browserName === "firefox" &&
+    manifest.browser_specific_settings?.gecko?.strict_min_version !== "117.0"
+  ) {
+    throw new Error(
+      "Firefox production manifest must require strict_min_version 117.0"
+    );
+  }
+
+  process.stdout.write(
+    `${browserName} manifest: minimal dynamic-injection permissions verified\n`
+  );
 }
 
 async function startServer() {
@@ -312,7 +335,8 @@ async function runVariant(variant, origin) {
 }
 
 async function main() {
-  await assertProductionManifest();
+  await assertProductionManifest("chrome");
+  await assertProductionManifest("firefox");
   const { server, origin } = await startServer();
   const rows = [];
   let failed = false;
