@@ -111,6 +111,26 @@ async function pollFor(predicate, timeoutMs = 5000, intervalMs = 200) {
   }
 }
 
+async function waitForClipboardPermissionOverrides(page) {
+  const permissionStateReady = await pollFor(async () => {
+    const state = await page.evaluate(async () => ({
+      read: await navigator.permissions
+        .query({ name: "clipboard-read" })
+        .then((permission) => permission.state),
+      write: await navigator.permissions
+        .query({ name: "clipboard-write" })
+        .then((permission) => permission.state),
+    }));
+    return state.read === "granted" && state.write === "denied";
+  });
+
+  if (!permissionStateReady) {
+    throw new Error(
+      "Clipboard permission overrides did not reach the test page"
+    );
+  }
+}
+
 async function makeVariant(variant, origin) {
   const dir = await mkdtemp(join(tmpdir(), `text-utils-${variant.name}-`));
   await cp(EXTENSION_DIRS.chrome, dir, { recursive: true });
@@ -229,6 +249,12 @@ async function runVariant(variant, origin) {
     const page = context.pages()[0] ?? (await context.newPage());
     await page.goto(`${origin}/`);
     await page.bringToFront();
+
+    if (variant.remove.includes("clipboardWrite")) {
+      // The override is installed before navigation; wait until the new
+      // renderer observes it before testing the missing manifest permission.
+      await waitForClipboardPermissionOverrides(page);
+    }
 
     const tabId = await serviceWorker.evaluate(
       () =>
