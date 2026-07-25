@@ -120,6 +120,21 @@ Chrome:
 npm run start:chrome
 ```
 
+### Browser Manifest Compatibility
+
+Chrome and Edge use Manifest V3, while Firefox remains on Manifest V2 and
+requires Firefox 117 or later. All three builds use the same implementation:
+after a context-menu click grants temporary `activeTab` access, the background
+script injects the shared content script into the clicked frame with
+`scripting.executeScript()`. This avoids requesting permanent access to every
+site.
+
+The temporary grant does not guarantee access to cross-origin child frames.
+Supporting those frames would require broad or user-approved host access.
+
+Before publishing a browser build, run the automated checks and the
+[manual browser checks](e2e/manual-browser-checks.md).
+
 [chrome-url]: https://chrome.google.com/webstore/detail/text-utils/{{TODO:CHROME_ID}}
 [chrome-image-version]: https://img.shields.io/chrome-web-store/v/{{TODO:CHROME_ID}}?logo=googlechrome&style=for-the-badge
 [chrome-image-users]: https://img.shields.io/chrome-web-store/d/{{TODO:CHROME_ID}}?logo=googlechrome&style=for-the-badge

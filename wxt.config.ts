@@ -27,13 +27,22 @@ export default defineConfig({
       default_icon: iconPaths,
       default_title: "__MSG_BrowserActionTitle__",
     },
-    permissions: ["activeTab", "clipboardWrite", "contextMenus", "storage"],
+    // All browsers inject the content script at runtime via
+    // scripting.executeScript() with the activeTab grant from the context
+    // menu click, avoiding a persistent host permission warning for all sites.
+    permissions: [
+      "activeTab",
+      "clipboardWrite",
+      "contextMenus",
+      "scripting",
+      "storage",
+    ],
     ...(browser === "firefox"
       ? {
           browser_specific_settings: {
             gecko: {
               id: "text-utils-browser-extension@ryan.thaut.me",
-              strict_min_version: "78.0",
+              strict_min_version: "117.0",
             },
           },
         }
@@ -41,6 +50,21 @@ export default defineConfig({
           minimum_chrome_version: browser === "edge" ? "91" : "90",
         }),
   }),
+  hooks: {
+    "build:manifestGenerated": (_wxt, manifest) => {
+      // The content script is registered at runtime for every browser,
+      // which leaves an empty content_scripts array in the manifest
+      if (manifest.content_scripts?.length === 0) {
+        delete manifest.content_scripts;
+      }
+
+      // WXT copies the runtime-registered content script's matches
+      // (<all_urls>) into host_permissions, but page access is meant to
+      // come exclusively from the activeTab grant on context menu click;
+      // delete it before WXT moves MV2 host permissions into permissions.
+      delete manifest.host_permissions;
+    },
+  },
   vite: () => ({
     resolve: {
       alias: {

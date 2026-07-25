@@ -4,20 +4,25 @@ import { debounce } from "debounce";
 
 import {
   CONFIG_STORAGE_KEY,
+  OnMenuClicked,
   RebuildMenus,
   SoftResetStoredMenuConfigs,
 } from "scripts/helpers/menus";
 
 export default defineBackground({
-  persistent: true,
   main() {
+    // all listeners must be registered synchronously so they are
+    // re-attached whenever the (non-persistent) background restarts
+    browser.contextMenus.onClicked.addListener(OnMenuClicked);
+
     browser.runtime.onInstalled.addListener(async (details) => {
       console.log("Installation Details", details);
 
       await SoftResetStoredMenuConfigs();
     });
 
-    browser.browserAction.onClicked.addListener(() => {
+    // MV3 exposes `action`; MV2 (Firefox) still uses `browserAction`
+    (browser.action ?? browser.browserAction).onClicked.addListener(() => {
       if (browser.runtime.openOptionsPage) {
         browser.runtime.openOptionsPage();
       } else {
