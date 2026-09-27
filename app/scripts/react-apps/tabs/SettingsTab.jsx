@@ -56,19 +56,15 @@ export default function SettingsTab() {
                           onChange={handleChange}
                         />
                       }
-                      label={browser.i18n.getMessage(
-                        `Setting_${setting}_Name`
-                      )}
+                      label={browser.i18n.getMessage(`Setting_${setting}_Name`)}
                     />
                   </FormGroup>
                   <FormHelperText>
-                    {browser.i18n.getMessage(
-                      `Setting_${setting}_Description`
-                    )}
+                    {browser.i18n.getMessage(`Setting_${setting}_Description`)}
                   </FormHelperText>
                 </FormControl>
               </ListItem>
-            )
+            ),
           )}
           <ListItem disableGutters>
             <ListItemIcon>

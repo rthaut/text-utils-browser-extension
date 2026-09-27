@@ -29,7 +29,7 @@ export default defineBackground({
         browser.management
           .getSelf()
           .then(({ optionsUrl: url }) =>
-            browser.windows.create({ url, type: "popup" })
+            browser.windows.create({ url, type: "popup" }),
           );
       }
     });
@@ -42,7 +42,7 @@ export default defineBackground({
         ) {
           RebuildMenus();
         }
-      }, 1000)
+      }, 1000),
     );
 
     RebuildMenus();

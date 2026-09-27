@@ -14,7 +14,7 @@ if (typeof browser.menus?.getTargetElement !== "function") {
     (event) => {
       menuTarget = event.target;
     },
-    true
+    true,
   );
 
   document.addEventListener("visibilitychange", clearMenuTargetIfInvalid, true);

@@ -1,17 +1,26 @@
 import Reverse from "./Reverse";
 
-export default (text) => Reverse(text)
-  .replace(/[\<\>\[\]\{\}\(\)]/g, (char) => {
+export default (text) =>
+  Reverse(text).replace(/[\<\>\[\]\{\}\(\)]/g, (char) => {
     switch (char) {
-      case "<": return ">"
-      case ">": return "<"
-      case "[": return "]"
-      case "]": return "["
-      case "{": return "}"
-      case "}": return "{"
-      case "(": return ")"
-      case ")": return "("
-      default: return char;
+      case "<":
+        return ">";
+      case ">":
+        return "<";
+      case "[":
+        return "]";
+      case "]":
+        return "[";
+      case "{":
+        return "}";
+      case "}":
+        return "{";
+      case "(":
+        return ")";
+      case ")":
+        return "(";
+      default:
+        return char;
     }
   });
 

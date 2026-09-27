@@ -65,7 +65,7 @@ const MenusEditor = () => {
             title:
               title !== GetDefaultMenuTitle(id) && title !== "" ? title : null,
           },
-        ])
+        ]),
       ),
     });
   };
@@ -175,7 +175,7 @@ const MenusEditor = () => {
             autoFocus
           >
             {browser.i18n.getMessage(
-              "OptionsResetConfirmationButtonDeclineText"
+              "OptionsResetConfirmationButtonDeclineText",
             )}
           </Button>
           <StyledEngineProvider injectFirst>
@@ -187,7 +187,7 @@ const MenusEditor = () => {
                 onClick={(_evt) => resetMenus()}
               >
                 {browser.i18n.getMessage(
-                  "OptionsResetConfirmationButtonAcceptText"
+                  "OptionsResetConfirmationButtonAcceptText",
                 )}
               </Button>
             </ThemeProvider>

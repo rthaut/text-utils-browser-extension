@@ -126,7 +126,7 @@ async function waitForClipboardPermissionOverrides(page) {
 
   if (!permissionStateReady) {
     throw new Error(
-      "Clipboard permission overrides did not reach the test page"
+      "Clipboard permission overrides did not reach the test page",
     );
   }
 }
@@ -139,7 +139,7 @@ async function makeVariant(variant, origin) {
   const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
 
   manifest.permissions = (manifest.permissions ?? []).filter(
-    (p) => !variant.remove.includes(p)
+    (p) => !variant.remove.includes(p),
   );
   if (variant.testGrant) {
     manifest.host_permissions = [`${origin}/*`];
@@ -151,7 +151,7 @@ async function makeVariant(variant, origin) {
 
 async function assertProductionManifest(browserName) {
   const manifest = JSON.parse(
-    await readFile(join(EXTENSION_DIRS[browserName], "manifest.json"), "utf8")
+    await readFile(join(EXTENSION_DIRS[browserName], "manifest.json"), "utf8"),
   );
   const actualPermissions = [...(manifest.permissions ?? [])].sort();
   const expectedPermissions = [...EXPECTED_PRODUCTION_PERMISSIONS].sort();
@@ -161,18 +161,18 @@ async function assertProductionManifest(browserName) {
   ) {
     throw new Error(
       `Unexpected ${browserName} production permissions: ${actualPermissions.join(
-        ", "
-      )}`
+        ", ",
+      )}`,
     );
   }
   if ("host_permissions" in manifest) {
     throw new Error(
-      `${browserName} production manifest must not contain host_permissions`
+      `${browserName} production manifest must not contain host_permissions`,
     );
   }
   if ("content_scripts" in manifest) {
     throw new Error(
-      `${browserName} production manifest must not contain content_scripts`
+      `${browserName} production manifest must not contain content_scripts`,
     );
   }
 
@@ -181,12 +181,12 @@ async function assertProductionManifest(browserName) {
     manifest.browser_specific_settings?.gecko?.strict_min_version !== "117.0"
   ) {
     throw new Error(
-      "Firefox production manifest must require strict_min_version 117.0"
+      "Firefox production manifest must require strict_min_version 117.0",
     );
   }
 
   process.stdout.write(
-    `${browserName} manifest: minimal dynamic-injection permissions verified\n`
+    `${browserName} manifest: minimal dynamic-injection permissions verified\n`,
   );
 }
 
@@ -196,7 +196,7 @@ async function startServer() {
     res.end(TEST_PAGE);
   });
   await new Promise((resolvePromise) =>
-    server.listen(0, "127.0.0.1", resolvePromise)
+    server.listen(0, "127.0.0.1", resolvePromise),
   );
   const origin = `http://127.0.0.1:${server.address().port}`;
   return { server, origin };
@@ -216,7 +216,7 @@ async function dispatchMenuClick(serviceWorker, tabId, info) {
           resolve();
         });
       }),
-    [tabId, info]
+    [tabId, info],
   );
 }
 
@@ -260,9 +260,9 @@ async function runVariant(variant, origin) {
       () =>
         new Promise((resolve) =>
           chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) =>
-            resolve(tabs[0]?.id)
-          )
-        )
+            resolve(tabs[0]?.id),
+          ),
+        ),
     );
 
     // --- test 1: selection -> clipboard (ConvertToUpperCase) ---
@@ -294,7 +294,7 @@ async function runVariant(variant, origin) {
           .sendMessage(tabId, { action: "Ping" }, { frameId: 0 })
           .then(() => true)
           .catch(() => false),
-      tabId
+      tabId,
     );
 
     // --- test 2: editable element mutation (first-click fallback path) ---
@@ -315,7 +315,7 @@ async function runVariant(variant, origin) {
 
     const editableFallback = await pollFor(async () => {
       const value = await page.evaluate(
-        () => document.getElementById("ta").value
+        () => document.getElementById("ta").value,
       );
       return value === "MAKE ME SHOUT";
     });
@@ -328,7 +328,7 @@ async function runVariant(variant, origin) {
         const contentEditable = document.getElementById("ce");
         contentEditable.textContent = "quiet words";
         contentEditable.dispatchEvent(
-          new MouseEvent("contextmenu", { bubbles: true })
+          new MouseEvent("contextmenu", { bubbles: true }),
         );
       });
 
@@ -341,7 +341,7 @@ async function runVariant(variant, origin) {
 
       editableCaptured = await pollFor(async () => {
         const value = await page.evaluate(
-          () => document.getElementById("ce").textContent
+          () => document.getElementById("ce").textContent,
         );
         return value === "QUIET WORDS";
       });
@@ -382,7 +382,7 @@ async function main() {
 
       checks.forEach((line) => process.stdout.write(`  ${line}\n`));
       process.stdout.write(
-        `  detail: editable fallback=${results.editableFallback} captured=${results.editableCaptured}\n`
+        `  detail: editable fallback=${results.editableFallback} captured=${results.editableCaptured}\n`,
       );
       process.stdout.write(`  proves: ${variant.proves}\n`);
 
@@ -397,7 +397,7 @@ async function main() {
   process.stdout.write(
     failed
       ? "\nPERMISSION HARNESS FAILED: observed behavior does not match the documented permission paths\n"
-      : "\nPERMISSION HARNESS PASSED: automated permission-path checks matched expectations\n"
+      : "\nPERMISSION HARNESS PASSED: automated permission-path checks matched expectations\n",
   );
   process.exit(failed ? 1 : 0);
 }
