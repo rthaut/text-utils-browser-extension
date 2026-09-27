@@ -31,7 +31,7 @@ const MenuListControls = ({ id, menu, updateMenuProp, disabled = false }) => {
     const label = browser.i18n.getMessage(
       menu.enabledContexts.length < 1
         ? "SelectContextsToEnable"
-        : "EnabledContextsLabel"
+        : "EnabledContextsLabel",
     );
 
     const renderEnabledContexts = (contexts) =>
@@ -94,7 +94,7 @@ const MenuListControls = ({ id, menu, updateMenuProp, disabled = false }) => {
                 <InputAdornment position="end">
                   <Tooltip
                     title={browser.i18n.getMessage(
-                      "OptionsButtonResetMenuTitleTooltip"
+                      "OptionsButtonResetMenuTitleTooltip",
                     )}
                     placement="top"
                   >
