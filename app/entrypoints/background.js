@@ -1,6 +1,6 @@
 import { browser } from "wxt/browser";
 import { defineBackground } from "wxt/utils/define-background";
-import { debounce } from "debounce";
+import debounce from "debounce";
 
 import {
   CONFIG_STORAGE_KEY,
