@@ -1,4 +1,8 @@
-export { headerCase as default } from "text-case";
+import { headerCase } from "text-case";
+
+import { removeInWordApostrophes } from "./lib/apostrophes";
+
+export default (text) => headerCase(removeInWordApostrophes(text));
 
 export const contexts = ["editable", "selection"];
 export const group = "change-case";

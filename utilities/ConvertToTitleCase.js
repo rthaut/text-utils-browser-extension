@@ -1,4 +1,8 @@
-export { titleCase as default } from "text-case";
+import { titleCase } from "text-case";
+
+import { keepInWordApostrophes } from "./lib/apostrophes";
+
+export default (text) => titleCase(text, keepInWordApostrophes);
 
 export const contexts = ["editable", "selection"];
 export const group = "change-case";
