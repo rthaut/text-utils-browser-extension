@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - Unreleased
+
+### Changed
+
+- Update WXT, React, Material UI and other dependencies. Nothing should look or work differently.
+
 ## [1.1.0] - 2026-07-25
 
 ### Changed
@@ -28,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Initial Release
 
-[unreleased]: https://github.com/rthaut/text-utils-browser-extension/compare/v1.1.0...HEAD
+[unreleased]: https://github.com/rthaut/text-utils-browser-extension/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/rthaut/text-utils-browser-extension/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/rthaut/text-utils-browser-extension/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/rthaut/text-utils-browser-extension/commits/v1.0.0
