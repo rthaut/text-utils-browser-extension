@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Reverse keeps emoji such as flags, skin tones and family emoji intact, and keeps Windows (CRLF) line breaks in order (Firefox 125 or later for emoji)
+
 ## [1.1.1] - Unreleased
 
 ### Changed
