@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Sort Lines keeps a trailing line break at the end, ignores case, sorts accented letters and numbers in natural order, and keeps Windows (CRLF) line endings
 - Case conversions no longer split words at apostrophes: Title Case turns "it's a test" into "It's a Test", and Camel Case turns it into "itsATest"
 
 ## [1.1.1] - 2026-10-12

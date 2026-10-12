@@ -1,4 +1,4 @@
-export { urlEncode as default } from "base64util";
+export { encodeURLSafe as default } from "./lib/base64";
 
 export const contexts = ["editable", "selection"];
 export const group = "base64";
