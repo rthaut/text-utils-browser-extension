@@ -1,4 +1,4 @@
-# Configurable Text Utilities v1.1.0
+# Configurable Text Utilities v1.1.1
 
 [![Chrome Web Store][chrome-image-version]][chrome-url] [![Microsoft Edge Add-on][edge-image-version]][edge-url] [![Mozilla Add-on][firefox-image-version]][firefox-url]
 
