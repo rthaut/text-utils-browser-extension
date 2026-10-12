@@ -72,6 +72,8 @@ const MenuListControls = ({ id, menu, updateMenuProp, disabled = false }) => {
       justifyContent="space-between"
       alignItems="center"
       spacing={2}
+      // fill the row; a Grid container in a flex parent otherwise shrinks to its content
+      sx={{ flexGrow: 1 }}
     >
       <Grid size={{ xs: 12, sm: 8, md: 9 }}>
         <TextField
