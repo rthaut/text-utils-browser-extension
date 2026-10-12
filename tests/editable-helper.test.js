@@ -99,6 +99,20 @@ describe.each(["input", "textarea"])(
   },
 );
 
+describe("ApplyUtilityToEditableElement with an async utility", () => {
+  it("writes the resolved value, not a promise", async () => {
+    const element = createField("input", "say abc now");
+    element.setSelectionRange(4, 7);
+    setTarget(element);
+
+    await ApplyUtilityToEditableElement(ELEMENT_ID, "HashSHA1");
+
+    expect(element.value).toBe(
+      "say a9993e364706816aba3e25717850c26c9cd0d89d now",
+    );
+  });
+});
+
 describe("ApplyUtilityToEditableElement on contenteditable", () => {
   it("converts the whole text content", async () => {
     const element = document.createElement("div");

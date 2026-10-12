@@ -8,12 +8,16 @@ import {
   RebuildMenus,
   SoftResetStoredMenuConfigs,
 } from "scripts/helpers/menus";
+import { OnDigestRequest } from "../../utilities/lib/hash";
 
 export default defineBackground({
   main() {
     // all listeners must be registered synchronously so they are
     // re-attached whenever the (non-persistent) background restarts
     browser.contextMenus.onClicked.addListener(OnMenuClicked);
+
+    // hashes text for content scripts on pages without `crypto.subtle`
+    browser.runtime.onMessage.addListener(OnDigestRequest);
 
     browser.runtime.onInstalled.addListener(async (details) => {
       console.log("Installation Details", details);
