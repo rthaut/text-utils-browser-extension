@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Hash utilities that replace or copy text as its SHA-1, SHA-256, SHA-384 or SHA-512 hash (lowercase hex)
+
 ### Fixed
 
 - Utilities applied to editable fields now stick on sites built with React and similar frameworks, can be undone with Ctrl+Z, and in rich-text editors only change the selected text instead of removing all formatting

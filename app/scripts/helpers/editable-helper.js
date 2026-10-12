@@ -50,10 +50,10 @@ const setNativeValue = (element, value) => {
 
 /**
  * @param {HTMLInputElement|HTMLTextAreaElement} element
- * @param {(text: string) => string} convert
+ * @param {(text: string) => Promise<string>} convert
  * @param {boolean} selectionOnly
  */
-const ApplyToTextField = (element, convert, selectionOnly) => {
+const ApplyToTextField = async (element, convert, selectionOnly) => {
   const { value, selectionStart, selectionEnd } = element;
 
   // `selectionStart` is null for input types without a text selection API
@@ -65,7 +65,7 @@ const ApplyToTextField = (element, convert, selectionOnly) => {
       ? [selectionStart, selectionEnd]
       : [0, value.length];
 
-  const replacement = convert(value.substring(start, end));
+  const replacement = await convert(value.substring(start, end));
 
   element.focus();
   if (selectionStart === null) {
@@ -114,10 +114,10 @@ const GetEditingHost = (element) => {
 
 /**
  * @param {HTMLElement} element
- * @param {(text: string) => string} convert
+ * @param {(text: string) => Promise<string>} convert
  * @param {boolean} selectionOnly
  */
-const ApplyToContentEditable = (element, convert, selectionOnly) => {
+const ApplyToContentEditable = async (element, convert, selectionOnly) => {
   const host = GetEditingHost(element);
   const doc = host.ownerDocument;
   const selection = doc.getSelection();
@@ -141,9 +141,14 @@ const ApplyToContentEditable = (element, convert, selectionOnly) => {
   // `innerText` (unlike `textContent`) has line breaks between paragraphs and
   // list items, and (unlike the selection's text in Firefox) leaves out the
   // whitespace that only formats the HTML source
-  const replacement = convert(
+  const replacement = await convert(
     wholeHost ? host.innerText : selection.toString(),
   );
+
+  // select the range again in case the selection moved while an async
+  // utility ran
+  selection.removeAllRanges();
+  selection.addRange(range);
 
   if (!InsertText(doc, replacement)) {
     range.deleteContents();
@@ -170,11 +175,12 @@ export async function ApplyUtilityToEditableElement(elementId, utilityId) {
   }
 
   const selectionOnly = await GetSetting("EditableApplyToSelectedTextOnly");
-  const convert = (text) => utility.call(null, text);
+  // utilities can be sync or async (like the hash utilities)
+  const convert = async (text) => await utility.call(null, text);
 
   if (element.isContentEditable || element.ownerDocument.designMode === "on") {
-    ApplyToContentEditable(element, convert, selectionOnly);
+    await ApplyToContentEditable(element, convert, selectionOnly);
   } else {
-    ApplyToTextField(element, convert, selectionOnly);
+    await ApplyToTextField(element, convert, selectionOnly);
   }
 }

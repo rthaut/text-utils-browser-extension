@@ -299,6 +299,96 @@ function selectContents(node) {
   selection.addRange(range);
 }
 
+// SHA-1 of "abc" (FIPS 180 test vector)
+const ABC_SHA1 = "a9993e364706816aba3e25717850c26c9cd0d89d";
+
+describe("ApplyUtilityToEditableElement with an async utility", () => {
+  afterEach(() => {
+    delete document.execCommand;
+  });
+
+  it.each(["input", "textarea"])(
+    "inserts the resolved value into a <%s> with execCommand",
+    async (tag) => {
+      const calls = stubExecCommand();
+      const element = createField(tag, "say abc now");
+      element.setSelectionRange(4, 7);
+      setTarget(element);
+
+      await ApplyUtilityToEditableElement(ELEMENT_ID, "HashSHA1");
+
+      expect(calls).toEqual([
+        { command: "insertText", text: ABC_SHA1, selected: "abc" },
+      ]);
+      expect(element.value).toBe(`say ${ABC_SHA1} now`);
+    },
+  );
+
+  it.each(["input", "textarea"])(
+    "writes the resolved value into a <%s> with the fallback setter",
+    async (tag) => {
+      const element = createField(tag, "say abc now");
+      element.setSelectionRange(4, 7);
+      setTarget(element);
+
+      await ApplyUtilityToEditableElement(ELEMENT_ID, "HashSHA1");
+
+      expect(element.value).toBe(`say ${ABC_SHA1} now`);
+    },
+  );
+
+  it("inserts the resolved value over a contenteditable selection with execCommand", async () => {
+    const calls = stubExecCommand();
+    const host = createRichText("<p>say <b>abc</b> now</p>");
+    const bold = host.querySelector("b");
+    selectContents(bold.firstChild);
+    setTarget(bold);
+
+    await ApplyUtilityToEditableElement(ELEMENT_ID, "HashSHA1");
+
+    expect(calls).toEqual([
+      { command: "insertText", text: ABC_SHA1, selected: "abc" },
+    ]);
+    expect(host.innerHTML).toBe(`<p>say <b>${ABC_SHA1}</b> now</p>`);
+  });
+
+  it("replaces a contenteditable selection with the fallback", async () => {
+    const host = createRichText("<p>say <b>abc</b> now</p>");
+    const bold = host.querySelector("b");
+    selectContents(bold.firstChild);
+    setTarget(bold);
+
+    await ApplyUtilityToEditableElement(ELEMENT_ID, "HashSHA1");
+
+    expect(host.innerHTML).toBe(`<p>say <b>${ABC_SHA1}</b> now</p>`);
+  });
+
+  it("replaces a whole contenteditable", async () => {
+    const host = createRichText("abc");
+    document.getSelection().removeAllRanges();
+    setTarget(host);
+
+    await ApplyUtilityToEditableElement(ELEMENT_ID, "HashSHA1");
+
+    expect(host.textContent).toBe(ABC_SHA1);
+  });
+
+  it("replaces a design mode document", async () => {
+    document.body.innerHTML = "<p>abc</p>";
+    document.designMode = "on";
+    document.getSelection().removeAllRanges();
+    setTarget(document.querySelector("p"));
+
+    try {
+      await ApplyUtilityToEditableElement(ELEMENT_ID, "HashSHA1");
+    } finally {
+      document.designMode = "off";
+    }
+
+    expect(document.body.textContent).toBe(ABC_SHA1);
+  });
+});
+
 describe("ApplyUtilityToEditableElement on contenteditable", () => {
   it("converts the whole text content", async () => {
     const element = createRichText("hello world");

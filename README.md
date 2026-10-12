@@ -68,6 +68,11 @@
   * Base64 Decode (URL Safe)
   * Base64 Encode
   * Base64 Encode (URL Safe)
+* Hash
+  * Hash (SHA-1)
+  * Hash (SHA-256)
+  * Hash (SHA-384)
+  * Hash (SHA-512)
 
 * * *
 

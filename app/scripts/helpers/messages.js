@@ -5,6 +5,7 @@ export const MSG_ACTION_COPY_PLAINTEXT_TO_CLIPBOARD =
   "CopyPlainTextToClipboard";
 export const MSG_ACTION_COPY_HTML_TO_CLIPBOARD = "CopyHtmlToClipboard";
 export const MSG_ACTION_PING = "Ping";
+export const MSG_ACTION_DIGEST = "Digest";
 
 export const PingContentScript = (tabId, frameId = 0) =>
   browser.tabs.sendMessage(
@@ -45,5 +46,14 @@ export const CopyHtmlToClipboard = (tabId, html) =>
     action: MSG_ACTION_COPY_HTML_TO_CLIPBOARD,
     data: {
       html,
+    },
+  });
+
+export const RequestDigest = (algorithm, text) =>
+  browser.runtime.sendMessage({
+    action: MSG_ACTION_DIGEST,
+    data: {
+      algorithm,
+      text,
     },
   });

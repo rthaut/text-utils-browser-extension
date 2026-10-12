@@ -64,6 +64,22 @@
       <div contenteditable="true" data-log>the quick brown fox</div>
     </section>
 
+    <section>
+      <h2>Hash (async utility)</h2>
+      <p>
+        Hash utilities run asynchronously. Enable "Hash (SHA-256)" for editable
+        text on the options page first. Select the word
+        <code>abc</code>, right-click it, and pick Text Utilities &gt; Hash
+        (SHA-256). It should become
+        <code
+          >ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad</code
+        >, and Ctrl+Z should put <code>abc</code> back.
+      </p>
+      <div contenteditable="true" data-log>
+        <p>hash <b>abc</b> here</p>
+      </div>
+    </section>
+
     <script src="event-log.js"></script>
   </body>
 </html>

@@ -145,6 +145,18 @@
   "Menu_EncodeURI_Title": {
     "message": "Encode URI"
   },
+  "Menu_HashSHA1_Title": {
+    "message": "Hash (SHA-1)"
+  },
+  "Menu_HashSHA256_Title": {
+    "message": "Hash (SHA-256)"
+  },
+  "Menu_HashSHA384_Title": {
+    "message": "Hash (SHA-384)"
+  },
+  "Menu_HashSHA512_Title": {
+    "message": "Hash (SHA-512)"
+  },
   "Menu_ReverseKeepDirectionalCharacters_Title": {
     "message": "Reverse Text (Keep Directional Characters)"
   },
