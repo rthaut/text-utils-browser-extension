@@ -62,14 +62,44 @@ describe("SortLinesAscending", () => {
     );
   });
 
-  it("splits CRLF line endings and joins with LF", () => {
+  it("keeps CRLF line endings", () => {
     expect(SortLinesAscending("banana\r\napple\r\ncherry")).toBe(
-      "apple\nbanana\ncherry",
+      "apple\r\nbanana\r\ncherry",
+    );
+  });
+
+  it("keeps a trailing line break at the end", () => {
+    expect(SortLinesAscending("b\na\n")).toBe("a\nb\n");
+    expect(SortLinesAscending("b\r\na\r\n")).toBe("a\r\nb\r\n");
+  });
+
+  it("ignores case", () => {
+    expect(SortLinesAscending("b\nC\na")).toBe("a\nb\nC");
+  });
+
+  it("sorts accented letters with their base letter", () => {
+    expect(SortLinesAscending("zebra\néclair\napple")).toBe(
+      "apple\néclair\nzebra",
+    );
+  });
+
+  it("sorts numbers by value", () => {
+    expect(SortLinesAscending("item10\nitem9\nitem1")).toBe(
+      "item1\nitem9\nitem10",
     );
   });
 
   it("keeps duplicate lines", () => {
     expect(SortLinesAscending("b\na\nb")).toBe("a\nb\nb");
+  });
+
+  it("sorts blank lines between other lines first", () => {
+    expect(SortLinesAscending("b\n\na")).toBe("\na\nb");
+  });
+
+  it("leaves a single line or empty text unchanged", () => {
+    expect(SortLinesAscending("only")).toBe("only");
+    expect(SortLinesAscending("")).toBe("");
   });
 });
 
@@ -80,9 +110,29 @@ describe("SortLinesDescending", () => {
     );
   });
 
-  it("splits CRLF line endings and joins with LF", () => {
+  it("keeps CRLF line endings", () => {
     expect(SortLinesDescending("banana\r\napple\r\ncherry")).toBe(
-      "cherry\nbanana\napple",
+      "cherry\r\nbanana\r\napple",
+    );
+  });
+
+  it("keeps a trailing line break at the end", () => {
+    expect(SortLinesDescending("a\nb\n")).toBe("b\na\n");
+  });
+
+  it("ignores case", () => {
+    expect(SortLinesDescending("b\nC\na")).toBe("C\nb\na");
+  });
+
+  it("sorts accented letters with their base letter", () => {
+    expect(SortLinesDescending("apple\néclair\nzebra")).toBe(
+      "zebra\néclair\napple",
+    );
+  });
+
+  it("sorts numbers by value", () => {
+    expect(SortLinesDescending("item1\nitem10\nitem9")).toBe(
+      "item10\nitem9\nitem1",
     );
   });
 });

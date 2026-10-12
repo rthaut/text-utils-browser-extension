@@ -1,4 +1,6 @@
-export default (text) => text.split(/\r?\n/).sort().join("\n");
+import sortLines from "./lib/sort-lines";
+
+export default (text) => sortLines(text);
 
 export const contexts = ["editable", "selection"];
 export const group = "sort";
