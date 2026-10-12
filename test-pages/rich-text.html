@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Rich text (contenteditable)</title>
+    <link rel="stylesheet" href="test-pages.css" />
+  </head>
+  <body>
+    <h1>Rich text (contenteditable)</h1>
+    <p>
+      Run each step on the first editor, using Text Utilities &gt; Convert to
+      Upper Case, and press Ctrl+Z (Cmd+Z on macOS) before the next step.
+    </p>
+    <ol>
+      <li>
+        Select the bold word "formatted", right-click it, and run the utility.
+        Only that word changes, it stays bold, and the italic text, link and
+        list are untouched. In Firefox the space after the bold word may
+        disappear; typing over the selected word does the same thing there, so
+        that is Firefox's editor rather than the extension.
+      </li>
+      <li>
+        Select a few words that run from plain text into the italic text, and
+        run the utility. Only the selected words change; everything outside the
+        selection keeps its formatting.
+      </li>
+      <li>
+        Click inside the editor without selecting anything, right-click, and run
+        the utility. All of the editor's text changes and keeps its line breaks.
+        Formatting is flattened to plain paragraphs, the same as pasting plain
+        text over the whole editor, and Chrome and Edge may add blank lines
+        between paragraphs.
+      </li>
+      <li>
+        After every step, the counter under the editor shows one more
+        <code>input</code> event.
+      </li>
+      <li>
+        After every step, Ctrl+Z puts the original text and formatting back.
+      </li>
+    </ol>
+
+    <section>
+      <h2>Editor</h2>
+      <div contenteditable="true" data-log>
+        <p>
+          This is some <b>formatted</b> text with <i>italic words</i> and
+          <a href="https://example.com/">a link</a>.
+        </p>
+        <ul>
+          <li>first item</li>
+          <li>second <b>bold</b> item</li>
+        </ul>
+        <p>A last paragraph.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Plain editor</h2>
+      <p>
+        A contenteditable with no markup. Utilities should behave the same as in
+        a text input.
+      </p>
+      <div contenteditable="true" data-log>the quick brown fox</div>
+    </section>
+
+    <script src="event-log.js"></script>
+  </body>
+</html>
