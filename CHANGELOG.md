@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Hash utilities that replace or copy text as its SHA-1, SHA-256, SHA-384 or SHA-512 hash (lowercase hex)
+
 ### Fixed
 
 - Sort Lines keeps a trailing line break at the end, ignores case, sorts accented letters and numbers in natural order, and keeps Windows (CRLF) line endings

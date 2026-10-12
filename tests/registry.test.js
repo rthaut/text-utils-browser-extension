@@ -24,8 +24,8 @@ describe("utility registry", () => {
   describe.each(utilityFiles)("%s", (id) => {
     const utility = utilities[id];
 
-    it("has a callable function that returns a string", () => {
-      expect(typeof utility.fn("TWFu")).toBe("string");
+    it("has a callable function that returns (or resolves to) a string", async () => {
+      expect(typeof (await utility.fn("TWFu"))).toBe("string");
     });
 
     it("lists only menu contexts the extension can build", () => {

@@ -19,7 +19,7 @@ export async function ApplyUtilityToEditableElement(elementId, utilityId) {
   const selectionOnly = await GetSetting("EditableApplyToSelectedTextOnly");
 
   if (element.isContentEditable) {
-    element.textContent = utility.call(null, element.textContent);
+    element.textContent = await utility.call(null, element.textContent);
 
     // TODO: support modifying selected text only in contenteditable DOM nodes/trees...
   } else {
@@ -27,16 +27,19 @@ export async function ApplyUtilityToEditableElement(elementId, utilityId) {
 
     if (selectionStart === selectionEnd) {
       // no selection; convert the entire value
-      element.value = utility.call(null, value);
+      element.value = await utility.call(null, value);
     } else {
       if (!selectionOnly) {
         // convert the entire value
-        element.value = utility.call(null, value);
+        element.value = await utility.call(null, value);
       } else {
         // convert only the selected text
         element.value =
           value.substring(0, selectionStart) +
-          utility.call(null, value.substring(selectionStart, selectionEnd)) +
+          (await utility.call(
+            null,
+            value.substring(selectionStart, selectionEnd),
+          )) +
           value.substring(selectionEnd);
       }
 

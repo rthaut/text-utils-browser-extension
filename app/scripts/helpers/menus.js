@@ -108,7 +108,7 @@ export const OnMenuClicked = async (info, tab) => {
     case "selection":
       await CopyPlainTextToClipboard(
         tab.id,
-        utilities[utility]["fn"].call(null, info.selectionText),
+        await utilities[utility]["fn"].call(null, info.selectionText),
       );
       break;
 
