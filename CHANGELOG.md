@@ -11,11 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Reverse keeps emoji such as flags, skin tones and family emoji intact, and keeps Windows (CRLF) line breaks in order (Firefox 125 or later for emoji)
 
-## [1.1.1] - Unreleased
+## [1.1.1] - 2026-10-12
 
 ### Changed
 
-- Update WXT, React, Material UI and other dependencies. Nothing should look or work differently.
+- Update WXT, React, Material UI and other dependencies
+
+### Fixed
+
+- The menu editor columns on the options page fill the page, so menu titles and dropdowns are no longer cut off
+- Declare that the extension does not collect any data, as Firefox now expects
 
 ## [1.1.0] - 2026-07-25
 
