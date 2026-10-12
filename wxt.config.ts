@@ -43,6 +43,11 @@ export default defineConfig({
             gecko: {
               id: "text-utils-browser-extension@ryan.thaut.me",
               strict_min_version: "117.0",
+              // the extension does not collect or transmit any user data
+              // https://extensionworkshop.com/documentation/develop/firefox-builtin-data-consent/
+              data_collection_permissions: {
+                required: ["none"],
+              },
             },
           },
         }
