@@ -20,9 +20,10 @@
     "start:chrome": "wxt -b chrome",
     "start:firefox": "wxt -b firefox --mv2",
     "start:firefox:nr": "npm run start:firefox -- --no-reload",
-    "test": "npm run lint && npm run test:firefox && npm run test:permissions",
+    "test": "npm run lint && npm run test:unit && npm run test:firefox && npm run test:permissions",
     "test:firefox": "npm run build:firefox && web-ext lint --source-dir=./.output/firefox-mv2/",
-    "test:permissions": "npm run build:chrome && npm run build:firefox && node e2e/permission-harness.mjs"
+    "test:permissions": "npm run build:chrome && npm run build:firefox && node e2e/permission-harness.mjs",
+    "test:unit": "vitest run"
   },
   "repository": {
     "type": "git",
@@ -64,8 +65,10 @@
     "eslint": "^9.39.4",
     "eslint-plugin-react": "^7.37.5",
     "globals": "^17.13.0",
+    "happy-dom": "^21.0.1",
     "playwright": "^1.63.0",
     "prettier": "3.9.9",
+    "vitest": "^5.0.3",
     "web-ext": "10.7.0",
     "wxt": "^0.21.2",
     "yaml": "^2.9.1"
