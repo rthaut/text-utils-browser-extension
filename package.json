@@ -69,5 +69,10 @@
     "web-ext": "10.7.0",
     "wxt": "^0.21.2",
     "yaml": "^2.9.1"
+  },
+  "overrides": {
+    "fx-runner": {
+      "shell-quote": "^1.11.0"
+    }
   }
 }
