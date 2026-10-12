@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { Buffer } from "node:buffer";
 
 import Base64Decode from "../../utilities/Base64Decode";
 import Base64DecodeURLSafe from "../../utilities/Base64DecodeURLSafe";
@@ -105,5 +106,27 @@ describe("Base64DecodeURLSafe", () => {
   it("throws URIError on bytes that are not valid UTF-8", () => {
     expect(() => Base64DecodeURLSafe("abc")).toThrow(URIError);
     expect(() => Base64DecodeURLSafe("_w")).toThrow(URIError);
+  });
+});
+
+describe("Base64 edge cases", () => {
+  it("throws URIError when encoding an unpaired surrogate", () => {
+    expect(() => Base64Encode("a\uD800b")).toThrow(URIError);
+    expect(() => Base64EncodeURLSafe("\uDC00")).toThrow(URIError);
+  });
+
+  it("keeps a leading byte order mark when decoding", () => {
+    // "77u/YQ==" is the UTF-8 BOM (EF BB BF) followed by "a"
+    expect(Base64Decode("77u/YQ==")).toBe("﻿a");
+    expect(Base64DecodeURLSafe("77u_YQ")).toBe("﻿a");
+  });
+
+  it("encodes and decodes long text", () => {
+    const text = "é😀a".repeat(100000);
+    // expected value produced independently with Node's Buffer
+    const expected = Buffer.from(text, "utf8").toString("base64");
+    expect(Base64Encode(text)).toBe(expected);
+    expect(Base64Decode(expected)).toBe(text);
+    expect(Base64DecodeURLSafe(Base64EncodeURLSafe(text))).toBe(text);
   });
 });
