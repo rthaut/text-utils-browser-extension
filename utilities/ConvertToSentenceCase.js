@@ -1,4 +1,8 @@
-export { sentenceCase as default } from "text-case";
+import { sentenceCase } from "text-case";
+
+import { keepInWordApostrophes } from "./lib/apostrophes";
+
+export default (text) => sentenceCase(text, keepInWordApostrophes);
 
 export const contexts = ["editable", "selection"];
 export const group = "change-case";

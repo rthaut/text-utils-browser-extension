@@ -1,4 +1,8 @@
-export { camelCase as default } from "text-case";
+import { camelCase } from "text-case";
+
+import { removeInWordApostrophes } from "./lib/apostrophes";
+
+export default (text) => camelCase(removeInWordApostrophes(text));
 
 export const contexts = ["editable", "selection"];
 export const group = "change-case";
