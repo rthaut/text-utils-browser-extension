@@ -11,7 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Update WXT, React, Material UI and other dependencies. Nothing should look or work differently.
+- Update WXT, React, Material UI and other dependencies
+
+### Fixed
+
+- The menu editor columns on the options page fill the page, so menu titles and dropdowns are no longer cut off
 
 ## [1.1.0] - 2026-07-25
 
