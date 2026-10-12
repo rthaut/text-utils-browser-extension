@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Editors inside iframes</title>
+    <link rel="stylesheet" href="test-pages.css" />
+  </head>
+  <body>
+    <h1>Editors inside iframes</h1>
+    <p>
+      Many rich-text editors (older TinyMCE and CKEditor setups, webmail) run
+      inside an iframe. Repeat the steps from the other pages inside each frame
+      below.
+    </p>
+
+    <section>
+      <h2>Same-origin frame: textarea and contenteditable</h2>
+      <p>Expected: works the same as on the top-level pages.</p>
+      <iframe src="frame-fields.html" title="Fields in a frame"></iframe>
+    </section>
+
+    <section>
+      <h2>Same-origin frame: designMode editor</h2>
+      <p>
+        The whole frame document is editable, like a classic iframe editor.
+        Expected: works like the rich text page (selection only, formatting
+        kept, Ctrl+Z reverts). Selecting <code>abc</code> on the last line and
+        running Hash (SHA-256) gives
+        <code
+          >ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad</code
+        >.
+      </p>
+      <iframe src="frame-design-mode.html" title="designMode editor"></iframe>
+    </section>
+
+    <section>
+      <h2>Cross-origin frame</h2>
+      <p>
+        Loaded from 127.0.0.1 while this page is on localhost, so it is a
+        different origin. Expected: the extension can't reach into it, so
+        nothing changes and the page keeps working. That is a known limit
+        without host permissions.
+      </p>
+      <iframe id="cross-origin" title="Cross-origin frame"></iframe>
+      <script>
+        document.getElementById("cross-origin").src =
+          `${location.protocol}//127.0.0.1:${location.port}/frame-fields.html`;
+      </script>
+    </section>
+  </body>
+</html>

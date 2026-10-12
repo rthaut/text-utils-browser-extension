@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Inputs and textareas</title>
+    <link rel="stylesheet" href="test-pages.css" />
+  </head>
+  <body>
+    <h1>Inputs and textareas</h1>
+    <p>
+      For each field, click in it without selecting anything, right-click, and
+      pick Text Utilities &gt; Convert to Upper Case. Press Ctrl+Z (Cmd+Z on
+      macOS). Then select one word, right-click it, and run the same utility.
+      Press Ctrl+Z again.
+    </p>
+    <p>Check:</p>
+    <ul>
+      <li>With nothing selected, the whole value changes.</li>
+      <li>
+        With a word selected, only that word changes and it stays selected (with
+        "Only Apply to Selected Text in Editable Content" on, the default).
+      </li>
+      <li>
+        The counter under the field shows one more <code>input</code> event
+        after each change.
+      </li>
+      <li>Ctrl+Z puts the previous text back in one step.</li>
+    </ul>
+
+    <section>
+      <h2>Text input</h2>
+      <input type="text" value="the quick brown fox" data-log />
+    </section>
+
+    <section>
+      <h2>Search input</h2>
+      <input type="search" value="jumps over the lazy dog" data-log />
+    </section>
+
+    <section>
+      <h2>Email input</h2>
+      <p>
+        Email inputs have no selection API, so the whole value always changes.
+        Use Convert to Lower Case here.
+      </p>
+      <input type="email" value="Someone@Example.COM" data-log />
+    </section>
+
+    <section>
+      <h2>Textarea</h2>
+      <p>
+        After converting the whole value, check each line stays on its own line.
+      </p>
+      <textarea rows="5" data-log>
+pear
+apple
+banana
+the quick brown fox</textarea>
+    </section>
+
+    <section>
+      <h2>Hash (async utility)</h2>
+      <p>
+        Hash utilities run asynchronously. Enable "Hash (SHA-256)" for editable
+        text on the options page first. Select the word
+        <code>abc</code>, right-click it, and pick Text Utilities &gt; Hash
+        (SHA-256). It should become
+        <code
+          >ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad</code
+        >, and Ctrl+Z should put <code>abc</code> back.
+      </p>
+      <input type="text" value="hash abc here" data-log />
+      <textarea rows="2" data-log>hash abc here</textarea>
+    </section>
+
+    <script src="event-log.js"></script>
+  </body>
+</html>

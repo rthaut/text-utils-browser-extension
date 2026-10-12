@@ -13,6 +13,9 @@ or exercise the pipeline in Firefox.
    text and confirm the transformed value reaches the clipboard.
 3. On the first invocation for that page, use an action in a text input,
    textarea, and contenteditable element. Confirm each value is updated.
+   `npm run test-pages` serves pages for this at `http://localhost:8058/`,
+   including React-controlled fields, rich text, and iframe editors; each page
+   lists what to check.
 4. Repeat an editable-field action to cover the already-injected content-script
    path.
 5. Confirm the generated manifest has no `host_permissions` or static
