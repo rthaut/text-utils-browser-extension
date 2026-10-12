@@ -1,4 +1,8 @@
-export { paramCase as default } from "text-case";
+import { paramCase } from "text-case";
+
+import { removeInWordApostrophes } from "./lib/apostrophes";
+
+export default (text) => paramCase(removeInWordApostrophes(text));
 
 export const contexts = ["editable", "selection"];
 export const group = "change-case";

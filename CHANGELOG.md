@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Case conversions no longer split words at apostrophes: Title Case turns "it's a test" into "It's a Test", and Camel Case turns it into "itsATest"
+
 ## [1.1.1] - Unreleased
 
 ### Changed

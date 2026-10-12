@@ -20,7 +20,8 @@ import ConvertToUpperCaseFirst from "../../utilities/ConvertToUpperCaseFirst";
 import SwapCase from "../../utilities/SwapCase";
 
 // each row is [input, expected]; inputs cover space-separated words,
-// camelCase, an acronym followed by words, mixed separators, and non-ASCII letters
+// camelCase, an acronym followed by words, mixed separators, non-ASCII letters,
+// and apostrophes inside words (straight and curly) and around them
 const cases = {
   ConvertToCamelCase: [
     ConvertToCamelCase,
@@ -30,6 +31,8 @@ const cases = {
       ["XMLHttpRequest", "xmlHttpRequest"],
       ["foo_bar-baz.qux", "fooBarBazQux"],
       ["Ünïcödé text", "ünïcödéText"],
+      ["it's a test", "itsATest"],
+      ["don’t stop", "dontStop"],
     ],
   ],
   ConvertToCapitalCase: [
@@ -39,6 +42,9 @@ const cases = {
       ["helloWorld", "Hello World"],
       ["XMLHttpRequest", "Xml Http Request"],
       ["foo_bar-baz.qux", "Foo Bar Baz Qux"],
+      ["it's a test", "It's A Test"],
+      ["don’t stop", "Don’t Stop"],
+      ["'quoted' text", "Quoted Text"],
     ],
   ],
   ConvertToConstantCase: [
@@ -49,6 +55,8 @@ const cases = {
       ["XMLHttpRequest", "XML_HTTP_REQUEST"],
       ["foo_bar-baz.qux", "FOO_BAR_BAZ_QUX"],
       ["Ünïcödé text", "ÜNÏCÖDÉ_TEXT"],
+      ["it's a test", "ITS_A_TEST"],
+      ["don’t stop", "DONT_STOP"],
     ],
   ],
   ConvertToDotCase: [
@@ -57,6 +65,8 @@ const cases = {
       ["hello world", "hello.world"],
       ["helloWorld", "hello.world"],
       ["foo_bar-baz.qux", "foo.bar.baz.qux"],
+      ["it's a test", "its.a.test"],
+      ["don’t stop", "dont.stop"],
     ],
   ],
   ConvertToHeaderCase: [
@@ -65,6 +75,8 @@ const cases = {
       ["hello world", "Hello-World"],
       ["contentType", "Content-Type"],
       ["XMLHttpRequest", "Xml-Http-Request"],
+      ["it's a test", "Its-A-Test"],
+      ["don’t stop", "Dont-Stop"],
     ],
   ],
   ConvertToLowerCase: [
@@ -92,6 +104,8 @@ const cases = {
       ["helloWorld", "hello-world"],
       ["XMLHttpRequest", "xml-http-request"],
       ["foo_bar-baz.qux", "foo-bar-baz-qux"],
+      ["it's a test", "its-a-test"],
+      ["don’t stop", "dont-stop"],
     ],
   ],
   ConvertToPascalCase: [
@@ -101,6 +115,8 @@ const cases = {
       ["helloWorld", "HelloWorld"],
       ["XMLHttpRequest", "XmlHttpRequest"],
       ["foo_bar-baz.qux", "FooBarBazQux"],
+      ["it's a test", "ItsATest"],
+      ["don’t stop", "DontStop"],
     ],
   ],
   ConvertToPathCase: [
@@ -109,6 +125,8 @@ const cases = {
       ["hello world", "hello/world"],
       ["helloWorld", "hello/world"],
       ["foo_bar-baz.qux", "foo/bar/baz/qux"],
+      ["it's a test", "its/a/test"],
+      ["don’t stop", "dont/stop"],
     ],
   ],
   ConvertToSentenceCase: [
@@ -118,6 +136,9 @@ const cases = {
       ["helloWorld", "Hello world"],
       ["HELLO WORLD", "Hello world"],
       ["foo_bar-baz", "Foo bar baz"],
+      ["it's a test", "It's a test"],
+      ["don’t stop", "Don’t stop"],
+      ["'quoted' text", "Quoted text"],
     ],
   ],
   ConvertToSnakeCase: [
@@ -127,6 +148,8 @@ const cases = {
       ["helloWorld", "hello_world"],
       ["XMLHttpRequest", "xml_http_request"],
       ["foo-bar.baz", "foo_bar_baz"],
+      ["it's a test", "its_a_test"],
+      ["don’t stop", "dont_stop"],
     ],
   ],
   ConvertToTitleCase: [
@@ -135,6 +158,9 @@ const cases = {
       ["hello world", "Hello World"],
       ["helloWorld", "Hello World"],
       ["foo_bar-baz", "Foo Bar Baz"],
+      ["it's a test", "It's a Test"],
+      ["don’t stop", "Don’t Stop"],
+      ["'quoted' text", "Quoted Text"],
     ],
   ],
   ConvertToUpperCase: [
