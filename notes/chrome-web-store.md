@@ -34,13 +34,13 @@ Provides user-invoked, configurable context-menu commands that transform selecte
 
 **Permission justifications**
 
-| Permission | Justification |
-| --- | --- |
-| `activeTab` | Applies the user-chosen text transformation to the page only when the user clicks one of the extension's context menu items. |
+| Permission       | Justification                                                                                                                                                                                           |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `activeTab`      | Applies the user-chosen text transformation to the page only when the user clicks one of the extension's context menu items.                                                                            |
 | `clipboardWrite` | Copies the transformed text to the clipboard when the user clicks a 'copy' context menu item; the write happens after the menu closes, outside a user-activation window, so the permission is required. |
-| `scripting` | Injects the extension's text-utility script into the invoked tab on demand instead of running on all sites. |
-| `contextMenus` | Creates the Text Utilities entries in the browser's context menu, which are the extension's user-facing invocation surface. |
-| `storage` | Stores and syncs the user's menu configuration and settings, including renamed, reordered, enabled, and disabled utilities. |
+| `scripting`      | Injects the extension's text-utility script into the invoked tab on demand instead of running on all sites.                                                                                             |
+| `contextMenus`   | Creates the Text Utilities entries in the browser's context menu, which are the extension's user-facing invocation surface.                                                                             |
+| `storage`        | Stores and syncs the user's menu configuration and settings, including renamed, reordered, enabled, and disabled utilities.                                                                             |
 
 **Remote code:** No, I am not using remote code.
 
