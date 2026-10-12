@@ -20,9 +20,7 @@ export default defineContentScript({
   // requesting persistent access to all sites.
   registration: "runtime",
   main() {
-    const polyfillReady = import(
-      "scripts/polyfills/menus.getTargetElement.js"
-    );
+    const polyfillReady = import("scripts/polyfills/menus.getTargetElement.js");
 
     // the message listener must be registered synchronously so it is
     // guaranteed to exist by the time `scripting.executeScript()` resolves
@@ -36,8 +34,8 @@ export default defineContentScript({
           polyfillReady.then(() =>
             ApplyUtilityToEditableElement(
               message.data.elementId,
-              message.data.utilityId
-            )
+              message.data.utilityId,
+            ),
           );
           break;
 

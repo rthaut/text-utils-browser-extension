@@ -22,7 +22,7 @@ export const useTheme = () => {
               secondary: indigo,
             },
       }),
-    [darkMode]
+    [darkMode],
   );
 
   return theme;

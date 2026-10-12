@@ -38,7 +38,7 @@ const MenuListItem = ({ id, menu, index, isDraggingOver, updateMenuProp }) => {
         borderColor: theme.palette.primary.main,
       }),
     }),
-    [theme]
+    [theme],
   );
 
   return (
@@ -51,7 +51,7 @@ const MenuListItem = ({ id, menu, index, isDraggingOver, updateMenuProp }) => {
           style={getListItemStyle(
             draggableProvided.draggableProps.style,
             draggableSnapshot.isDragging,
-            !menu.enabledContexts.length
+            !menu.enabledContexts.length,
           )}
           sx={{ height: (theme) => theme.spacing(8) }}
         >
@@ -113,7 +113,7 @@ const MenuList = ({ menus, updateMenus }) => {
     const reorderedMenus = ReorderItemInList(
       menus,
       result.source.index,
-      result.destination.index
+      result.destination.index,
     ).map((value, index) => ({
       ...value,
       order: index + 1,
@@ -163,7 +163,7 @@ MenuList.propTypes = {
       title: PropTypes.string.isRequired,
       enabledContexts: PropTypes.arrayOf(PropTypes.string).isRequired,
       possibleContexts: PropTypes.arrayOf(PropTypes.string).isRequired,
-    })
+    }),
   ),
   updateMenus: PropTypes.func.isRequired,
 };

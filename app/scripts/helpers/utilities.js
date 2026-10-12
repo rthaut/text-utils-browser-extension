@@ -6,7 +6,10 @@ export const GetUtilities = () => {
   const utilities = {};
 
   Object.entries(utilityModules).forEach(([path, module]) => {
-    const name = path.split("/").pop().replace(/\.[^.]+$/, "");
+    const name = path
+      .split("/")
+      .pop()
+      .replace(/\.[^.]+$/, "");
     const { default: fn, ...utility } = module;
     utilities[name] = { fn, ...utility };
   });

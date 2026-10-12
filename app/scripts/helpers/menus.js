@@ -32,7 +32,7 @@ export const ParseMenuItemId = (menuItemId) => {
     if (menuItemId.endsWith(suffix)) {
       const utilityIdLower = menuItemId.slice(0, -suffix.length);
       const utility = Object.keys(utilities).find(
-        (id) => id.toLowerCase() === utilityIdLower
+        (id) => id.toLowerCase() === utilityIdLower,
       );
 
       if (utility) {
@@ -99,7 +99,7 @@ export const OnMenuClicked = async (info, tab) => {
     // rejected background event-listener promise.
     console.warn(
       `Unable to run utility "${utility}" in frame ${frameId}`,
-      error
+      error,
     );
     return;
   }
@@ -108,7 +108,7 @@ export const OnMenuClicked = async (info, tab) => {
     case "selection":
       await CopyPlainTextToClipboard(
         tab.id,
-        utilities[utility]["fn"].call(null, info.selectionText)
+        utilities[utility]["fn"].call(null, info.selectionText),
       );
       break;
 
@@ -219,7 +219,7 @@ export const RebuildMenus = async () => {
           title: GetMenuTitleForContext(context, menu.title),
         });
       });
-    }
+    },
   );
 
   // console.log("RebuildMenus() :: Menus By Context", menusByContext);
@@ -266,7 +266,7 @@ export const SoftResetStoredMenuConfigs = async () => {
     ) {
       console.info(
         `Setting menu config "${config}" to default configuration`,
-        defaultMenuConfigs[config]
+        defaultMenuConfigs[config],
       );
 
       storedMenuConfigs[config] = defaultMenuConfigs[config];

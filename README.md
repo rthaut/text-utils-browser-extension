@@ -135,9 +135,9 @@ Supporting those frames would require broad or user-approved host access.
 Before publishing a browser build, run the automated checks and the
 [manual browser checks](e2e/manual-browser-checks.md).
 
-[chrome-url]: https://chrome.google.com/webstore/detail/text-utils/{{TODO:CHROME_ID}}
-[chrome-image-version]: https://img.shields.io/chrome-web-store/v/{{TODO:CHROME_ID}}?logo=googlechrome&style=for-the-badge
-[chrome-image-users]: https://img.shields.io/chrome-web-store/d/{{TODO:CHROME_ID}}?logo=googlechrome&style=for-the-badge
+[chrome-url]: https://chrome.google.com/webstore/detail/text-utils/deidhikdknjmfomeekiheklkidbinhlb
+[chrome-image-version]: https://img.shields.io/chrome-web-store/v/deidhikdknjmfomeekiheklkidbinhlb?logo=googlechrome&style=for-the-badge
+[chrome-image-users]: https://img.shields.io/chrome-web-store/d/deidhikdknjmfomeekiheklkidbinhlb?logo=googlechrome&style=for-the-badge
 
 [edge-url]: https://microsoftedge.microsoft.com/addons/detail/text-utils/plpggmjkjpnoocflkpeoabgbgemjcpon
 [edge-image-version]: https://img.shields.io/badge/dynamic/json?logo=microsoftedge&style=for-the-badge&label=edge%20add-on&prefix=v&query=%24.version&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Fplpggmjkjpnoocflkpeoabgbgemjcpon

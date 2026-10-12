@@ -14,7 +14,7 @@ export const PingContentScript = (tabId, frameId = 0) =>
     },
     {
       frameId,
-    }
+    },
   );
 
 export const ConvertEditableText = (tabId, frameId, elementId, utilityId) =>
@@ -29,7 +29,7 @@ export const ConvertEditableText = (tabId, frameId, elementId, utilityId) =>
     },
     {
       frameId,
-    }
+    },
   );
 
 export const CopyPlainTextToClipboard = (tabId, text) =>
